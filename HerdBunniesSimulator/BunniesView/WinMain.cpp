@@ -1,0 +1,93 @@
+#include <windows.h>
+
+#include "OpenglWindow.h"
+#include "TimeControl.h"
+#include "Renderer.h"
+#include <stdio.h>
+
+OpenglWindow *glwnd;
+Renderer *renderer;
+
+void InitGl()
+{
+	glViewport(0, 0, 800, 800);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//gluPerspective(60.0f, 1024.0f / 768, 1.0f, 1000.0f);
+	//gluOrtho2D(0, 1024, 760, 0);
+	gluOrtho2D(-50, 50, 50, -50);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glShadeModel(GL_SMOOTH);
+
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearDepth(1.0f);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+
+	glEnable(GL_NORMALIZE);
+
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+
+	glDisable(GL_LIGHTING);
+}
+
+HWND hwnd;
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int)
+{
+	TimeControl *tc = new TimeControl();
+
+	tc ->Start();
+	float time = 0;
+
+	MSG msg;
+	BOOL done = false;
+
+	glwnd = new OpenglWindow();
+	glwnd ->SetCurrentContext();
+	glwnd ->Initialize(NULL, "dupa", 800, 800, 32, 0, false, true, NULL);
+
+	InitGl();
+
+	renderer = new Renderer(glwnd);
+	renderer ->Initialize();
+
+	while (!done)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT)
+			{
+				done = true;
+			}
+			else
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+		else
+		{
+			if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+			{
+				done = true;
+			}
+			else
+			{
+				float seconds = tc ->CheckFrameMS() / 1000.0f;
+				time += seconds;
+
+				renderer->Update(time, seconds);
+				renderer ->Render(time, seconds);
+			}
+		}
+	}
+
+	return (int)(msg.wParam);
+}
+
