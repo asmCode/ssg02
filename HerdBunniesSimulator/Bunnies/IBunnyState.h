@@ -8,8 +8,10 @@ class IBunnyState
 public:
 	enum State
 	{
-		State_DoNothing,
-		State_GoToFarmer,
+		State_Idle,
+		State_SettingInRank,
+		State_GoingToReproduction,
+		State_Reproducting,
 	};
 
 	virtual ~IBunnyState() {}

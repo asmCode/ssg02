@@ -9,6 +9,7 @@ class IBunny
 {
 public:
 	virtual void SetState(IBunnyState *bunnyState) = 0;
+	virtual const IBunnyState *GetState() const = 0;
 
 	virtual void SetPosition(const sm::Vec3 &position) = 0;
 	virtual void SetMoveTarget(const sm::Vec3 &moveTarget) = 0;

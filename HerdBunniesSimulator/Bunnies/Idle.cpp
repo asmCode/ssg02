@@ -1,6 +1,7 @@
 #include "Idle.h"
 
 #include "IBunny.h"
+#include "HealthyBunny.h"
 #include "Player.h"
 #include "SettingsInRanks.h"
 #include "GameProps.h"
@@ -60,7 +61,7 @@ void Idle::Update(IBunny *bunny, float time, float seconds)
 
 IBunnyState::State Idle::GetStateType() const
 {
-	return IBunnyState::State_DoNothing;
+	return IBunnyState::State_Idle;
 }
 
 bool Idle::CheckRunningAway(IBunny *bunny, float time, float seconds)
@@ -97,6 +98,10 @@ bool Idle::CheckSettingInRanks(IBunny *bunny, float time, float seconds)
 
 void Idle::DoIdleStuff(IBunny *bunny, float time, float seconds)
 {
+	HealthyBunny *hbunny = dynamic_cast<HealthyBunny*>(bunny);
+	assert(hbunny != NULL);
+
+	hbunny->DecreaseRestingAfterReproductionTime(seconds);
 }
 
 Idle *GenericSingleton<Idle>::instance;

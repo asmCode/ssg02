@@ -2,8 +2,10 @@
 #include "Idle.h"
 
 #include "IBunny.h"
+#include "HealthyBunny.h"
 #include "Player.h"
 #include "GameProps.h"
+#include "BunniesManager.h"
 #include <assert.h>
 #include <stdio.h>
 
@@ -27,16 +29,24 @@ void SettingsInRanks::Leave()
 {
 }
 
-void SettingsInRanks::Initialize(Player *player)
+void SettingsInRanks::Initialize(Player *player,
+								 BunniesManager *bunniesManager)
 {
 	assert(player != NULL);
+	assert(bunniesManager != NULL);
 
 	m_player = player;
+	m_bunniesManager = bunniesManager;
 }
 
 void SettingsInRanks::Update(IBunny *bunny, float time, float seconds)
 {
 	assert(bunny != NULL);
+
+	HealthyBunny *hbunny = dynamic_cast<HealthyBunny*>(bunny);
+	assert(hbunny != NULL);
+
+	hbunny->DecreaseRestingAfterReproductionTime(seconds);
 
 	sm::Vec3 farmerPosition = m_player->GetPosition();
 	sm::Vec3 farmerLookTarget = m_player->GetLookTarget();
@@ -80,13 +90,16 @@ void SettingsInRanks::Update(IBunny *bunny, float time, float seconds)
 	else
 	{
 		bunnyMoveTarget.Normalize();
-		bunny->SetPosition(bunnyPosition + (bunnyMoveTarget * GameProps::HealthyBunnyWalkSpeed * seconds));
+		sm::Vec3 newBunnyPosition = bunnyPosition + (bunnyMoveTarget * GameProps::HealthyBunnyWalkSpeed * seconds);
+
+		if (!m_bunniesManager->CheckCollision(newBunnyPosition, 0.4f, bunny)) // TODO
+			bunny->SetPosition(newBunnyPosition);
 	}
 }
 
 IBunnyState::State SettingsInRanks::GetStateType() const
 {
-	return IBunnyState::State_GoToFarmer;
+	return IBunnyState::State_SettingInRank;
 }
 
 SettingsInRanks *GenericSingleton<SettingsInRanks>::instance;

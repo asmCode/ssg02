@@ -7,6 +7,9 @@
 
 HealthyBunny::HealthyBunny(void) :
 	m_isActive(false),
+	m_reproductionPartner(NULL),
+	m_reproductingTime(0.0f),
+	m_restingAfterReproduction(0.0f),
 	m_bunnyState(SettingsInRanks::GetInstance())
 {
 }
@@ -38,6 +41,7 @@ void HealthyBunny::ActivateOnStart(const sm::Vec3 &position)
 {
 	m_isActive = true;
 	m_position = position;
+	m_reproductionPartner = NULL;
 }
 
 void HealthyBunny::SetState(IBunnyState *bunnyState)
@@ -47,6 +51,13 @@ void HealthyBunny::SetState(IBunnyState *bunnyState)
 	m_bunnyState->Leave();
 	m_bunnyState = bunnyState;
 	m_bunnyState->Enter();
+}
+
+const IBunnyState *HealthyBunny::GetState() const
+{
+	assert(m_bunnyState != NULL);
+
+	return m_bunnyState;
 }
 
 void HealthyBunny::SetPosition(const sm::Vec3 &position)
@@ -69,3 +80,44 @@ const sm::Vec3 HealthyBunny::GetMoveTarget() const
 	return m_moveTarget;
 }
 
+void HealthyBunny::SetReproductionPartner(HealthyBunny *bunny)
+{
+	m_reproductionPartner = bunny;
+}
+
+HealthyBunny *HealthyBunny::GetReproductionPartner()
+{
+	return m_reproductionPartner;
+}
+
+void HealthyBunny::SetReproductingTime(float time)
+{
+	m_reproductingTime = time;
+}
+
+float HealthyBunny::GetReproductingTime() const
+{
+	return m_reproductingTime;
+}
+
+void HealthyBunny::SetRestingAfterReproductionTime(float time)
+{
+	m_restingAfterReproduction = time;
+}
+
+void HealthyBunny::DecreaseRestingAfterReproductionTime(float seconds)
+{
+	m_restingAfterReproduction -= seconds;
+	if (m_restingAfterReproduction < 0.0f)
+		m_restingAfterReproduction = 0.0f;
+}
+
+bool HealthyBunny::CanReproduce() const
+{
+	if ((m_bunnyState->GetStateType() == IBunnyState::State_Idle || 
+		m_bunnyState->GetStateType() == IBunnyState::State_SettingInRank) &&
+		m_restingAfterReproduction == 0.0f)
+		return true;
+
+	return false;
+}

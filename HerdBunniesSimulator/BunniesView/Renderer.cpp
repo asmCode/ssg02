@@ -33,10 +33,10 @@ void Renderer::Initialize()
 
 	player = new Player(shapesRenderer);
 	bunniesMgr = new BunniesManager(shapesRenderer);
-	bunniesMgr->ResetForNewGame(10);
+	bunniesMgr->ResetForNewGame(2);
 
 	Idle::GetInstance()->Initialize(player);
-	SettingsInRanks::GetInstance()->Initialize(player);
+	SettingsInRanks::GetInstance()->Initialize(player, bunniesMgr);
 }
 
 void Renderer::KeyDown(int keyCode)

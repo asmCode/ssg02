@@ -4,6 +4,7 @@
 #include <GenericSingleton.h>
 
 class Player;
+class BunniesManager;
 class IBunny;
 
 class SettingsInRanks : public IBunnyState, public GenericSingleton<SettingsInRanks>
@@ -14,7 +15,8 @@ public:
 	void Update(IBunny *bunny, float time, float seconds);
 	IBunnyState::State GetStateType() const;
 
-	void Initialize(Player *player);
+	void Initialize(Player *player,
+					BunniesManager *bunniesManager);
 
 private:
 	SettingsInRanks();
@@ -24,5 +26,6 @@ private:
 	void Leave();
 
 	Player *m_player;
+	BunniesManager *m_bunniesManager;
 };
 
