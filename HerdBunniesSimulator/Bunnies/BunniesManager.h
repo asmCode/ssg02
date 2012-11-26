@@ -20,6 +20,7 @@ public:
 
 	void ClearBunnies();
 	void ResetForNewGame(uint32_t healthyBunniesCount);
+	void BornNewRabbit(const sm::Vec3 &position);
 
 	bool CheckCollision(const IBunny *bunny);
 	bool CheckCollision(const sm::Vec3 &position, float radius, const IBunny *excludeFromTest);
@@ -35,7 +36,14 @@ private:
 	float m_reproduceColldown;
 	float m_reproduceDelay;
 
+	uint32_t m_maxHealthyBunnyIndex;
+
 	bool ShouldGoToReproduce();
 	void GoToReproduce();
+
+	HealthyBunny *GetRandomHealthyBunny(
+		bool ableToReproduce = false,
+		bool ableToFuck = false,
+		const IBunny *excludeFromTest = NULL);
 };
 

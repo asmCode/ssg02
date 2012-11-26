@@ -2,11 +2,13 @@
 #include "HealthyBunny.h"
 #include "GameProps.h"
 #include "Reproducting.h"
+#include "BunniesManager.h"
 #include "Idle.h"
 #include <assert.h>
 
 Reproducting::Reproducting(void) :
-	m_player(NULL)
+	m_player(NULL),
+	m_bunniesManager(NULL)
 {
 }
 
@@ -37,12 +39,27 @@ void Reproducting::Update(IBunny *bunny, float time, float seconds)
 		hbunny->SetRestingAfterReproductionTime(GameProps::RestingAfterReproduction);
 		hbunny->SetReproductingTime(0.0f);
 		hbunny->SetState(Idle::GetInstance());
+
+		HealthyBunny *partner = hbunny->GetReproductionPartner();
+		if (hbunny > partner)
+			m_bunniesManager->BornNewRabbit(hbunny->GetPosition());
+
+		hbunny->SetReproductionPartner(NULL);
 	}
 }
 
 IBunnyState::State Reproducting::GetStateType() const
 {
 	return IBunnyState::State_Reproducting;
+}
+
+void Reproducting::Initialize(Player *player, BunniesManager *bunniesManager)
+{
+	assert(player != NULL);
+	assert(bunniesManager != NULL);
+
+	m_player = player;
+	m_bunniesManager = bunniesManager;
 }
 
 Reproducting *GenericSingleton<Reproducting>::instance;

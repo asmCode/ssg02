@@ -10,6 +10,7 @@
 BunniesManager::BunniesManager(IShapesRenderer *shapesRenderer) :
 	m_shapesRenderer(shapesRenderer),
 	m_reproduceColldown(0.0f),
+	m_maxHealthyBunnyIndex(0),
 	m_reproduceDelay(5.0f) // TOOD
 {
 	assert(m_shapesRenderer != NULL);
@@ -28,6 +29,8 @@ void BunniesManager::ClearBunnies()
 	{
 		m_healthyBunnies[i]->Reset();
 	}
+
+	m_maxHealthyBunnyIndex = 0;
 }
 
 void BunniesManager::ResetForNewGame(uint32_t healthyBunniesCount)
@@ -48,6 +51,27 @@ void BunniesManager::ResetForNewGame(uint32_t healthyBunniesCount)
 			startPos.z = random.GetFloat(-50.0f, 50.0f);
 
 			m_healthyBunnies[i]->ActivateOnStart(startPos);
+
+			if (i > m_maxHealthyBunnyIndex)
+				m_maxHealthyBunnyIndex = i;
+		}
+	}
+}
+
+void BunniesManager::BornNewRabbit(const sm::Vec3 &position)
+{
+	for (uint32_t i = 0; i < MaxBunniesCount; i++)
+	{
+		if (!m_healthyBunnies[i]->IsActive())
+		{
+			m_healthyBunnies[i]->Reset();
+			m_healthyBunnies[i]->ActivateOnStart(position);
+			m_healthyBunnies[i]->SetNewborn();
+
+			if (i > m_maxHealthyBunnyIndex)
+				m_maxHealthyBunnyIndex = i;
+
+			return;
 		}
 	}
 }
@@ -123,29 +147,50 @@ void BunniesManager::GoToReproduce()
 {
 	m_reproduceColldown = 0.0f;
 
-	HealthyBunny *bunny1 = NULL;
-	HealthyBunny *bunny2 = NULL;
-
-	for (uint32_t i = 0; i < MaxBunniesCount; i++)
+	HealthyBunny *bunny1 = GetRandomHealthyBunny(true);
+	HealthyBunny *bunny2 = GetRandomHealthyBunny(true, false,  bunny1);
+	
+	if (bunny1 != NULL && bunny2 != NULL)
 	{
-		if (m_healthyBunnies[i]->IsActive())
-		{
-			if (m_healthyBunnies[i]->CanReproduce())
-			{
-				if (bunny1 == NULL) // found first one
-					bunny1 = m_healthyBunnies[i];
-				else if (bunny2 == NULL) // found second one
-					bunny2 = m_healthyBunnies[i];
-				
-				if (bunny1 != NULL && bunny2 != NULL)
-				{
-					bunny1->SetReproductionPartner(bunny2);
-					bunny1->SetState(GoingToReproduction::GetInstance());
+		bunny1->SetReproductionPartner(bunny2);
+		bunny1->SetState(GoingToReproduction::GetInstance());
 
-					bunny2->SetReproductionPartner(bunny1);
-					bunny2->SetState(GoingToReproduction::GetInstance());
-				}
-			}
+		bunny2->SetReproductionPartner(bunny1);
+		bunny2->SetState(GoingToReproduction::GetInstance());
+	}
+}
+
+HealthyBunny *BunniesManager::GetRandomHealthyBunny(bool ableToReproduce, bool ableToFuck, const IBunny *excludeFromTest)
+{
+	static Randomizer rand;
+
+	int baseIndex = rand.GetInt(0, m_maxHealthyBunnyIndex);
+	int index = baseIndex;
+
+	while (true)
+	{
+		index++;
+		if (index == m_maxHealthyBunnyIndex + 1)
+			index = 0;
+
+		if (index == baseIndex) // if check all and didnt found
+			return NULL;
+
+		if (m_healthyBunnies[index] == excludeFromTest)
+			continue;
+
+		if (m_healthyBunnies[index]->IsActive())
+		{
+			bool found = true;
+
+			if (ableToReproduce && !m_healthyBunnies[index]->CanReproduce())
+				found = false;
+
+			if (ableToFuck && !m_healthyBunnies[index]->CanBeFucked())
+				found = false;
+
+			if (found)
+				return m_healthyBunnies[index];
 		}
 	}
 }

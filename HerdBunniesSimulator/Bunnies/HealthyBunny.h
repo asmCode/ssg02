@@ -39,6 +39,15 @@ public:
 	bool CanReproduce() const;
 	void DecreaseRestingAfterReproductionTime(float seconds);
 
+	void SetNewborn();
+	bool IsBorning() const;
+	bool IsGrowingUp() const;
+	float GetGrowingUpTime() const;
+	void DecreaseGrowingUpTime(float seconds);
+	const sm::Vec3 &GetBorningJumpOutVector() const;
+
+	bool CanBeFucked() const;
+
 private:
 	bool m_isActive;
 
@@ -50,6 +59,9 @@ private:
 	HealthyBunny *m_reproductionPartner;
 	float m_reproductingTime;
 	float m_restingAfterReproduction;
+
+	float m_growingUpTime;
+	sm::Vec3 m_borningJumpOutVector;
 };
 
 #endif

@@ -38,6 +38,20 @@ void Idle::Update(IBunny *bunny, float time, float seconds)
 {
 	assert(bunny != NULL);
 
+	HealthyBunny *hbunny = dynamic_cast<HealthyBunny*>(bunny);
+	assert(hbunny != NULL);
+
+	if (hbunny->IsBorning())
+	{
+		hbunny->DecreaseGrowingUpTime(seconds);
+		bunny->SetPosition(bunny->GetPosition() + (hbunny->GetBorningJumpOutVector() * seconds * 3));
+		return;
+	}
+	else if (hbunny->IsGrowingUp())
+	{
+		hbunny->DecreaseGrowingUpTime(seconds);
+	}
+
 	if (CheckRunningAway(bunny, time, seconds))
 	{
 		bunny->SetState(NULL);

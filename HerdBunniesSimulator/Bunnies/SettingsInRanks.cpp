@@ -48,6 +48,11 @@ void SettingsInRanks::Update(IBunny *bunny, float time, float seconds)
 
 	hbunny->DecreaseRestingAfterReproductionTime(seconds);
 
+	if (hbunny->IsGrowingUp())
+	{
+		hbunny->DecreaseGrowingUpTime(seconds);
+	}
+
 	sm::Vec3 farmerPosition = m_player->GetPosition();
 	sm::Vec3 farmerLookTarget = m_player->GetLookTarget();
 	sm::Vec3 farmerMoveTarget = sm::Vec3(farmerLookTarget.x, 0.0f, farmerLookTarget.z).GetNormalized();

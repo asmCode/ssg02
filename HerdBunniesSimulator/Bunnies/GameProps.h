@@ -9,5 +9,7 @@ public:
 	static const float HealthyBunnyDistanceToFarmer;
 	static const float ReproductionTime;
 	static const float RestingAfterReproduction;
+	static const float GrowingUpTime;
+	static const float BorningTime;
 };
 

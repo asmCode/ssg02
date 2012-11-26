@@ -5,6 +5,7 @@
 
 class IBunny;
 class Player;
+class BunniesManager;
 
 class Reproducting : public IBunnyState, public GenericSingleton<Reproducting>
 {
@@ -14,6 +15,8 @@ public:
 	void Update(IBunny *bunny, float time, float seconds);
 	IBunnyState::State GetStateType() const;
 
+	void Initialize(Player *player, BunniesManager *bunniesManager);
+
 private:
 	Reproducting(void);
 	~Reproducting(void);
@@ -22,5 +25,6 @@ private:
 	void Leave();
 
 	Player *m_player;
+	BunniesManager *m_bunniesManager;
 };
 
