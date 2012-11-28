@@ -2,6 +2,7 @@
 
 #include "../Bunnies/Player.h"
 #include "../Bunnies/HealthyBunny.h"
+#include "../Bunnies/InfectedBunny.h"
 #include "../Bunnies/IBunnyState.h"
 #include "Shapes.h"
 
@@ -17,10 +18,14 @@ void WinShapesRenderer::DrawHealthyBunny(HealthyBunny *healthyBunny)
 {
 	sm::Vec3 color = GetBunnyColor(healthyBunny);
 
-	if (healthyBunny->GetState()->GetStateType() == IBunnyState::State_GoingToReproduction)
-		Shapes::DrawCircle(sm::Vec2(healthyBunny->GetPosition().x, healthyBunny->GetPosition().z), 0.4f, color);
-	else
-		Shapes::DrawCircle(sm::Vec2(healthyBunny->GetPosition().x, healthyBunny->GetPosition().z), 0.4f, color);
+	Shapes::DrawCircle(sm::Vec2(healthyBunny->GetPosition().x, healthyBunny->GetPosition().z), 0.4f, color);
+}
+
+void WinShapesRenderer::DrawInfectedBunny(InfectedBunny *infectedBunny)
+{
+	sm::Vec3 color = GetBunnyColor(infectedBunny);
+
+	Shapes::DrawCircle(sm::Vec2(infectedBunny->GetPosition().x, infectedBunny->GetPosition().z), 0.4f, color);
 }
 
 void WinShapesRenderer::DrawPlayer(Player *player)
@@ -34,9 +39,9 @@ void WinShapesRenderer::DrawPlayer(Player *player)
 sm::Vec3 WinShapesRenderer::GetBunnyColor(HealthyBunny *healtyBunny)
 {
 	if (healtyBunny->IsBorning())
-		return sm::Vec3(0, 1, 0);
+		return sm::Vec3(0, 0.5f, 0);
 	else if (healtyBunny->IsGrowingUp())
-		return sm::Vec3(0, 0, 1);
+		return sm::Vec3(0, 1.0f, 0);
 	if (healtyBunny->GetState()->GetStateType() == IBunnyState::State_Idle ||
 		healtyBunny->GetState()->GetStateType() == IBunnyState::State_SettingInRank)
 		return sm::Vec3(218.0f / 255.0f, 112.0f / 255.0f, 214.0f / 255.0f);
@@ -46,5 +51,19 @@ sm::Vec3 WinShapesRenderer::GetBunnyColor(HealthyBunny *healtyBunny)
 		return sm::Vec3(255.0f / 255.0f, 128.0f / 255.0f, 0.0f / 255.0f);
 
 	return sm::Vec3(1.0f, 1.0f, 1.0f);
+}
+
+sm::Vec3 WinShapesRenderer::GetBunnyColor(InfectedBunny *bunny)
+{
+	if (bunny->GetState()->GetStateType() == IBunnyState::State_Respawning)
+		return sm::Vec3(1.0f, 0.3f, 0.3f);
+	else if (bunny->GetState()->GetStateType() == IBunnyState::State_Hunting)
+		return sm::Vec3(0, 0, 1.0f);
+	else if (bunny->GetState()->GetStateType() == IBunnyState::State_Fucking)
+		return sm::Vec3(0, 1.0f, 1.0f);
+	else if (bunny->GetState()->GetStateType() == IBunnyState::State_RestingAfterFucking)
+		return sm::Vec3(0, 1.0f, 0.5f);
+
+	return sm::Vec3(0.5f, 0.5f, 0.5f);
 }
 

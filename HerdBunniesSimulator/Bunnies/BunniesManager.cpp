@@ -1,5 +1,6 @@
 #include "BunniesManager.h"
 #include "HealthyBunny.h"
+#include "InfectedBunny.h"
 #include "IBunnyState.h"
 #include "GoingToReproduction.h"
 #include "../BunniesView/IShapesRenderer.h"
@@ -9,14 +10,18 @@
 
 BunniesManager::BunniesManager(IShapesRenderer *shapesRenderer) :
 	m_shapesRenderer(shapesRenderer),
-	m_reproduceColldown(0.0f),
 	m_maxHealthyBunnyIndex(0),
-	m_reproduceDelay(5.0f) // TOOD
+	m_reproduceColldown(0.0f),
+	m_reproduceDelay(5.0f), // TOOD
+	m_spawnCooldown(0.0f),
+	m_spawnDelay(3.0f) // TODO
 {
 	assert(m_shapesRenderer != NULL);
 
 	for (uint32_t i = 0; i < MaxBunniesCount; i++)
 		m_healthyBunnies[i] = new HealthyBunny();
+	for (uint32_t i = 0; i < MaxBunniesCount; i++)
+		m_infectedBunnies[i] = new InfectedBunny();
 }
 
 BunniesManager::~BunniesManager(void)
@@ -28,6 +33,7 @@ void BunniesManager::ClearBunnies()
 	for (uint32_t i = 0; i < MaxBunniesCount; i++)
 	{
 		m_healthyBunnies[i]->Reset();
+		m_infectedBunnies[i]->Reset();
 	}
 
 	m_maxHealthyBunnyIndex = 0;
@@ -120,10 +126,21 @@ void BunniesManager::Update(float time, float seconds)
 			m_healthyBunnies[i]->Update(time, seconds);
 	}
 
+	for (uint32_t i = 0; i < MaxBunniesCount; i++)
+	{
+		if (m_infectedBunnies[i]->IsActive())
+			m_infectedBunnies[i]->Update(time, seconds);
+	}
+
 	m_reproduceColldown += seconds;
+	m_spawnCooldown += seconds;
 
 	if (ShouldGoToReproduce())
 		GoToReproduce();
+
+
+	if (ShouldRespawnInfectedBunny())
+		SpawnInfectedBunny();
 }
 
 void BunniesManager::Draw(float time, float seconds)
@@ -132,6 +149,9 @@ void BunniesManager::Draw(float time, float seconds)
 	{
 		if (m_healthyBunnies[i]->IsActive())
 			m_shapesRenderer->DrawHealthyBunny(m_healthyBunnies[i]);
+
+		if (m_infectedBunnies[i]->IsActive())
+			m_shapesRenderer->DrawInfectedBunny(m_infectedBunnies[i]);
 	}
 }
 
@@ -193,5 +213,59 @@ HealthyBunny *BunniesManager::GetRandomHealthyBunny(bool ableToReproduce, bool a
 				return m_healthyBunnies[index];
 		}
 	}
+}
+
+void BunniesManager::SpawnInfectedBunny()
+{
+	static Randomizer rand;
+
+	m_spawnCooldown = 0.0f;
+
+	for (uint32_t i = 0; i < MaxBunniesCount; i++)
+	{
+		if (!m_infectedBunnies[i]->IsActive())
+		{
+			m_infectedBunnies[i]->Respawn(GetRandomRespawnPosition());
+			return;
+		}
+	}
+}
+
+sm::Vec3 BunniesManager::GetRandomRespawnPosition()
+{
+	static Randomizer rand;
+
+	sm::Vec3 position;
+
+	int side = rand.GetInt(0, 3);
+
+	switch (side)
+	{
+		case 0: // left
+			position = sm::Vec3(-50.0f, 0, rand.GetFloat(-50.0f, 50.0f));
+			break;
+
+		case 1: // right
+			position = sm::Vec3(50.0f, 0, rand.GetFloat(-50.0f, 50.0f));
+			break;
+
+		case 2: // top
+			position = sm::Vec3(rand.GetFloat(-50.0f, 50.0f), 0, 50.0f);
+			break;
+
+		case 3: // bottom
+			position = sm::Vec3(rand.GetFloat(-50.0f, 50.0f), 0, -50.0f);
+			break;
+	}
+
+	return position;
+}
+
+bool BunniesManager::ShouldRespawnInfectedBunny()
+{
+	if (m_spawnCooldown >= m_spawnDelay)
+		return true;
+
+	return false;
 }
 

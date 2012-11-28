@@ -4,9 +4,9 @@
 #include <vector>
 #include <stdint.h>
 
-class HealthyBunny;
-class BadBunny;
 class IBunny;
+class HealthyBunny;
+class InfectedBunny;
 class IShapesRenderer;
 
 class BunniesManager
@@ -25,25 +25,33 @@ public:
 	bool CheckCollision(const IBunny *bunny);
 	bool CheckCollision(const sm::Vec3 &position, float radius, const IBunny *excludeFromTest);
 
+	void SpawnInfectedBunny();
+
+	HealthyBunny *GetRandomHealthyBunny(
+		bool ableToReproduce = false,
+		bool ableToFuck = false,
+		const IBunny *excludeFromTest = NULL);
+
 private:
 	static const uint16_t MaxBunniesCount = 100;
 
 	IShapesRenderer *m_shapesRenderer;
 
 	HealthyBunny *m_healthyBunnies[MaxBunniesCount];
-	BadBunny *m_badBunnies[MaxBunniesCount];
+	InfectedBunny *m_infectedBunnies[MaxBunniesCount];
 
 	float m_reproduceColldown;
 	float m_reproduceDelay;
+	float m_spawnCooldown;
+	float m_spawnDelay;
 
 	uint32_t m_maxHealthyBunnyIndex;
 
 	bool ShouldGoToReproduce();
 	void GoToReproduce();
 
-	HealthyBunny *GetRandomHealthyBunny(
-		bool ableToReproduce = false,
-		bool ableToFuck = false,
-		const IBunny *excludeFromTest = NULL);
+	bool ShouldRespawnInfectedBunny();
+
+	sm::Vec3 GetRandomRespawnPosition();
 };
 

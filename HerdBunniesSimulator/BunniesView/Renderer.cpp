@@ -13,6 +13,7 @@
 #include "../Bunnies/Idle.h"
 #include "../Bunnies/SettingsInRanks.h"
 #include "../Bunnies/Reproducting.h"
+#include "../Bunnies/Respawning.h"
 
 Player *player;
 IShapesRenderer *shapesRenderer;
@@ -39,6 +40,7 @@ void Renderer::Initialize()
 	Idle::GetInstance()->Initialize(player);
 	SettingsInRanks::GetInstance()->Initialize(player, bunniesMgr);
 	Reproducting::GetInstance()->Initialize(player, bunniesMgr);
+	Respawning::GetInstance()->Initialize(bunniesMgr);
 }
 
 void Renderer::KeyDown(int keyCode)

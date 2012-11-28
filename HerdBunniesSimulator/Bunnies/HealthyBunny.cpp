@@ -174,6 +174,11 @@ bool HealthyBunny::CanReproduce() const
 
 bool HealthyBunny::CanBeFucked() const
 {
-	return false; // TODO
+	return
+		!IsBorning() &&
+		!IsGrowingUp() &&
+		(m_bunnyState->GetStateType() == IBunnyState::State_Idle || 
+		m_bunnyState->GetStateType() == IBunnyState::State_SettingInRank ||
+		m_bunnyState->GetStateType() == IBunnyState::State_GoingToReproduction);
 }
 

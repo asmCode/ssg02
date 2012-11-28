@@ -12,6 +12,10 @@ public:
 		State_SettingInRank,
 		State_GoingToReproduction,
 		State_Reproducting,
+		State_Respawning,
+		State_Hunting,
+		State_Fucking,
+		State_RestingAfterFucking
 	};
 
 	virtual ~IBunnyState() {}

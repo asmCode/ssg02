@@ -2,13 +2,14 @@
 #define _SHAPES_RENDERER_
 
 class HealthyBunny;
-class BadBunny;
+class InfectedBunny;
 class Player;
 
 class IShapesRenderer
 {
 public:
 	virtual void DrawHealthyBunny(HealthyBunny *healthyBunny) = 0;
+	virtual void DrawInfectedBunny(InfectedBunny *infectedBunny) = 0;
 	virtual void DrawPlayer(Player *player) = 0;
 };
 
