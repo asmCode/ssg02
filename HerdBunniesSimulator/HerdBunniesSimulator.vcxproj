@@ -89,6 +89,7 @@
     <ClInclude Include="Bunnies\BunniesManager.h" />
     <ClInclude Include="Bunnies\CollideObject.h" />
     <ClInclude Include="Bunnies\CollisionManager.h" />
+    <ClInclude Include="Bunnies\Fucking.h" />
     <ClInclude Include="Bunnies\GameObjectType.h" />
     <ClInclude Include="Bunnies\GoingToReproduction.h" />
     <ClInclude Include="Bunnies\Ground.h" />
@@ -98,6 +99,7 @@
     <ClInclude Include="Bunnies\InfectedBunny.h" />
     <ClInclude Include="Bunnies\Reproducting.h" />
     <ClInclude Include="Bunnies\Respawning.h" />
+    <ClInclude Include="Bunnies\RestingAfterFucking.h" />
     <ClInclude Include="Bunnies\SettingsInRanks.h" />
     <ClInclude Include="Bunnies\HealthyBunny.h" />
     <ClInclude Include="Bunnies\IBunny.h" />
@@ -115,6 +117,7 @@
     <ClCompile Include="Bunnies\BunniesManager.cpp" />
     <ClCompile Include="Bunnies\CollideObject.cpp" />
     <ClCompile Include="Bunnies\CollisionManager.cpp" />
+    <ClCompile Include="Bunnies\Fucking.cpp" />
     <ClCompile Include="Bunnies\GoingToReproduction.cpp" />
     <ClCompile Include="Bunnies\Ground.cpp" />
     <ClCompile Include="Bunnies\Hunting.cpp" />
@@ -123,6 +126,7 @@
     <ClCompile Include="Bunnies\InfectedBunny.cpp" />
     <ClCompile Include="Bunnies\Reproducting.cpp" />
     <ClCompile Include="Bunnies\Respawning.cpp" />
+    <ClCompile Include="Bunnies\RestingAfterFucking.cpp" />
     <ClCompile Include="Bunnies\SettingsInRanks.cpp" />
     <ClCompile Include="Bunnies\HealthyBunny.cpp" />
     <ClCompile Include="Bunnies\Player.cpp" />

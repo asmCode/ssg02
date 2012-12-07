@@ -42,6 +42,8 @@ private:
 	sm::Vec3 m_position;
 	sm::Vec3 m_moveTarget;
 
+	sm::Vec3 m_target; // target which bunny should reach
+
 	float m_spawningProgress;
 	HealthyBunny *m_huntingTarget;
 };

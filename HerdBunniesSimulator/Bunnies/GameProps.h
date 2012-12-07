@@ -14,5 +14,7 @@ public:
 	static const float GrowingUpTime;
 	static const float BorningTime;
 	static const float SpawningTime;
+	static const float DistanceToFuck;
+	static const float RestingAfterFuckingTime;
 };
 

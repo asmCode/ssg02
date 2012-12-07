@@ -182,3 +182,13 @@ bool HealthyBunny::CanBeFucked() const
 		m_bunnyState->GetStateType() == IBunnyState::State_GoingToReproduction);
 }
 
+void HealthyBunny::GetTheFuckOut()
+{
+	// zmien stan na spierdalanie
+}
+
+void HealthyBunny::SetToBeeingFucked()
+{
+	// zmien stan na beeing fucked
+}
+

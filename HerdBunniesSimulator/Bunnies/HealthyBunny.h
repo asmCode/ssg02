@@ -48,6 +48,9 @@ public:
 
 	bool CanBeFucked() const;
 
+	void GetTheFuckOut(); // run away from hunting bunny
+	void SetToBeeingFucked(); // hunting bunny gotcha!
+
 private:
 	bool m_isActive;
 

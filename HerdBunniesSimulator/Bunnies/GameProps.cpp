@@ -11,4 +11,5 @@ const float GameProps::RestingAfterReproduction = 10.0f;
 const float GameProps::GrowingUpTime = 15.0f;
 const float GameProps::BorningTime = 2.0f;
 const float GameProps::SpawningTime = 3.0f;
+const float GameProps::RestingAfterFuckingTime = 5.0f;
 

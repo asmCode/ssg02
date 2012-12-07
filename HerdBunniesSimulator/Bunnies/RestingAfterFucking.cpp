@@ -1,4 +1,4 @@
-#include "Hunting.h"
+#include "RestingAfterFucking.h"
 #include "IBunny.h"
 #include "InfectedBunny.h"
 #include "HealthyBunny.h"
@@ -6,34 +6,28 @@
 #include "GameProps.h"
 #include <assert.h>
 
-Hunting::Hunting(void)
+RestingAfterFucking::RestingAfterFucking(void)
 {
 }
 
-Hunting::~Hunting(void)
+RestingAfterFucking::~RestingAfterFucking(void)
 {
 }
 
-void Hunting::Enter()
+void RestingAfterFucking::Enter()
 {
 }
 
-void Hunting::Leave()
+void RestingAfterFucking::Leave()
 {
 }
 
-void Hunting::Update(IBunny *bunny, float time, float seconds)
+void RestingAfterFucking::Update(IBunny *bunny, float time, float seconds)
 {
 	assert(bunny != NULL);
 
 	InfectedBunny *ibunny = dynamic_cast<InfectedBunny*>(bunny);
 	assert(ibunny != NULL);
-
-	HealthyBunny *hbunny = ibunny->GetHuntingTarget();
-	assert(hbunny != NULL);
-
-	sm::Vec3 moveTarget = (hbunny->GetPosition() - ibunny->GetPosition());
-	moveTarget.y = 0.0f;
 
 	if (moveTarget.GetLength() <= 0.4f * 2)
 	{
@@ -48,11 +42,11 @@ void Hunting::Update(IBunny *bunny, float time, float seconds)
 	}
 }
 
-IBunnyState::State Hunting::GetStateType() const
+IBunnyState::State RestingAfterFucking::GetStateType() const
 {
-	return IBunnyState::State_Hunting;
+	return IBunnyState::State_RestingAfterFucking;
 }
 
-Hunting *GenericSingleton<Hunting>::instance;
+RestingAfterFucking *GenericSingleton<RestingAfterFucking>::instance;
 
 
