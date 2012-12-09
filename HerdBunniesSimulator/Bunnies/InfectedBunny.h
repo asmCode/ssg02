@@ -34,6 +34,14 @@ public:
 	void SetHuntingTarget(HealthyBunny *healthyBunny);
 	HealthyBunny *GetHuntingTarget();
 
+	const sm::Vec3& GetTargetPosition() const;
+	void SetTargetPosition(const sm::Vec3 &targetPosition);
+
+	void RefreshNewTargetPosition(float seconds);
+
+	float& FuckingProgress();
+	float& RestingAfterFuckingProgress();
+
 private:
 	bool m_isActive;
 
@@ -42,7 +50,11 @@ private:
 	sm::Vec3 m_position;
 	sm::Vec3 m_moveTarget;
 
-	sm::Vec3 m_target; // target which bunny should reach
+	float m_targetPositionRefreshColldown;
+	sm::Vec3 m_targetPosition; // target which bunny should reach
+
+	float m_fuckingProgress;
+	float m_restingAfterFuckingProgress;
 
 	float m_spawningProgress;
 	HealthyBunny *m_huntingTarget;

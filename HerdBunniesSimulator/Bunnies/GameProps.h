@@ -16,5 +16,8 @@ public:
 	static const float SpawningTime;
 	static const float DistanceToFuck;
 	static const float RestingAfterFuckingTime;
+	static const float RefreshNewTargetPositionFrom;
+	static const float RefreshNewTargetPositionTo;
+	static const float FuckingTime;
 };
 

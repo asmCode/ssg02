@@ -29,17 +29,13 @@ void RestingAfterFucking::Update(IBunny *bunny, float time, float seconds)
 	InfectedBunny *ibunny = dynamic_cast<InfectedBunny*>(bunny);
 	assert(ibunny != NULL);
 
-	if (moveTarget.GetLength() <= 0.4f * 2)
-	{
-		ibunny->SetState(Fucking::GetInstance());
-		hbunny->SetToBeeingFucked();
-	}
-	else
-	{
-		moveTarget.Normalize();
+	ibunny->RefreshNewTargetPosition(seconds);
 
-		ibunny->SetPosition(ibunny->GetPosition() + moveTarget * GameProps::InfectedBunnyHuntingSpeed * seconds);
-	}
+	sm::Vec3 moveTarget = ibunny->GetTargetPosition() - ibunny->GetPosition();
+	moveTarget.y = 0.0f;
+	moveTarget.Normalize();
+
+	ibunny->SetPosition(ibunny->GetPosition() + moveTarget * GameProps::InfectedBunnyRestingSpeed * seconds);
 }
 
 IBunnyState::State RestingAfterFucking::GetStateType() const
@@ -48,5 +44,4 @@ IBunnyState::State RestingAfterFucking::GetStateType() const
 }
 
 RestingAfterFucking *GenericSingleton<RestingAfterFucking>::instance;
-
 

@@ -37,6 +37,7 @@ void Hunting::Update(IBunny *bunny, float time, float seconds)
 
 	if (moveTarget.GetLength() <= 0.4f * 2)
 	{
+		ibunny->FuckingProgress() = 0.0f;
 		ibunny->SetState(Fucking::GetInstance());
 		hbunny->SetToBeeingFucked();
 	}

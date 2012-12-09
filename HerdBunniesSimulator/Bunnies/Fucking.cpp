@@ -1,4 +1,5 @@
 #include "Fucking.h"
+#include "RestingAfterFucking.h"
 #include "IBunny.h"
 #include "InfectedBunny.h"
 #include "HealthyBunny.h"
@@ -30,6 +31,13 @@ void Fucking::Update(IBunny *bunny, float time, float seconds)
 
 	HealthyBunny *hbunny = ibunny->GetHuntingTarget();
 	assert(hbunny != NULL);
+
+	ibunny->FuckingProgress() += seconds;
+	if (ibunny->FuckingProgress() >= GameProps::FuckingTime)
+	{
+		ibunny->RestingAfterFuckingProgress() = 0.0f;
+		ibunny->SetState(RestingAfterFucking::GetInstance());
+	}
 }
 
 IBunnyState::State Fucking::GetStateType() const
