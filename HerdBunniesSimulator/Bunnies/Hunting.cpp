@@ -3,6 +3,7 @@
 #include "InfectedBunny.h"
 #include "HealthyBunny.h"
 #include "Fucking.h"
+#include "RestingAfterFucking.h"
 #include "GameProps.h"
 #include <assert.h>
 
@@ -31,6 +32,12 @@ void Hunting::Update(IBunny *bunny, float time, float seconds)
 
 	HealthyBunny *hbunny = ibunny->GetHuntingTarget();
 	assert(hbunny != NULL);
+
+	if (!hbunny->CanBeFucked()) // make sure if bunny can be still fucked
+	{
+		ibunny->RestingAfterFuckingProgress() = GameProps::RestingAfterFuckingTime / 2.0f; // TODO: czas dwa razy mniejszy niz zwykle
+		ibunny->SetState(RestingAfterFucking::GetInstance());
+	}
 
 	sm::Vec3 moveTarget = (hbunny->GetPosition() - ibunny->GetPosition());
 	moveTarget.y = 0.0f;

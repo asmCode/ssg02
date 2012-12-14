@@ -4,6 +4,7 @@
 #include <GenericSingleton.h>
 
 class IBunny;
+class BunniesManager;
 
 class RestingAfterFucking : public IBunnyState, public GenericSingleton<RestingAfterFucking>
 {
@@ -12,8 +13,11 @@ class RestingAfterFucking : public IBunnyState, public GenericSingleton<RestingA
 public:
 	void Update(IBunny *bunny, float time, float seconds);
 	IBunnyState::State GetStateType() const;
+	void Initialize(BunniesManager *bunniesManager);
 
 private:
+	BunniesManager *m_bunniesManager;
+
 	RestingAfterFucking(void);
 	~RestingAfterFucking(void);
 

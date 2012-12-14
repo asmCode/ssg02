@@ -15,7 +15,11 @@ public:
 		State_Respawning,
 		State_Hunting,
 		State_Fucking,
-		State_RestingAfterFucking
+		State_RestingAfterFucking,
+		State_BeeingFucked,
+		State_RunningAway,
+		State_ChangingToInfected,
+		State_Dying
 	};
 
 	virtual ~IBunnyState() {}

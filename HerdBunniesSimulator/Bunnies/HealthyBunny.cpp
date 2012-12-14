@@ -179,7 +179,8 @@ bool HealthyBunny::CanBeFucked() const
 		!IsGrowingUp() &&
 		(m_bunnyState->GetStateType() == IBunnyState::State_Idle || 
 		m_bunnyState->GetStateType() == IBunnyState::State_SettingInRank ||
-		m_bunnyState->GetStateType() == IBunnyState::State_GoingToReproduction);
+		m_bunnyState->GetStateType() == IBunnyState::State_GoingToReproduction ||
+		m_bunnyState->GetStateType() == IBunnyState::State_RunningAway);
 }
 
 void HealthyBunny::GetTheFuckOut()

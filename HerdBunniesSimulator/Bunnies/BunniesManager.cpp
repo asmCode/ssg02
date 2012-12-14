@@ -14,7 +14,7 @@ BunniesManager::BunniesManager(IShapesRenderer *shapesRenderer) :
 	m_reproduceColldown(0.0f),
 	m_reproduceDelay(5.0f), // TOOD
 	m_spawnCooldown(0.0f),
-	m_spawnDelay(3.0f) // TODO
+	m_spawnDelay(5.0f) // TODO
 {
 	assert(m_shapesRenderer != NULL);
 

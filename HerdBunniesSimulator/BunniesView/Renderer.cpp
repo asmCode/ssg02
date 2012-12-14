@@ -14,6 +14,7 @@
 #include "../Bunnies/SettingsInRanks.h"
 #include "../Bunnies/Reproducting.h"
 #include "../Bunnies/Respawning.h"
+#include "../Bunnies/RestingAfterFucking.h"
 
 Player *player;
 IShapesRenderer *shapesRenderer;
@@ -41,6 +42,7 @@ void Renderer::Initialize()
 	SettingsInRanks::GetInstance()->Initialize(player, bunniesMgr);
 	Reproducting::GetInstance()->Initialize(player, bunniesMgr);
 	Respawning::GetInstance()->Initialize(bunniesMgr);
+	RestingAfterFucking::GetInstance()->Initialize(bunniesMgr);
 }
 
 void Renderer::KeyDown(int keyCode)
