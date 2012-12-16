@@ -26,6 +26,7 @@ public:
 	bool CheckCollision(const sm::Vec3 &position, float radius, const IBunny *excludeFromTest);
 
 	void SpawnInfectedBunny();
+	void ChangeToInfected(HealthyBunny *hbunny);
 
 	HealthyBunny *GetRandomHealthyBunny(
 		bool ableToReproduce = false,

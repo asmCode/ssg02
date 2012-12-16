@@ -19,11 +19,11 @@ void Respawning::Initialize(BunniesManager *bunniesManager)
 	m_bunniesManager = bunniesManager;
 }
 
-void Respawning::Enter()
+void Respawning::Enter(IBunny *bunny)
 {
 }
 
-void Respawning::Leave()
+void Respawning::Leave(IBunny *bunny)
 {
 }
 
@@ -42,6 +42,7 @@ void Respawning::Update(IBunny *bunny, float time, float seconds)
 		if (hbunny != NULL)
 		{
 			ibunny->SetHuntingTarget(hbunny);
+			ibunny->DidTellToGTFO() = false;
 			ibunny->SetState(Hunting::GetInstance());
 		}
 	}

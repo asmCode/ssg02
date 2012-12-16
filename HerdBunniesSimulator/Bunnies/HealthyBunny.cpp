@@ -2,6 +2,10 @@
 
 #include "Idle.h"
 #include "SettingsInRanks.h"
+#include "BeeingFucked.h"
+#include "RunningAway.h"
+#include "ChangingToInfected.h"
+#include "InfectedBunny.h"
 #include "GameProps.h"
 #include <Utils/Randomizer.h>
 #include <assert.h>
@@ -13,6 +17,7 @@ HealthyBunny::HealthyBunny(void) :
 	m_reproductingTime(0.0f),
 	m_restingAfterReproduction(0.0f),
 	m_growingUpTime(0.0f),
+	m_changingProgress(GameProps::ChangingToInfectedTime),
 	m_bunnyState(SettingsInRanks::GetInstance())
 {
 }
@@ -37,6 +42,7 @@ void HealthyBunny::Reset()
 	m_reproductingTime = 0.0f;
 	m_restingAfterReproduction = 0.0f;
 	m_growingUpTime = 0.0f;
+	m_useRunningAwayInitialDirection = false;
 	SetState(SettingsInRanks::GetInstance());
 }
 
@@ -57,9 +63,9 @@ void HealthyBunny::SetState(IBunnyState *bunnyState)
 	assert(bunnyState != NULL);
 
 	if (m_bunnyState != NULL)
-		m_bunnyState->Leave();
+		m_bunnyState->Leave(this);
 	m_bunnyState = bunnyState;
-	m_bunnyState->Enter();
+	m_bunnyState->Enter(this);
 }
 
 const IBunnyState *HealthyBunny::GetState() const
@@ -183,13 +189,80 @@ bool HealthyBunny::CanBeFucked() const
 		m_bunnyState->GetStateType() == IBunnyState::State_RunningAway);
 }
 
-void HealthyBunny::GetTheFuckOut()
+void HealthyBunny::GetTheFuckOut(InfectedBunny *ibunny)
 {
-	// zmien stan na spierdalanie
+	m_useRunningAwayInitialDirection = true;
+	m_runningAwayInitialDirection = (m_position - ibunny->GetPosition()).GetNormalized() * 10.0f;
+	m_runningAwayInitialDirection.y = 0.0f;
+
+	if (m_runningAwayInitialDirection.x < -48.0f)
+		m_runningAwayInitialDirection.x = -48.0f;
+	if (m_runningAwayInitialDirection.x > 48.0f)
+		m_runningAwayInitialDirection.x = 48.0f;
+
+	if (m_runningAwayInitialDirection.z < -48.0f)
+		m_runningAwayInitialDirection.z = -48.0f;
+	if (m_runningAwayInitialDirection.z > 48.0f)
+		m_runningAwayInitialDirection.z = 48.0f;
+
+	SetState(RunningAway::GetInstance());
 }
 
 void HealthyBunny::SetToBeeingFucked()
 {
-	// zmien stan na beeing fucked
+	SetState(BeeingFucked::GetInstance());
+}
+
+void HealthyBunny::SetToIdle()
+{
+	SetState(Idle::GetInstance());
+}
+
+void HealthyBunny::RefreshNewTargetPosition(float seconds)
+{
+	static Randomizer random;
+
+	float distance = (m_targetPosition - m_position).GetLength();
+
+	m_targetPositionRefreshColldown -= seconds;
+	if (m_targetPositionRefreshColldown <= 0.0f || distance <= 0.4f)
+	{
+		if (m_useRunningAwayInitialDirection)
+		{
+			m_targetPosition = m_position + m_runningAwayInitialDirection;
+			m_useRunningAwayInitialDirection = false;
+		}
+		else
+		{
+			m_targetPosition.x = random.GetFloat(-50.0f, 50.0f);
+			m_targetPosition.y = 0.0f;
+			m_targetPosition.z = random.GetFloat(-50.0f, 50.0f);
+		}
+
+		m_targetPositionRefreshColldown = random.GetFloat(
+			GameProps::RefreshNewTargetPositionFrom,
+			GameProps::RefreshNewTargetPositionTo);
+	}
+}
+
+const sm::Vec3& HealthyBunny::GetTargetPosition() const
+{
+	return m_targetPosition;
+}
+
+void HealthyBunny::SetTargetPosition(const sm::Vec3 &targetPosition)
+{
+	m_targetPosition = targetPosition;
+}
+
+void HealthyBunny::StartChangingToInfected()
+{
+	m_changingProgress.Reset();
+	SetState(ChangingToInfected::GetInstance());
+}
+
+Ticker& HealthyBunny::ChangingProgress()
+{
+	return m_changingProgress;
 }
 

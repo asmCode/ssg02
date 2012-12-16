@@ -17,7 +17,7 @@ private:
 	Hunting(void);
 	~Hunting(void);
 
-	void Enter();
-	void Leave();
+	void Enter(IBunny *bunny);
+	void Leave(IBunny *bunny);
 };
 

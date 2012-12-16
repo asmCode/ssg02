@@ -6,9 +6,9 @@
 class IBunny;
 class BunniesManager;
 
-class Respawning : public IBunnyState, public GenericSingleton<Respawning>
+class ChangingToInfected : public IBunnyState, public GenericSingleton<ChangingToInfected>
 {
-	friend class GenericSingleton<Respawning>;
+	friend class GenericSingleton<ChangingToInfected>;
 
 public:
 	void Update(IBunny *bunny, float time, float seconds);
@@ -18,8 +18,8 @@ public:
 private:
 	BunniesManager *m_bunniesManager;
 
-	Respawning(void);
-	~Respawning(void);
+	ChangingToInfected(void);
+	~ChangingToInfected(void);
 
 	void Enter(IBunny *bunny);
 	void Leave(IBunny *bunny);

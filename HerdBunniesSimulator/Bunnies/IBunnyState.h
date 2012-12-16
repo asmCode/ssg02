@@ -19,13 +19,13 @@ public:
 		State_BeeingFucked,
 		State_RunningAway,
 		State_ChangingToInfected,
-		State_Dying
+		State_Dying,
 	};
 
 	virtual ~IBunnyState() {}
 
-	virtual void Enter() {}
-	virtual void Leave() {}
+	virtual void Enter(IBunny *bunny) {}
+	virtual void Leave(IBunny *bunny) {}
 
 	virtual void Update(IBunny *bunny, float time, float seconds) = 0;
 	virtual State GetStateType() const = 0;

@@ -15,9 +15,15 @@ public:
 	static const float BorningTime;
 	static const float SpawningTime;
 	static const float DistanceToFuck;
-	static const float RestingAfterFuckingTime;
+	static const float RestingAfterFuckingTimeFrom;
+	static const float RestingAfterFuckingTimeTo;
+	static const float RestingAfterTryingToFuckTimeFrom;
+	static const float RestingAfterTryingToFuckTimeTo;
 	static const float RefreshNewTargetPositionFrom;
 	static const float RefreshNewTargetPositionTo;
 	static const float FuckingTime;
+	static const float RunningAwayDistance;
+	static const float SickBunnySpeed;
+	static const float ChangingToInfectedTime;
 };
 

@@ -13,8 +13,10 @@
 #include "../Bunnies/Idle.h"
 #include "../Bunnies/SettingsInRanks.h"
 #include "../Bunnies/Reproducting.h"
+#include "../Bunnies/ChangingToInfected.h"
 #include "../Bunnies/Respawning.h"
 #include "../Bunnies/RestingAfterFucking.h"
+#include "../Bunnies/BeeingFucked.h"
 
 Player *player;
 IShapesRenderer *shapesRenderer;
@@ -43,6 +45,8 @@ void Renderer::Initialize()
 	Reproducting::GetInstance()->Initialize(player, bunniesMgr);
 	Respawning::GetInstance()->Initialize(bunniesMgr);
 	RestingAfterFucking::GetInstance()->Initialize(bunniesMgr);
+	BeeingFucked::GetInstance()->Initialize(bunniesMgr);
+	ChangingToInfected::GetInstance()->Initialize(bunniesMgr);
 }
 
 void Renderer::KeyDown(int keyCode)

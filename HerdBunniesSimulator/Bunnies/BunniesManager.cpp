@@ -178,6 +178,10 @@ void BunniesManager::GoToReproduce()
 		bunny2->SetReproductionPartner(bunny1);
 		bunny2->SetState(GoingToReproduction::GetInstance());
 	}
+	else
+	{
+		int r = 0;
+	}
 }
 
 HealthyBunny *BunniesManager::GetRandomHealthyBunny(bool ableToReproduce, bool ableToFuck, const IBunny *excludeFromTest)
@@ -187,19 +191,16 @@ HealthyBunny *BunniesManager::GetRandomHealthyBunny(bool ableToReproduce, bool a
 	int baseIndex = rand.GetInt(0, m_maxHealthyBunnyIndex);
 	int index = baseIndex;
 
+	bool firstIteration = true;
+
 	while (true)
 	{
-		index++;
-		if (index == m_maxHealthyBunnyIndex + 1)
-			index = 0;
-
-		if (index == baseIndex) // if check all and didnt found
+		if (!firstIteration && index == baseIndex) // if checked all and didnt found
 			return NULL;
 
-		if (m_healthyBunnies[index] == excludeFromTest)
-			continue;
+		firstIteration = false;
 
-		if (m_healthyBunnies[index]->IsActive())
+		if (m_healthyBunnies[index]->IsActive() && m_healthyBunnies[index] != excludeFromTest)
 		{
 			bool found = true;
 
@@ -212,6 +213,10 @@ HealthyBunny *BunniesManager::GetRandomHealthyBunny(bool ableToReproduce, bool a
 			if (found)
 				return m_healthyBunnies[index];
 		}
+
+		index++;
+		if (index == m_maxHealthyBunnyIndex + 1)
+			index = 0;
 	}
 }
 
@@ -267,5 +272,10 @@ bool BunniesManager::ShouldRespawnInfectedBunny()
 		return true;
 
 	return false;
+}
+
+void BunniesManager::ChangeToInfected(HealthyBunny *hbunny)
+{
+	//CHANGE THIS MOTHERSUCKER TO INFCTED YO!
 }
 

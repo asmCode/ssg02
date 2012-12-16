@@ -16,11 +16,11 @@ Reproducting::~Reproducting(void)
 {
 }
 
-void Reproducting::Enter()
+void Reproducting::Enter(IBunny *bunny)
 {
 }
 
-void Reproducting::Leave()
+void Reproducting::Leave(IBunny *bunny)
 {
 }
 

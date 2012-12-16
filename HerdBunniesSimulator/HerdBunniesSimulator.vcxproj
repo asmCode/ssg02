@@ -85,8 +85,10 @@
     <ClInclude Include="BunniesView\Shapes.h" />
     <ClInclude Include="BunniesView\TimeControl.h" />
     <ClInclude Include="BunniesView\WinShapesRenderer.h" />
+    <ClInclude Include="Bunnies\BeeingFucked.h" />
     <ClInclude Include="Bunnies\BoundingSphere.h" />
     <ClInclude Include="Bunnies\BunniesManager.h" />
+    <ClInclude Include="Bunnies\ChangingToInfected.h" />
     <ClInclude Include="Bunnies\CollideObject.h" />
     <ClInclude Include="Bunnies\CollisionManager.h" />
     <ClInclude Include="Bunnies\Fucking.h" />
@@ -100,11 +102,13 @@
     <ClInclude Include="Bunnies\Reproducting.h" />
     <ClInclude Include="Bunnies\Respawning.h" />
     <ClInclude Include="Bunnies\RestingAfterFucking.h" />
+    <ClInclude Include="Bunnies\RunningAway.h" />
     <ClInclude Include="Bunnies\SettingsInRanks.h" />
     <ClInclude Include="Bunnies\HealthyBunny.h" />
     <ClInclude Include="Bunnies\IBunny.h" />
     <ClInclude Include="Bunnies\IBunnyState.h" />
     <ClInclude Include="Bunnies\Player.h" />
+    <ClInclude Include="Bunnies\Ticker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BunniesView\OpenglWindow.cpp" />
@@ -113,8 +117,10 @@
     <ClCompile Include="BunniesView\TimeControl.cpp" />
     <ClCompile Include="BunniesView\WinMain.cpp" />
     <ClCompile Include="BunniesView\WinShapesRenderer.cpp" />
+    <ClCompile Include="Bunnies\BeeingFucked.cpp" />
     <ClCompile Include="Bunnies\BoundingSphere.cpp" />
     <ClCompile Include="Bunnies\BunniesManager.cpp" />
+    <ClCompile Include="Bunnies\ChangingToInfected.cpp" />
     <ClCompile Include="Bunnies\CollideObject.cpp" />
     <ClCompile Include="Bunnies\CollisionManager.cpp" />
     <ClCompile Include="Bunnies\Fucking.cpp" />
@@ -127,9 +133,11 @@
     <ClCompile Include="Bunnies\Reproducting.cpp" />
     <ClCompile Include="Bunnies\Respawning.cpp" />
     <ClCompile Include="Bunnies\RestingAfterFucking.cpp" />
+    <ClCompile Include="Bunnies\RunningAway.cpp" />
     <ClCompile Include="Bunnies\SettingsInRanks.cpp" />
     <ClCompile Include="Bunnies\HealthyBunny.cpp" />
     <ClCompile Include="Bunnies\Player.cpp" />
+    <ClCompile Include="Bunnies\Ticker.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

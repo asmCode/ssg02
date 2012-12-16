@@ -4,24 +4,26 @@
 #include <GenericSingleton.h>
 
 class IBunny;
+class Player;
 class BunniesManager;
 
-class Respawning : public IBunnyState, public GenericSingleton<Respawning>
+class BeeingFucked : public IBunnyState, public GenericSingleton<BeeingFucked>
 {
-	friend class GenericSingleton<Respawning>;
+	friend class GenericSingleton<BeeingFucked>;
 
 public:
 	void Update(IBunny *bunny, float time, float seconds);
 	IBunnyState::State GetStateType() const;
+
 	void Initialize(BunniesManager *bunniesManager);
 
 private:
-	BunniesManager *m_bunniesManager;
-
-	Respawning(void);
-	~Respawning(void);
+	BeeingFucked(void);
+	~BeeingFucked(void);
 
 	void Enter(IBunny *bunny);
 	void Leave(IBunny *bunny);
+
+	BunniesManager *m_bunniesManager;
 };
 

@@ -20,11 +20,9 @@ private:
 	Idle();
 	~Idle();
 
-	void Enter();
-	void Leave();
+	void Enter(IBunny *bunny);
+	void Leave(IBunny *bunny);
 
-	bool CheckRunningAway(IBunny *bunny, float time, float seconds);
-	bool CheckGoingToReproduction(IBunny *bunny, float time, float seconds);
 	bool CheckSettingInRanks(IBunny *bunny, float time, float seconds);
 	void DoIdleStuff(IBunny *bunny, float time, float seconds);
 

@@ -21,8 +21,8 @@ private:
 	Reproducting(void);
 	~Reproducting(void);
 
-	void Enter();
-	void Leave();
+	void Enter(IBunny *bunny);
+	void Leave(IBunny *bunny);
 
 	Player *m_player;
 	BunniesManager *m_bunniesManager;

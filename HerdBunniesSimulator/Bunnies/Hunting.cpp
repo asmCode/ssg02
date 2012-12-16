@@ -5,6 +5,7 @@
 #include "Fucking.h"
 #include "RestingAfterFucking.h"
 #include "GameProps.h"
+#include <Utils/Randomizer.h>
 #include <assert.h>
 
 Hunting::Hunting(void)
@@ -15,11 +16,16 @@ Hunting::~Hunting(void)
 {
 }
 
-void Hunting::Enter()
+void Hunting::Enter(IBunny *bunny)
 {
+	assert(bunny != NULL);
+	InfectedBunny *ibunny = dynamic_cast<InfectedBunny*>(bunny);
+	assert(ibunny != NULL);
+
+	ibunny->DidTellToGTFO() = false;
 }
 
-void Hunting::Leave()
+void Hunting::Leave(IBunny *bunny)
 {
 }
 
@@ -35,8 +41,11 @@ void Hunting::Update(IBunny *bunny, float time, float seconds)
 
 	if (!hbunny->CanBeFucked()) // make sure if bunny can be still fucked
 	{
-		ibunny->RestingAfterFuckingProgress() = GameProps::RestingAfterFuckingTime / 2.0f; // TODO: czas dwa razy mniejszy niz zwykle
+		static Randomizer random;
+
+		ibunny->RestingAfterFuckingProgress().SetTicker(random.GetFloat(GameProps::RestingAfterTryingToFuckTimeFrom, GameProps::RestingAfterTryingToFuckTimeTo));
 		ibunny->SetState(RestingAfterFucking::GetInstance());
+		return;
 	}
 
 	sm::Vec3 moveTarget = (hbunny->GetPosition() - ibunny->GetPosition());
@@ -44,9 +53,14 @@ void Hunting::Update(IBunny *bunny, float time, float seconds)
 
 	if (moveTarget.GetLength() <= 0.4f * 2)
 	{
-		ibunny->FuckingProgress() = 0.0f;
+		ibunny->FuckingProgress().Reset();
 		ibunny->SetState(Fucking::GetInstance());
 		hbunny->SetToBeeingFucked();
+	}
+	if (moveTarget.GetLength() <= GameProps::RunningAwayDistance && !ibunny->DidTellToGTFO())
+	{
+		hbunny->GetTheFuckOut(ibunny);
+		ibunny->DidTellToGTFO() = true;
 	}
 	else
 	{

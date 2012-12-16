@@ -6,9 +6,9 @@
 class IBunny;
 class BunniesManager;
 
-class Respawning : public IBunnyState, public GenericSingleton<Respawning>
+class RunningAway : public IBunnyState, public GenericSingleton<RunningAway>
 {
-	friend class GenericSingleton<Respawning>;
+	friend class GenericSingleton<RunningAway>;
 
 public:
 	void Update(IBunny *bunny, float time, float seconds);
@@ -18,8 +18,8 @@ public:
 private:
 	BunniesManager *m_bunniesManager;
 
-	Respawning(void);
-	~Respawning(void);
+	RunningAway(void);
+	~RunningAway(void);
 
 	void Enter(IBunny *bunny);
 	void Leave(IBunny *bunny);

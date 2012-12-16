@@ -20,12 +20,12 @@ SettingsInRanks::~SettingsInRanks(void)
 {
 }
 
-void SettingsInRanks::Enter()
+void SettingsInRanks::Enter(IBunny *bunny)
 {
 	//OutputDebugStringA("SettingsInRanks enter\n");
 }
 
-void SettingsInRanks::Leave()
+void SettingsInRanks::Leave(IBunny *bunny)
 {
 }
 

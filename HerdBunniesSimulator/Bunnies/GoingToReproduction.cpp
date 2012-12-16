@@ -13,11 +13,11 @@ GoingToReproduction::~GoingToReproduction(void)
 {
 }
 
-void GoingToReproduction::Enter()
+void GoingToReproduction::Enter(IBunny *bunny)
 {
 }
 
-void GoingToReproduction::Leave()
+void GoingToReproduction::Leave(IBunny *bunny)
 {
 }
 
@@ -30,6 +30,15 @@ void GoingToReproduction::Update(IBunny *bunny, float time, float seconds)
 
 	HealthyBunny *partner = hbunny->GetReproductionPartner();
 	assert(partner != NULL);
+
+	// make sure if funny can still reproduce
+	if ((partner->GetState()->GetStateType() != IBunnyState::State_GoingToReproduction &&
+		partner->GetState()->GetStateType() != IBunnyState::State_Reproducting) ||
+		partner->GetReproductionPartner() != hbunny)
+	{
+		hbunny->SetToIdle();
+		return;
+	}
 
 	sm::Vec3 moveTarget = partner->GetPosition() - hbunny->GetPosition();
 	moveTarget.y = 0;

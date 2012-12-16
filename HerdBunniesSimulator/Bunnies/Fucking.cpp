@@ -4,6 +4,7 @@
 #include "InfectedBunny.h"
 #include "HealthyBunny.h"
 #include "GameProps.h"
+#include <Utils/Randomizer.h>
 #include <assert.h>
 
 Fucking::Fucking(void)
@@ -14,11 +15,11 @@ Fucking::~Fucking(void)
 {
 }
 
-void Fucking::Enter()
+void Fucking::Enter(IBunny *bunny)
 {
 }
 
-void Fucking::Leave()
+void Fucking::Leave(IBunny *bunny)
 {
 }
 
@@ -32,11 +33,15 @@ void Fucking::Update(IBunny *bunny, float time, float seconds)
 	HealthyBunny *hbunny = ibunny->GetHuntingTarget();
 	assert(hbunny != NULL);
 
-	ibunny->FuckingProgress() += seconds;
-	if (ibunny->FuckingProgress() >= GameProps::FuckingTime)
+	ibunny->FuckingProgress().Progress(seconds);
+	if (ibunny->FuckingProgress().IsTimeout())
 	{
-		ibunny->RestingAfterFuckingProgress() = 0.0f;
+		static Randomizer random;
+
+		ibunny->RestingAfterFuckingProgress().SetTicker(random.GetFloat(GameProps::RestingAfterFuckingTimeFrom, GameProps::RestingAfterFuckingTimeTo));
 		ibunny->SetState(RestingAfterFucking::GetInstance());
+
+		hbunny->StartChangingToInfected();
 	}
 }
 

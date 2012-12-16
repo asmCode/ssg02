@@ -2,6 +2,7 @@
 #define _INFECTED_BUNNY_
 
 #include "IBunny.h"
+#include "Ticker.h"
 
 class IBunnyState;
 class HealthyBunny;
@@ -39,8 +40,10 @@ public:
 
 	void RefreshNewTargetPosition(float seconds);
 
-	float& FuckingProgress();
-	float& RestingAfterFuckingProgress();
+	Ticker& FuckingProgress();
+	Ticker& RestingAfterFuckingProgress();
+
+	bool& DidTellToGTFO();
 
 private:
 	bool m_isActive;
@@ -53,8 +56,10 @@ private:
 	float m_targetPositionRefreshColldown;
 	sm::Vec3 m_targetPosition; // target which bunny should reach
 
-	float m_fuckingProgress;
-	float m_restingAfterFuckingProgress;
+	Ticker m_fuckingProgress;
+	Ticker m_restingAfterFuckingProgress;
+
+	bool m_didTellToGTFO;
 
 	float m_spawningProgress;
 	HealthyBunny *m_huntingTarget;

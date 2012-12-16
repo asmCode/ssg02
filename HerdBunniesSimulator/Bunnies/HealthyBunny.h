@@ -2,9 +2,11 @@
 #define _HEALTHY_BUNNY_
 
 #include "IBunny.h"
+#include "Ticker.h"
 #include <Math\Vec3.h>
 
 class IBunnyState;
+class InfectedBunny;
 
 class HealthyBunny : public IBunny
 {
@@ -48,13 +50,25 @@ public:
 
 	bool CanBeFucked() const;
 
-	void GetTheFuckOut(); // run away from hunting bunny
+	void GetTheFuckOut(InfectedBunny *ibunny); // run away from hunting bunny
 	void SetToBeeingFucked(); // hunting bunny gotcha!
+	void SetToIdle();
+
+	void RefreshNewTargetPosition(float seconds);
+
+	const sm::Vec3& GetTargetPosition() const;
+	void SetTargetPosition(const sm::Vec3 &targetPosition);
+
+	void StartChangingToInfected();
+	Ticker& ChangingProgress();
 
 private:
 	bool m_isActive;
 
 	IBunnyState *m_bunnyState;
+
+	bool m_useRunningAwayInitialDirection;
+	sm::Vec3 m_runningAwayInitialDirection;
 
 	sm::Vec3 m_position;
 	sm::Vec3 m_moveTarget;
@@ -62,9 +76,12 @@ private:
 	HealthyBunny *m_reproductionPartner;
 	float m_reproductingTime;
 	float m_restingAfterReproduction;
+	Ticker m_changingProgress;
 
 	float m_growingUpTime;
 	sm::Vec3 m_borningJumpOutVector;
+	float m_targetPositionRefreshColldown;
+	sm::Vec3 m_targetPosition; // target which bunny should reach
 };
 
 #endif

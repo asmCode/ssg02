@@ -18,12 +18,11 @@ Idle::~Idle(void)
 {
 }
 
-void Idle::Enter()
+void Idle::Enter(IBunny *bunny)
 {
-	//OutputDebugStringA("Idle enter\n");
 }
 
-void Idle::Leave()
+void Idle::Leave(IBunny *bunny)
 {
 }
 
@@ -52,18 +51,6 @@ void Idle::Update(IBunny *bunny, float time, float seconds)
 		hbunny->DecreaseGrowingUpTime(seconds);
 	}
 
-	if (CheckRunningAway(bunny, time, seconds))
-	{
-		bunny->SetState(NULL);
-		return;
-	}
-
-	if (CheckGoingToReproduction(bunny, time, seconds))
-	{
-		bunny->SetState(NULL);
-		return;
-	}
-
 	if (CheckSettingInRanks(bunny, time, seconds))
 	{
 		bunny->SetState(SettingsInRanks::GetInstance());
@@ -76,16 +63,6 @@ void Idle::Update(IBunny *bunny, float time, float seconds)
 IBunnyState::State Idle::GetStateType() const
 {
 	return IBunnyState::State_Idle;
-}
-
-bool Idle::CheckRunningAway(IBunny *bunny, float time, float seconds)
-{
-	return false;
-}
-
-bool Idle::CheckGoingToReproduction(IBunny *bunny, float time, float seconds)
-{
-	return false;
 }
 
 bool Idle::CheckSettingInRanks(IBunny *bunny, float time, float seconds)

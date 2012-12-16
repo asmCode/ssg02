@@ -6,6 +6,7 @@
 #include "BunniesManager.h"
 #include "GameProps.h"
 #include "Hunting.h"
+#include <Utils/Randomizer.h>
 #include <assert.h>
 
 RestingAfterFucking::RestingAfterFucking(void)
@@ -21,16 +22,18 @@ void RestingAfterFucking::Initialize(BunniesManager *bunniesManager)
 	m_bunniesManager = bunniesManager;
 }
 
-void RestingAfterFucking::Enter()
+void RestingAfterFucking::Enter(IBunny *bunny)
 {
 }
 
-void RestingAfterFucking::Leave()
+void RestingAfterFucking::Leave(IBunny *bunny)
 {
 }
 
 void RestingAfterFucking::Update(IBunny *bunny, float time, float seconds)
 {
+	static Randomizer rand;
+
 	assert(bunny != NULL);
 
 	InfectedBunny *ibunny = dynamic_cast<InfectedBunny*>(bunny);
@@ -44,8 +47,8 @@ void RestingAfterFucking::Update(IBunny *bunny, float time, float seconds)
 
 	ibunny->SetPosition(ibunny->GetPosition() + moveTarget * GameProps::InfectedBunnyRestingSpeed * seconds);
 
-	ibunny->RestingAfterFuckingProgress() += seconds;
-	if (ibunny->RestingAfterFuckingProgress() >= GameProps::RestingAfterFuckingTime)
+	ibunny->RestingAfterFuckingProgress().Progress(seconds);
+	if (ibunny->RestingAfterFuckingProgress().IsTimeout())
 	{
 		HealthyBunny *hbunny = m_bunniesManager->GetRandomHealthyBunny(false, true, NULL);
 		if (hbunny != NULL)

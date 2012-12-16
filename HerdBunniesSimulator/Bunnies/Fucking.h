@@ -17,7 +17,7 @@ private:
 	Fucking(void);
 	~Fucking(void);
 
-	void Enter();
-	void Leave();
+	void Enter(IBunny *bunny);
+	void Leave(IBunny *bunny);
 };
 

@@ -12,7 +12,8 @@ InfectedBunny::InfectedBunny() :
 	m_spawningProgress(0.0f),
 	m_huntingTarget(NULL),
 	m_bunnyState(NULL),
-	m_targetPositionRefreshColldown(0.0f)
+	m_targetPositionRefreshColldown(0.0f),
+	m_fuckingProgress(GameProps::FuckingTime)
 {
 }
 
@@ -30,9 +31,9 @@ void InfectedBunny::SetState(IBunnyState *bunnyState)
 	assert(bunnyState != NULL);
 
 	if (m_bunnyState != NULL)
-		m_bunnyState->Leave();
+		m_bunnyState->Leave(this);
 	m_bunnyState = bunnyState;
-	m_bunnyState->Enter();
+	m_bunnyState->Enter(this);
 }
 
 const IBunnyState *InfectedBunny::GetState() const
@@ -82,8 +83,6 @@ void InfectedBunny::Reset()
 	m_isActive = false;	
 	m_huntingTarget = NULL;
 	m_targetPositionRefreshColldown = 0.0f;
-	m_fuckingProgress = 0.0f;
-	m_restingAfterFuckingProgress = 0.0f;
 }
 
 float InfectedBunny::IsSpawning() const
@@ -137,13 +136,18 @@ void InfectedBunny::RefreshNewTargetPosition(float seconds)
 	}
 }
 
-float& InfectedBunny::FuckingProgress()
+Ticker& InfectedBunny::FuckingProgress()
 {
 	return m_fuckingProgress;
 }
 
-float& InfectedBunny::RestingAfterFuckingProgress()
+Ticker& InfectedBunny::RestingAfterFuckingProgress()
 {
 	return m_restingAfterFuckingProgress;
+}
+
+bool& InfectedBunny::DidTellToGTFO()
+{
+	return m_didTellToGTFO;
 }
 
