@@ -15,6 +15,7 @@ const float GameProps::RestingAfterFuckingTimeFrom = 4.0f;
 const float GameProps::RestingAfterFuckingTimeTo = 8.0f;
 const float GameProps::RestingAfterTryingToFuckTimeFrom = 2.0f;
 const float GameProps::RestingAfterTryingToFuckTimeTo = 4.0f;
+const float GameProps::RestingAfterChangedToInfectedTime = 2.0f;
 const float GameProps::RefreshNewTargetPositionFrom = 0.5f;
 const float GameProps::RefreshNewTargetPositionTo = 5.0f;
 const float GameProps::FuckingTime = 4.0f;

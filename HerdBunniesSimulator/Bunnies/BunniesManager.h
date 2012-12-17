@@ -33,6 +33,8 @@ public:
 		bool ableToFuck = false,
 		const IBunny *excludeFromTest = NULL);
 
+	InfectedBunny* GetUnusedInfectedBunny();
+
 private:
 	static const uint16_t MaxBunniesCount = 100;
 

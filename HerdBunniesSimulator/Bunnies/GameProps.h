@@ -19,6 +19,7 @@ public:
 	static const float RestingAfterFuckingTimeTo;
 	static const float RestingAfterTryingToFuckTimeFrom;
 	static const float RestingAfterTryingToFuckTimeTo;
+	static const float RestingAfterChangedToInfectedTime;
 	static const float RefreshNewTargetPositionFrom;
 	static const float RefreshNewTargetPositionTo;
 	static const float FuckingTime;

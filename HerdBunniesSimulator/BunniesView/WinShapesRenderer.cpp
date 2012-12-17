@@ -49,6 +49,12 @@ sm::Vec3 WinShapesRenderer::GetBunnyColor(HealthyBunny *healtyBunny)
 		return sm::Vec3(255.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f);
 	else if (healtyBunny->GetState()->GetStateType() == IBunnyState::State_Reproducting)
 		return sm::Vec3(255.0f / 255.0f, 128.0f / 255.0f, 0.0f / 255.0f);
+	else if (healtyBunny->GetState()->GetStateType() == IBunnyState::State_RunningAway)
+		return sm::Vec3(255.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f);
+	else if (healtyBunny->GetState()->GetStateType() == IBunnyState::State_BeeingFucked)
+		return sm::Vec3(64.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f);
+	else if (healtyBunny->GetState()->GetStateType() == IBunnyState::State_ChangingToInfected)
+		return sm::Vec3(255.0f / 255.0f, 0.0f / 255.0f, 128.0f / 255.0f);
 
 	return sm::Vec3(1.0f, 1.0f, 1.0f);
 }

@@ -276,6 +276,25 @@ bool BunniesManager::ShouldRespawnInfectedBunny()
 
 void BunniesManager::ChangeToInfected(HealthyBunny *hbunny)
 {
-	//CHANGE THIS MOTHERSUCKER TO INFCTED YO!
+	assert(hbunny);
+
+	InfectedBunny *ibunny = GetUnusedInfectedBunny();
+	if (ibunny == NULL)
+		return;
+
+	ibunny->ChangeFromInfected(hbunny);
+
+	hbunny->Reset();
+}
+
+InfectedBunny* BunniesManager::GetUnusedInfectedBunny()
+{
+	for (uint32_t i = 0; i < MaxBunniesCount; i++)
+	{
+		if (!m_infectedBunnies[i]->IsActive())
+			return m_infectedBunnies[i];
+	}
+
+	return NULL;
 }
 

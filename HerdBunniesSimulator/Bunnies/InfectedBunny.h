@@ -45,6 +45,8 @@ public:
 
 	bool& DidTellToGTFO();
 
+	void ChangeFromInfected(HealthyBunny *hbunny);
+
 private:
 	bool m_isActive;
 

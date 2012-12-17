@@ -2,6 +2,7 @@
 #include "IBunnyState.h"
 #include "HealthyBunny.h"
 #include "Respawning.h"
+#include "RestingAfterFucking.h"
 #include "GameProps.h"
 #include <Utils/Randomizer.h>
 #include <stddef.h>
@@ -149,5 +150,16 @@ Ticker& InfectedBunny::RestingAfterFuckingProgress()
 bool& InfectedBunny::DidTellToGTFO()
 {
 	return m_didTellToGTFO;
+}
+
+void InfectedBunny::ChangeFromInfected(HealthyBunny *hbunny)
+{
+	assert(hbunny != NULL);
+
+	m_isActive = true;
+	SetPosition(hbunny->GetPosition());
+	SetMoveTarget(hbunny->GetMoveTarget());
+	m_restingAfterFuckingProgress.SetTicker(GameProps::RestingAfterChangedToInfectedTime);
+	SetState(RestingAfterFucking::GetInstance());
 }
 
