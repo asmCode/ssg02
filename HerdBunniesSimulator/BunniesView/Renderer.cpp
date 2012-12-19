@@ -1,26 +1,17 @@
 #include "Renderer.h"
-
 #include "Shapes.h"
+
+#include "../Bunnies/GameController.h"
+#include "../Bunnies/Player.h"
 
 #include <windows.h>
 #include <gl\gl.h>
 #include <gl\glu.h>
 #include <time.h>
-#include "../Bunnies/Player.h"
-#include "IShapesRenderer.h"
-#include "WinShapesRenderer.h"
-#include "../Bunnies/BunniesManager.h"
-#include "../Bunnies/Idle.h"
-#include "../Bunnies/SettingsInRanks.h"
-#include "../Bunnies/Reproducting.h"
-#include "../Bunnies/ChangingToInfected.h"
-#include "../Bunnies/Respawning.h"
-#include "../Bunnies/RestingAfterFucking.h"
-#include "../Bunnies/BeeingFucked.h"
 
-Player *player;
-IShapesRenderer *shapesRenderer;
-BunniesManager *bunniesMgr;
+GameController *gctrl;
+
+bool mouseDown = false;
 
 Renderer::Renderer(OpenglWindow *glwnd)
 {
@@ -34,19 +25,7 @@ void Renderer::Initialize()
 
 	input ->RegisterObserver(this);
 
-	shapesRenderer = new WinShapesRenderer();
-
-	player = new Player(shapesRenderer);
-	bunniesMgr = new BunniesManager(shapesRenderer);
-	bunniesMgr->ResetForNewGame(2);
-
-	Idle::GetInstance()->Initialize(player);
-	SettingsInRanks::GetInstance()->Initialize(player, bunniesMgr);
-	Reproducting::GetInstance()->Initialize(player, bunniesMgr);
-	Respawning::GetInstance()->Initialize(bunniesMgr);
-	RestingAfterFucking::GetInstance()->Initialize(bunniesMgr);
-	BeeingFucked::GetInstance()->Initialize(bunniesMgr);
-	ChangingToInfected::GetInstance()->Initialize(bunniesMgr);
+	gctrl = new GameController();
 }
 
 void Renderer::KeyDown(int keyCode)
@@ -57,20 +36,28 @@ void Renderer::KeyDown(int keyCode)
 	switch (keyCode)
 	{
 	case 'W':
-		player->SetForwadMove(-1.0f);
+		gctrl->proto_SetForwardMove(-1.0f);
 		break;
 
 	case 'S':
-		player->SetForwadMove(1.0f);
+		gctrl->proto_SetForwardMove(1.0f);
 		break;
 
 	case 'A':
-		player->SetStrafeMove(-1.0f);
+		gctrl->proto_SetStrafeMove(-1.0f);
 		break;
 
 	case 'D':
-		player->SetStrafeMove(1.0f);
+		gctrl->proto_SetStrafeMove(1.0f);
 		break;
+
+	case VK_LBUTTON:
+		{
+			mouseDown = true;
+			POINT p;
+			GetCursorPos(&p);
+			gctrl->HandlePress(0, sm::Vec2(p.x, p.y));
+		}
 	}
 }
 
@@ -82,20 +69,28 @@ void Renderer::KeyUp(int keyCode)
 	switch (keyCode)
 	{
 	case 'W':
-		player->SetForwadMove(0.0f);
+		gctrl->proto_SetForwardMove(0.0f);
 		break;
 
 	case 'S':
-		player->SetForwadMove(0.0f);
+		gctrl->proto_SetForwardMove(0.0f);
 		break;
 
 	case 'A':
-		player->SetStrafeMove(0.0f);
+		gctrl->proto_SetStrafeMove(0.0f);
 		break;
 
 	case 'D':
-		player->SetStrafeMove(0.0f);
+		gctrl->proto_SetStrafeMove(0.0f);
 		break;
+
+	case VK_LBUTTON:
+		{
+			mouseDown = false;
+			POINT p;
+			GetCursorPos(&p);
+			gctrl->HandleRelease(0, sm::Vec2(p.x, p.y));
+		}
 	}
 }
 
@@ -113,10 +108,17 @@ void Renderer::MouseMove(int x, int y, int xShift, int yShift)
 	
 	gluUnProject(x, y, 0.0, modelView, projMatrix, viewport, &dx, &dy, &dz);
 
+	Player *player = gctrl->proto_GetPlayer();
+
 	sm::Vec3 pos = player->GetPosition();
 	sm::Vec3 trg = (sm::Vec3(dx, 0.0f, -dy) - pos).GetNormalized();
 	
 	player->SetLookTarget(trg);
+
+	if (mouseDown)
+	{
+		gctrl->HandleMove(0, sm::Vec2(x, y));
+	}
 }
 
 void Renderer::Update(float time, float seconds)
@@ -124,8 +126,7 @@ void Renderer::Update(float time, float seconds)
 	input->UpdateMouse();
 	input->Update();
 
-	player->Update(time, seconds);
-	bunniesMgr->Update(time, seconds);
+	gctrl->Update(time, seconds);
 }
 
 void Renderer::Render(float time, float seconds)
@@ -133,8 +134,7 @@ void Renderer::Render(float time, float seconds)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	player->Draw(time, seconds);
-	bunniesMgr->Draw(time, seconds);
+	gctrl->Draw(time, seconds);
 
 	glwnd ->SwapBuffers();
 }

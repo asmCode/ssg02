@@ -41,7 +41,7 @@ void Player::SetLookTarget(const sm::Vec3 &lookTarget)
 	m_lookTarget = lookTarget;
 }
 
-void Player::SetForwadMove(float forwardMove)
+void Player::SetForwardMove(float forwardMove)
 {
 	assert(forwardMove >= -1.0f && forwardMove <= 1.0f);
 

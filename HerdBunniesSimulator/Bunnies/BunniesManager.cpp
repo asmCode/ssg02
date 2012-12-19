@@ -295,6 +295,7 @@ InfectedBunny* BunniesManager::GetUnusedInfectedBunny()
 			return m_infectedBunnies[i];
 	}
 
+
 	return NULL;
 }
 

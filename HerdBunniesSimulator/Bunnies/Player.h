@@ -14,7 +14,7 @@ public:
 	void Draw(float time, float seconds);
 
 	void SetLookTarget(const sm::Vec3 &lookTarget);
-	void SetForwadMove(float forwardMove);
+	void SetForwardMove(float forwardMove);
 	void SetStrafeMove(float strafeMove);
 
 	const sm::Vec3& GetPosition() const;
