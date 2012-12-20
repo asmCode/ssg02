@@ -102,6 +102,7 @@
     <ClInclude Include="Bunnies\GameProps.h" />
     <ClInclude Include="Bunnies\IGameController.h" />
     <ClInclude Include="Bunnies\InfectedBunny.h" />
+    <ClInclude Include="Bunnies\InterfaceProvider.h" />
     <ClInclude Include="Bunnies\IScreen.h" />
     <ClInclude Include="Bunnies\Reproducting.h" />
     <ClInclude Include="Bunnies\Respawning.h" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Bunnies\Idle.cpp" />
     <ClCompile Include="Bunnies\GameProps.cpp" />
     <ClCompile Include="Bunnies\InfectedBunny.cpp" />
+    <ClCompile Include="Bunnies\InterfaceProvider.cpp" />
     <ClCompile Include="Bunnies\Reproducting.cpp" />
     <ClCompile Include="Bunnies\Respawning.cpp" />
     <ClCompile Include="Bunnies\RestingAfterFucking.cpp" />

@@ -3,6 +3,7 @@
 class GameProps
 {
 public:
+	static const float FarmerMoveSpeed;
 	static const float HealthyBunnyWalkSpeed;
 	static const float HealthyBunnyRunSpeed;
 	static const float InfectedBunnyHuntingSpeed;

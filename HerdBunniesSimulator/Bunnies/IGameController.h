@@ -2,6 +2,7 @@
 #define _IGAME_CONTROLLER_
 
 #include <UI/IGestureHandler.h>
+#include <Math/Vec3.h>
 
 class Player;
 

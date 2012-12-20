@@ -7,7 +7,7 @@ class IShapesRenderer;
 class Player
 {
 public:
-	Player(IShapesRenderer *shapesRenderer);
+	Player();
 	~Player(void);
 
 	void Update(float time, float seconds);
@@ -21,10 +21,6 @@ public:
 	const sm::Vec3& GetLookTarget() const;
 
 private:
-	static const float MoveSpeed;
-
-	IShapesRenderer *m_shapesRenderer;
-
 	sm::Vec3 m_position;
 	sm::Vec3 m_lookTarget;
 

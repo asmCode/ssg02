@@ -8,6 +8,7 @@
 #include <gl\gl.h>
 #include <gl\glu.h>
 #include <time.h>
+#include <assert.h>
 
 GameController *gctrl;
 
@@ -26,6 +27,8 @@ void Renderer::Initialize()
 	input ->RegisterObserver(this);
 
 	gctrl = new GameController();
+	bool success = gctrl->Initialize();
+	assert(success != NULL);
 }
 
 void Renderer::KeyDown(int keyCode)

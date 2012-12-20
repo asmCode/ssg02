@@ -23,19 +23,17 @@ GameScreen::~GameScreen(void)
 
 bool GameScreen::Initialize()
 {
-	// SHAPE RENDERER MUSISZ DOSTARCZYC Z ZEWNATRZ shapesRenderer = new WinShapesRenderer();
+	m_player = new Player();
+	m_bunniesMgr = new BunniesManager();
+	m_bunniesMgr->ResetForNewGame(4);
 
-	player = new Player(shapesRenderer);
-	bunniesMgr = new BunniesManager(shapesRenderer);
-	bunniesMgr->ResetForNewGame(2);
-
-	Idle::GetInstance()->Initialize(player);
-	SettingsInRanks::GetInstance()->Initialize(player, bunniesMgr);
-	Reproducting::GetInstance()->Initialize(player, bunniesMgr);
-	Respawning::GetInstance()->Initialize(bunniesMgr);
-	RestingAfterFucking::GetInstance()->Initialize(bunniesMgr);
-	BeeingFucked::GetInstance()->Initialize(bunniesMgr);
-	ChangingToInfected::GetInstance()->Initialize(bunniesMgr);
+	Idle::GetInstance()->Initialize(m_player);
+	SettingsInRanks::GetInstance()->Initialize(m_player, m_bunniesMgr);
+	Reproducting::GetInstance()->Initialize(m_player, m_bunniesMgr);
+	Respawning::GetInstance()->Initialize(m_bunniesMgr);
+	RestingAfterFucking::GetInstance()->Initialize(m_bunniesMgr);
+	BeeingFucked::GetInstance()->Initialize(m_bunniesMgr);
+	ChangingToInfected::GetInstance()->Initialize(m_bunniesMgr);
 
 	return true;
 }

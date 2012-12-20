@@ -1,18 +1,16 @@
 #include "Player.h"
+#include "GameProps.h"
+#include "InterfaceProvider.h"
 #include "../BunniesView/IShapesRenderer.h"
 #include <stdio.h>
 #include <assert.h>
 
-const float Player::MoveSpeed = 10.0f;
-
-Player::Player(IShapesRenderer *shapesRenderer) :
-	m_shapesRenderer(shapesRenderer),
+Player::Player() :
 	m_position(0, 0, 0),
 	m_lookTarget(0, 0, -1),
 	m_forwardMove(0.0f),
 	m_strafeMove(0.0f)
 {
-	assert(m_shapesRenderer != NULL);
 }
 
 Player::~Player(void)
@@ -25,15 +23,17 @@ void Player::Update(float time, float seconds)
 	moveTarget.Normalize();
 	sm::Vec3 strafeTarget(-moveTarget.z, 0.0f, moveTarget.x);
 
-	moveTarget *= -m_forwardMove * MoveSpeed;
-	strafeTarget *= m_strafeMove * MoveSpeed;
+	moveTarget *= -m_forwardMove * GameProps::FarmerMoveSpeed;
+	strafeTarget *= m_strafeMove * GameProps::FarmerMoveSpeed;
 
 	m_position += (moveTarget + strafeTarget) * seconds;
 }
 
 void Player::Draw(float time, float seconds)
 {
-	m_shapesRenderer->DrawPlayer(this);
+	IShapesRenderer *shapesRenderer = InterfaceProvider::GetShapesRenderer();
+
+	shapesRenderer->DrawPlayer(this);
 }
 
 void Player::SetLookTarget(const sm::Vec3 &lookTarget)

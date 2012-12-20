@@ -3,21 +3,19 @@
 #include "InfectedBunny.h"
 #include "IBunnyState.h"
 #include "GoingToReproduction.h"
+#include "InterfaceProvider.h"
 #include "../BunniesView/IShapesRenderer.h"
 #include <Utils/Randomizer.h>
 
 #include <assert.h>
 
-BunniesManager::BunniesManager(IShapesRenderer *shapesRenderer) :
-	m_shapesRenderer(shapesRenderer),
+BunniesManager::BunniesManager() :
 	m_maxHealthyBunnyIndex(0),
 	m_reproduceColldown(0.0f),
 	m_reproduceDelay(5.0f), // TOOD
 	m_spawnCooldown(0.0f),
 	m_spawnDelay(5.0f) // TODO
 {
-	assert(m_shapesRenderer != NULL);
-
 	for (uint32_t i = 0; i < MaxBunniesCount; i++)
 		m_healthyBunnies[i] = new HealthyBunny();
 	for (uint32_t i = 0; i < MaxBunniesCount; i++)
@@ -145,13 +143,15 @@ void BunniesManager::Update(float time, float seconds)
 
 void BunniesManager::Draw(float time, float seconds)
 {
+	IShapesRenderer *shapesRenderer = InterfaceProvider::GetShapesRenderer();
+
 	for (uint32_t i = 0; i < MaxBunniesCount; i++)
 	{
 		if (m_healthyBunnies[i]->IsActive())
-			m_shapesRenderer->DrawHealthyBunny(m_healthyBunnies[i]);
+			shapesRenderer->DrawHealthyBunny(m_healthyBunnies[i]);
 
 		if (m_infectedBunnies[i]->IsActive())
-			m_shapesRenderer->DrawInfectedBunny(m_infectedBunnies[i]);
+			shapesRenderer->DrawInfectedBunny(m_infectedBunnies[i]);
 	}
 }
 

@@ -2,6 +2,8 @@
 
 #include "IScreen.h"
 #include "GameScreen.h"
+#include "../BunniesView/WinShapesRenderer.h"
+#include "InterfaceProvider.h"
 #include <stddef.h>
 #include <assert.h>
 
@@ -17,7 +19,17 @@ GameController::~GameController(void)
 
 bool GameController::Initialize()
 {
-	return false;
+	WinShapesRenderer *winShapeRenderer = new WinShapesRenderer();
+	InterfaceProvider::m_shapesRenderer = winShapeRenderer;
+
+	m_gameScreen = new GameScreen();
+	if (!m_gameScreen->Initialize())
+		return false;
+
+
+	m_activeScreen = m_gameScreen;
+
+	return true;
 }
 
 void GameController::Draw(float time, float seconds)
@@ -57,10 +69,16 @@ void GameController::HandleMove(uint32_t pointIndex, const sm::Vec2 &point)
 
 void GameController::proto_SetStrafeMove(float value)
 {
+	Player *player = m_gameScreen->GetPlayer();
+
+	player->SetStrafeMove(value);
 }
 
 void GameController::proto_SetForwardMove(float value)
 {
+	Player *player = m_gameScreen->GetPlayer();
+
+	player->SetForwardMove(value);
 }
 
 void GameController::proto_SetLookTarget(const sm::Vec3 &lookTarget)

@@ -7,12 +7,11 @@
 class IBunny;
 class HealthyBunny;
 class InfectedBunny;
-class IShapesRenderer;
 
 class BunniesManager
 {
 public:
-	BunniesManager(IShapesRenderer *shapesRenderer);
+	BunniesManager();
 	~BunniesManager(void);
 
 	void Update(float time, float seconds);
@@ -37,8 +36,6 @@ public:
 
 private:
 	static const uint16_t MaxBunniesCount = 100;
-
-	IShapesRenderer *m_shapesRenderer;
 
 	HealthyBunny *m_healthyBunnies[MaxBunniesCount];
 	InfectedBunny *m_infectedBunnies[MaxBunniesCount];
