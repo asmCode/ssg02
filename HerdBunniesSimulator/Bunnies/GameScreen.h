@@ -3,6 +3,7 @@
 #include "IScreen.h"
 
 class Player;
+class IGun;
 class IShapesRenderer;
 class BunniesManager;
 
@@ -28,7 +29,7 @@ public:
 
 private:
 	Player *m_player;
-	IShapesRenderer *m_shapesRenderer;
+	IGun *m_activeGun;
 	BunniesManager *m_bunniesMgr;
 };
 

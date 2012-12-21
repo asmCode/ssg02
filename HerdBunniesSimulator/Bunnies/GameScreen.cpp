@@ -1,6 +1,8 @@
 #include "GameScreen.h"
 
 #include "Player.h"
+#include "IGun.h"
+#include "Shotgun.h"
 #include "BunniesManager.h"
 #include "Idle.h"
 #include "SettingsInRanks.h"
@@ -9,11 +11,15 @@
 #include "Respawning.h"
 #include "RestingAfterFucking.h"
 #include "BeeingFucked.h"
+#include "Shotgun.h"
 
 #include "../BunniesView/IShapesRenderer.h"
 #include "../BunniesView/WinShapesRenderer.h"
 
-GameScreen::GameScreen(void)
+GameScreen::GameScreen(void) :
+	m_player(NULL),
+	m_bunniesMgr(NULL),
+	m_activeGun(NULL)
 {
 }
 
@@ -26,6 +32,9 @@ bool GameScreen::Initialize()
 	m_player = new Player();
 	m_bunniesMgr = new BunniesManager();
 	m_bunniesMgr->ResetForNewGame(4);
+
+	Shotgun *shotgun = new Shotgun();
+	m_activeGun = shotgun;
 
 	Idle::GetInstance()->Initialize(m_player);
 	SettingsInRanks::GetInstance()->Initialize(m_player, m_bunniesMgr);
@@ -62,10 +71,12 @@ void GameScreen::Update(float time, float seconds)
 
 void GameScreen::HandlePress(uint32_t pointIndex, const sm::Vec2 &point)
 {
+	m_activeGun->PullTrigger();
 }
 
 void GameScreen::HandleRelease(uint32_t pointIndex, const sm::Vec2 &point)
 {
+	m_activeGun->ReleaseTrigger();
 }
 
 void GameScreen::HandleMove(uint32_t pointIndex, const sm::Vec2 &point)

@@ -24,3 +24,8 @@ const float GameProps::RunningAwayDistance = 10.0f;
 const float GameProps::SickBunnySpeed = 2.0f;
 const float GameProps::ChangingToInfectedTime = 5.0f;
 
+const float GameProps::ShotgunShotRatio = 1.2f;
+const float GameProps::ShotgunRange = 20.0f;
+const float GameProps::ShotgunFieldOfDamage = 3.1415f / 8.0f;
+const float GameProps::ShotgunDamage = 100.0f;
+
