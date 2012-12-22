@@ -6,6 +6,7 @@
 #include "RunningAway.h"
 #include "ChangingToInfected.h"
 #include "InfectedBunny.h"
+#include "Dying.h"
 #include "GameProps.h"
 #include <Utils/Randomizer.h>
 #include <assert.h>
@@ -168,7 +169,8 @@ const sm::Vec3 &HealthyBunny::GetBorningJumpOutVector() const
 
 bool HealthyBunny::CanReproduce() const
 {
-	if ((m_bunnyState->GetStateType() == IBunnyState::State_Idle || 
+	if (IsActive() &&
+		(m_bunnyState->GetStateType() == IBunnyState::State_Idle || 
 		m_bunnyState->GetStateType() == IBunnyState::State_SettingInRank) &&
 		m_restingAfterReproduction == 0.0f &&
 		!IsBorning() &&
@@ -181,6 +183,7 @@ bool HealthyBunny::CanReproduce() const
 bool HealthyBunny::CanBeFucked() const
 {
 	return
+		IsActive() &&
 		!IsBorning() &&
 		!IsGrowingUp() &&
 		(m_bunnyState->GetStateType() == IBunnyState::State_Idle || 
@@ -264,5 +267,22 @@ void HealthyBunny::StartChangingToInfected()
 Ticker& HealthyBunny::ChangingProgress()
 {
 	return m_changingProgress;
+}
+
+void HealthyBunny::MakeDamage(float damageValue)
+{
+	m_health -= damageValue * GameProps::HealthyBunnyResistance;
+	if (m_health < 0.0f)
+		m_health = 0.0f;
+
+	if (m_health == 0.0f)
+	{
+		Die();
+	}
+}
+
+void HealthyBunny::Die()
+{
+	SetState(Dying::GetInstance());
 }
 

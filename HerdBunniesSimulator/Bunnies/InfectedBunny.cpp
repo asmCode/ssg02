@@ -2,6 +2,7 @@
 #include "IBunnyState.h"
 #include "HealthyBunny.h"
 #include "Respawning.h"
+#include "Dying.h"
 #include "RestingAfterFucking.h"
 #include "GameProps.h"
 #include <Utils/Randomizer.h>
@@ -161,5 +162,22 @@ void InfectedBunny::ChangeFromInfected(HealthyBunny *hbunny)
 	SetMoveTarget(hbunny->GetMoveTarget());
 	m_restingAfterFuckingProgress.SetTicker(GameProps::RestingAfterChangedToInfectedTime);
 	SetState(RestingAfterFucking::GetInstance());
+}
+
+void InfectedBunny::MakeDamage(float damageValue)
+{
+	m_health -= damageValue;
+	if (m_health < 0.0f)
+		m_health = 0.0f;
+
+	if (m_health == 0.0f)
+	{
+		Die();
+	}
+}
+
+void InfectedBunny::Die()
+{
+	SetState(Dying::GetInstance());
 }
 

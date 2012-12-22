@@ -299,3 +299,34 @@ InfectedBunny* BunniesManager::GetUnusedInfectedBunny()
 	return NULL;
 }
 
+void BunniesManager::GetBunniesInCone(IBunny **&bunnies,
+									  uint32_t &bunniesCount,
+									  const sm::Vec3 &coneTop,
+									  const sm::Vec3 &coneTarget,
+									  float cosOfAngle)
+{
+	bunnies = NULL;
+	bunniesCount = 0;
+
+	uint32_t index = 0;
+
+	sm::Vec3 bunnyDirection;
+
+	for (uint32_t i = 0; i < MaxBunniesCount; i++)
+	{
+		bunnyDirection = (m_healthyBunnies[i]->GetPosition() - coneTop).GetNormalized();
+		if (sm::Vec3::Dot(coneTarget, bunnyDirection) <= cosOfAngle)
+		{
+			bunnies[index] = m_healthyBunnies[i];
+			index++;
+		}
+
+		bunnyDirection = (m_infectedBunnies[i]->GetPosition() - coneTop).GetNormalized();
+		if (sm::Vec3::Dot(coneTarget, bunnyDirection) <= cosOfAngle)
+		{
+			bunnies[index] = m_infectedBunnies[i];
+			index++;
+		}
+	}
+}
+

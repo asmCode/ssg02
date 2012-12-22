@@ -1,13 +1,13 @@
 #ifndef _INFECTED_BUNNY_
 #define _INFECTED_BUNNY_
 
-#include "IBunny.h"
+#include "Bunny.h"
 #include "Ticker.h"
 
 class IBunnyState;
 class HealthyBunny;
 
-class InfectedBunny : public IBunny
+class InfectedBunny : public Bunny
 {
 public:
 	InfectedBunny(void);
@@ -46,6 +46,10 @@ public:
 	bool& DidTellToGTFO();
 
 	void ChangeFromInfected(HealthyBunny *hbunny);
+
+	void MakeDamage(float damageValue);
+
+	void Die();
 
 private:
 	bool m_isActive;

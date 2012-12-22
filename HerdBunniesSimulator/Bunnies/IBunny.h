@@ -16,6 +16,8 @@ public:
 
 	virtual const sm::Vec3 GetPosition() const = 0;
 	virtual const sm::Vec3 GetMoveTarget() const = 0;
+
+	virtual void MakeDamage(float damageValue) = 0;
 };
 
 #endif

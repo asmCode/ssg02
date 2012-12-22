@@ -1,14 +1,14 @@
 #ifndef _HEALTHY_BUNNY_
 #define _HEALTHY_BUNNY_
 
-#include "IBunny.h"
+#include "Bunny.h"
 #include "Ticker.h"
 #include <Math\Vec3.h>
 
 class IBunnyState;
 class InfectedBunny;
 
-class HealthyBunny : public IBunny
+class HealthyBunny : public Bunny
 {
 public:
 	HealthyBunny(void);
@@ -61,6 +61,10 @@ public:
 
 	void StartChangingToInfected();
 	Ticker& ChangingProgress();
+
+	void MakeDamage(float damageValue);
+
+	void Die();
 
 private:
 	bool m_isActive;

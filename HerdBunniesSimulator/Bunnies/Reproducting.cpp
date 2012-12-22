@@ -31,6 +31,17 @@ void Reproducting::Update(IBunny *bunny, float time, float seconds)
 	HealthyBunny *hbunny = dynamic_cast<HealthyBunny*>(bunny);
 	assert(hbunny != NULL);
 
+	HealthyBunny *partner = hbunny->GetReproductionPartner();
+
+	// make sure if funny can still reproduce
+	if (partner == NULL ||
+		!partner->IsActive() ||
+		partner->GetState()->GetStateType() == IBunnyState::State_Dying)
+	{
+		hbunny->SetToIdle();
+		return;
+	}
+
 	hbunny->SetReproductingTime(hbunny->GetReproductingTime() + seconds);
 
 	float repTime = hbunny->GetReproductingTime();

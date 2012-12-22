@@ -34,6 +34,13 @@ public:
 
 	InfectedBunny* GetUnusedInfectedBunny();
 
+	void GetBunniesInCone(
+		IBunny **&bunnies,
+		uint32_t &bunniesCount,
+		const sm::Vec3 &coneTop,
+		const sm::Vec3 &coneTarget,
+		float cosOfAngle); // cosine of angle
+
 private:
 	static const uint16_t MaxBunniesCount = 100;
 

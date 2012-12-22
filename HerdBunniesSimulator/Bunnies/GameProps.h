@@ -6,6 +6,7 @@ public:
 	static const float FarmerMoveSpeed;
 	static const float HealthyBunnyWalkSpeed;
 	static const float HealthyBunnyRunSpeed;
+	static const float HealthyBunnyResistance;
 	static const float InfectedBunnyHuntingSpeed;
 	static const float InfectedBunnyRestingSpeed;
 	static const float DangerShotAngle; // value of cos(angle)

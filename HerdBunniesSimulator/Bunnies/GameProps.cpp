@@ -3,6 +3,7 @@
 const float GameProps::FarmerMoveSpeed = 10.0f;
 const float GameProps::HealthyBunnyWalkSpeed = 5.0f;
 const float GameProps::HealthyBunnyRunSpeed = 8.0f;
+const float GameProps::HealthyBunnyResistance = 0.2f;
 const float GameProps::InfectedBunnyHuntingSpeed = 10.0f;
 const float GameProps::InfectedBunnyRestingSpeed = 5.0f;
 const float GameProps::DangerShotAngle = 0.8f;

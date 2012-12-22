@@ -33,6 +33,15 @@ void Fucking::Update(IBunny *bunny, float time, float seconds)
 	HealthyBunny *hbunny = ibunny->GetHuntingTarget();
 	assert(hbunny != NULL);
 
+	if (!hbunny->IsActive() || hbunny->GetState()->GetStateType() == IBunnyState::State_Dying) // make sure if bunny can be still fucked
+	{
+		static Randomizer random;
+
+		ibunny->RestingAfterFuckingProgress().SetTicker(random.GetFloat(GameProps::RestingAfterTryingToFuckTimeFrom, GameProps::RestingAfterTryingToFuckTimeTo));
+		ibunny->SetState(RestingAfterFucking::GetInstance());
+		return;
+	}
+
 	ibunny->FuckingProgress().Progress(seconds);
 	if (ibunny->FuckingProgress().IsTimeout())
 	{

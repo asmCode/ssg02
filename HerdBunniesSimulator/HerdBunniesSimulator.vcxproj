@@ -88,9 +88,11 @@
     <ClInclude Include="Bunnies\BeeingFucked.h" />
     <ClInclude Include="Bunnies\BoundingSphere.h" />
     <ClInclude Include="Bunnies\BunniesManager.h" />
+    <ClInclude Include="Bunnies\Bunny.h" />
     <ClInclude Include="Bunnies\ChangingToInfected.h" />
     <ClInclude Include="Bunnies\CollideObject.h" />
     <ClInclude Include="Bunnies\CollisionManager.h" />
+    <ClInclude Include="Bunnies\Dying.h" />
     <ClInclude Include="Bunnies\Fucking.h" />
     <ClInclude Include="Bunnies\GameController.h" />
     <ClInclude Include="Bunnies\GameObjectType.h" />
@@ -130,9 +132,11 @@
     <ClCompile Include="Bunnies\BeeingFucked.cpp" />
     <ClCompile Include="Bunnies\BoundingSphere.cpp" />
     <ClCompile Include="Bunnies\BunniesManager.cpp" />
+    <ClCompile Include="Bunnies\Bunny.cpp" />
     <ClCompile Include="Bunnies\ChangingToInfected.cpp" />
     <ClCompile Include="Bunnies\CollideObject.cpp" />
     <ClCompile Include="Bunnies\CollisionManager.cpp" />
+    <ClCompile Include="Bunnies\Dying.cpp" />
     <ClCompile Include="Bunnies\Fucking.cpp" />
     <ClCompile Include="Bunnies\GameController.cpp" />
     <ClCompile Include="Bunnies\GameScreen.cpp" />

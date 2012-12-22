@@ -34,7 +34,8 @@ void GoingToReproduction::Update(IBunny *bunny, float time, float seconds)
 	// make sure if funny can still reproduce
 	if ((partner->GetState()->GetStateType() != IBunnyState::State_GoingToReproduction &&
 		partner->GetState()->GetStateType() != IBunnyState::State_Reproducting) ||
-		partner->GetReproductionPartner() != hbunny)
+		partner->GetReproductionPartner() != hbunny ||
+		partner->GetState()->GetStateType() == IBunnyState::State_Dying)
 	{
 		hbunny->SetToIdle();
 		return;
