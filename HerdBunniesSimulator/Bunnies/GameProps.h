@@ -29,7 +29,7 @@ public:
 	static const float SickBunnySpeed;
 	static const float ChangingToInfectedTime;
 
-	static const float ShotgunShotRatio;
+	static const float ShotgunShotDelay;
 	static const float ShotgunRange;
 	static const float ShotgunFieldOfDamage;
 	static const float ShotgunDamage;

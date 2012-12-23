@@ -11,7 +11,10 @@ public:
 	virtual void Update(float time, float seconds) = 0;
 	virtual void Draw(float time, float seconds) = 0;
 
-	/// Return NULL if no shot occured at the moment, and IBullet otherwise
+	/**
+	 * Return NULL if no shot occured at the moment, and IBullet otherwise.
+	 * Should be called right after Update().
+	**/
 	virtual IBullet* GetBullet() const = 0;
 };
 

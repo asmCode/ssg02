@@ -1,13 +1,15 @@
 #pragma once
 
 #include "IGun.h"
+#include "Ticker.h"
 
 class ShotgunBullet;
+class Player;
 
 class Shotgun : public IGun
 {
 public:
-	Shotgun(void);
+	Shotgun(Player *player);
 	~Shotgun(void);
 
 	void PullTrigger();
@@ -19,6 +21,12 @@ public:
 	IBullet* GetBullet() const;
 
 private:
+	Player *m_player;
 	ShotgunBullet *m_shotgunBullet;
+
+	bool m_isTriggerPulled;
+	bool m_justShooted;
+
+	Ticker m_shotTicker;
 };
 

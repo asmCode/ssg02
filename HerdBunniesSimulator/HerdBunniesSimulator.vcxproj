@@ -101,6 +101,8 @@
     <ClInclude Include="Bunnies\Ground.h" />
     <ClInclude Include="Bunnies\Hunting.h" />
     <ClInclude Include="Bunnies\IBullet.h" />
+    <ClInclude Include="Bunnies\IDamageable.h" />
+    <ClInclude Include="Bunnies\IDamageableProvider.h" />
     <ClInclude Include="Bunnies\Idle.h" />
     <ClInclude Include="Bunnies\GameProps.h" />
     <ClInclude Include="Bunnies\IGameController.h" />

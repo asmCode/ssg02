@@ -11,6 +11,8 @@ class InfectedBunny;
 class BunniesManager
 {
 public:
+	static const uint16_t MaxBunniesCount = 100;
+
 	BunniesManager();
 	~BunniesManager(void);
 
@@ -34,16 +36,10 @@ public:
 
 	InfectedBunny* GetUnusedInfectedBunny();
 
-	void GetBunniesInCone(
-		IBunny **&bunnies,
-		uint32_t &bunniesCount,
-		const sm::Vec3 &coneTop,
-		const sm::Vec3 &coneTarget,
-		float cosOfAngle); // cosine of angle
+	HealthyBunny** GetHealthyBunnies();
+	InfectedBunny** GetInfectedBunnies();
 
 private:
-	static const uint16_t MaxBunniesCount = 100;
-
 	HealthyBunny *m_healthyBunnies[MaxBunniesCount];
 	InfectedBunny *m_infectedBunnies[MaxBunniesCount];
 

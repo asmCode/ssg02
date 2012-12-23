@@ -76,6 +76,7 @@ void InfectedBunny::Respawn(const sm::Vec3 &position)
 {
 	m_isActive = true;
 	m_spawningProgress = GameProps::SpawningTime;
+	m_health = 100.0f;
 	SetPosition(position);
 	SetState(Respawning::GetInstance());
 }
@@ -84,6 +85,7 @@ void InfectedBunny::Reset()
 {
 	m_isActive = false;	
 	m_huntingTarget = NULL;
+	m_health = 100.0f;
 	m_targetPositionRefreshColldown = 0.0f;
 }
 
@@ -158,6 +160,7 @@ void InfectedBunny::ChangeFromInfected(HealthyBunny *hbunny)
 	assert(hbunny != NULL);
 
 	m_isActive = true;
+	m_health = 100.0f;
 	SetPosition(hbunny->GetPosition());
 	SetMoveTarget(hbunny->GetMoveTarget());
 	m_restingAfterFuckingProgress.SetTicker(GameProps::RestingAfterChangedToInfectedTime);

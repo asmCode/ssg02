@@ -43,6 +43,7 @@ void HealthyBunny::Reset()
 	m_reproductingTime = 0.0f;
 	m_restingAfterReproduction = 0.0f;
 	m_growingUpTime = 0.0f;
+	m_health = 100.0f;
 	m_useRunningAwayInitialDirection = false;
 	SetState(SettingsInRanks::GetInstance());
 }
@@ -56,6 +57,7 @@ void HealthyBunny::ActivateOnStart(const sm::Vec3 &position)
 {
 	m_isActive = true;
 	m_position = position;
+	m_health = 100.0f;
 	m_reproductionPartner = NULL;
 }
 
