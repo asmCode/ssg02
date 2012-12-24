@@ -181,6 +181,10 @@ void InfectedBunny::MakeDamage(float damageValue)
 
 void InfectedBunny::Die()
 {
+	if (GetState()->GetStateType() == IBunnyState::State_Fucking ||
+		GetState()->GetStateType() == IBunnyState::State_Hunting)
+		m_huntingTarget->SetToIdle();
+
 	SetState(Dying::GetInstance());
 }
 

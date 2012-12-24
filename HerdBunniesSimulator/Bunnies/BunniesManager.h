@@ -44,9 +44,7 @@ private:
 	InfectedBunny *m_infectedBunnies[MaxBunniesCount];
 
 	float m_reproduceColldown;
-	float m_reproduceDelay;
 	float m_spawnCooldown;
-	float m_spawnDelay;
 
 	uint32_t m_maxHealthyBunnyIndex;
 

@@ -285,6 +285,10 @@ void HealthyBunny::MakeDamage(float damageValue)
 
 void HealthyBunny::Die()
 {
+	if (GetState()->GetStateType() == IBunnyState::State_Reproducting &&
+		m_reproductionPartner != NULL)
+		m_reproductionPartner->SetToIdle();
+
 	SetState(Dying::GetInstance());
 }
 

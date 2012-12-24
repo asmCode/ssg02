@@ -3,6 +3,9 @@
 class GameProps
 {
 public:
+	static const float RespawnDelay;
+	static const float ReproductionDelay;
+
 	static const float FarmerMoveSpeed;
 	static const float HealthyBunnyWalkSpeed;
 	static const float HealthyBunnyRunSpeed;

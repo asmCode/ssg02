@@ -4,6 +4,7 @@
 #include "IBunnyState.h"
 #include "GoingToReproduction.h"
 #include "InterfaceProvider.h"
+#include "GameProps.h"
 #include "../BunniesView/IShapesRenderer.h"
 #include <Utils/Randomizer.h>
 
@@ -12,9 +13,7 @@
 BunniesManager::BunniesManager() :
 	m_maxHealthyBunnyIndex(0),
 	m_reproduceColldown(0.0f),
-	m_reproduceDelay(5.0f), // TOOD
-	m_spawnCooldown(0.0f),
-	m_spawnDelay(5.0f) // TODO
+	m_spawnCooldown(0.0f)
 {
 	for (uint32_t i = 0; i < MaxBunniesCount; i++)
 		m_healthyBunnies[i] = new HealthyBunny();
@@ -157,7 +156,7 @@ void BunniesManager::Draw(float time, float seconds)
 
 bool BunniesManager::ShouldGoToReproduce()
 {
-	if (m_reproduceColldown >= m_reproduceDelay)
+	if (m_reproduceColldown >= GameProps::ReproductionDelay)
 		return true;
 
 	return false;
@@ -268,7 +267,7 @@ sm::Vec3 BunniesManager::GetRandomRespawnPosition()
 
 bool BunniesManager::ShouldRespawnInfectedBunny()
 {
-	if (m_spawnCooldown >= m_spawnDelay)
+	if (m_spawnCooldown >= GameProps::RespawnDelay)
 		return true;
 
 	return false;
