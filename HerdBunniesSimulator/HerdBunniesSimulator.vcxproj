@@ -52,6 +52,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\Users\majak\code\libs;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Framework;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -85,6 +86,7 @@
     <ClInclude Include="BunniesView\Shapes.h" />
     <ClInclude Include="BunniesView\TimeControl.h" />
     <ClInclude Include="BunniesView\WinShapesRenderer.h" />
+    <ClInclude Include="Bunnies\AnimButton.h" />
     <ClInclude Include="Bunnies\BeeingFucked.h" />
     <ClInclude Include="Bunnies\BoundingSphere.h" />
     <ClInclude Include="Bunnies\BunniesManager.h" />
@@ -92,6 +94,7 @@
     <ClInclude Include="Bunnies\ChangingToInfected.h" />
     <ClInclude Include="Bunnies\CollideObject.h" />
     <ClInclude Include="Bunnies\CollisionManager.h" />
+    <ClInclude Include="Bunnies\Control.h" />
     <ClInclude Include="Bunnies\Dying.h" />
     <ClInclude Include="Bunnies\Fucking.h" />
     <ClInclude Include="Bunnies\GameController.h" />
@@ -122,7 +125,36 @@
     <ClInclude Include="Bunnies\Shotgun.h" />
     <ClInclude Include="Bunnies\ShotgunBullet.h" />
     <ClInclude Include="Bunnies\Ticker.h" />
+    <ClInclude Include="Framework\Graphics\Animation.h" />
+    <ClInclude Include="Framework\Graphics\BoundingBox.h" />
+    <ClInclude Include="Framework\Graphics\BoundingSphere.h" />
+    <ClInclude Include="Framework\Graphics\Color.h" />
+    <ClInclude Include="Framework\Graphics\DepthTexture.h" />
+    <ClInclude Include="Framework\Graphics\Effect.h" />
+    <ClInclude Include="Framework\Graphics\FontLetter.h" />
+    <ClInclude Include="Framework\Graphics\FontRenderer.h" />
+    <ClInclude Include="Framework\Graphics\Framebuffer.h" />
+    <ClInclude Include="Framework\Graphics\ICgContextService.h" />
+    <ClInclude Include="Framework\Graphics\IDrawable.h" />
+    <ClInclude Include="Framework\Graphics\IGlContextService.h" />
+    <ClInclude Include="Framework\Graphics\IUpdateable.h" />
+    <ClInclude Include="Framework\Graphics\Material.h" />
+    <ClInclude Include="Framework\Graphics\Mesh.h" />
+    <ClInclude Include="Framework\Graphics\MeshPart.h" />
+    <ClInclude Include="Framework\Graphics\Model.h" />
+    <ClInclude Include="Framework\Graphics\Point.h" />
+    <ClInclude Include="Framework\Graphics\PVRTexture.h" />
+    <ClInclude Include="Framework\Graphics\Rect.h" />
+    <ClInclude Include="Framework\Graphics\Shader.h" />
+    <ClInclude Include="Framework\Graphics\SpriteAnim.h" />
+    <ClInclude Include="Framework\Graphics\SpriteBatch.h" />
+    <ClInclude Include="Framework\Graphics\SteerCamera.h" />
+    <ClInclude Include="Framework\Graphics\TexPart.h" />
+    <ClInclude Include="Framework\Graphics\Texture.h" />
+    <ClInclude Include="Framework\Graphics\timecontrol.h" />
+    <ClInclude Include="Framework\Graphics\Vertex.h" />
     <ClInclude Include="Framework\UI\IGestureHandler.h" />
+    <ClInclude Include="Framework\UI\Image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BunniesView\OpenglWindow.cpp" />
@@ -131,6 +163,7 @@
     <ClCompile Include="BunniesView\TimeControl.cpp" />
     <ClCompile Include="BunniesView\WinMain.cpp" />
     <ClCompile Include="BunniesView\WinShapesRenderer.cpp" />
+    <ClCompile Include="Bunnies\AnimButton.cpp" />
     <ClCompile Include="Bunnies\BeeingFucked.cpp" />
     <ClCompile Include="Bunnies\BoundingSphere.cpp" />
     <ClCompile Include="Bunnies\BunniesManager.cpp" />
@@ -138,6 +171,7 @@
     <ClCompile Include="Bunnies\ChangingToInfected.cpp" />
     <ClCompile Include="Bunnies\CollideObject.cpp" />
     <ClCompile Include="Bunnies\CollisionManager.cpp" />
+    <ClCompile Include="Bunnies\Control.cpp" />
     <ClCompile Include="Bunnies\Dying.cpp" />
     <ClCompile Include="Bunnies\Fucking.cpp" />
     <ClCompile Include="Bunnies\GameController.cpp" />
@@ -159,6 +193,28 @@
     <ClCompile Include="Bunnies\Shotgun.cpp" />
     <ClCompile Include="Bunnies\ShotgunBullet.cpp" />
     <ClCompile Include="Bunnies\Ticker.cpp" />
+    <ClCompile Include="Framework\Graphics\Animation.cpp" />
+    <ClCompile Include="Framework\Graphics\BoundingBox.cpp" />
+    <ClCompile Include="Framework\Graphics\BoundingSphere.cpp" />
+    <ClCompile Include="Framework\Graphics\Color.cpp" />
+    <ClCompile Include="Framework\Graphics\DepthTexture.cpp" />
+    <ClCompile Include="Framework\Graphics\Effect.cpp" />
+    <ClCompile Include="Framework\Graphics\FontLetter.cpp" />
+    <ClCompile Include="Framework\Graphics\FontRenderer.cpp" />
+    <ClCompile Include="Framework\Graphics\Framebuffer.cpp" />
+    <ClCompile Include="Framework\Graphics\Material.cpp" />
+    <ClCompile Include="Framework\Graphics\Mesh.cpp" />
+    <ClCompile Include="Framework\Graphics\MeshPart.cpp" />
+    <ClCompile Include="Framework\Graphics\Model.cpp" />
+    <ClCompile Include="Framework\Graphics\PVRTexture.cpp" />
+    <ClCompile Include="Framework\Graphics\Shader.cpp" />
+    <ClCompile Include="Framework\Graphics\SpriteAnim.cpp" />
+    <ClCompile Include="Framework\Graphics\SpriteBatch.cpp" />
+    <ClCompile Include="Framework\Graphics\SteerCamera.cpp" />
+    <ClCompile Include="Framework\Graphics\TexPart.cpp" />
+    <ClCompile Include="Framework\Graphics\Texture.cpp" />
+    <ClCompile Include="Framework\Graphics\TimeControl.cpp" />
+    <ClCompile Include="Framework\UI\Image.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
