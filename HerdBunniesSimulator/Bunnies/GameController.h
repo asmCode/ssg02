@@ -6,13 +6,14 @@
 
 #include "Player.h" // TODO PROTO
 
+class IGraphicsEngine;
 class IScreen;
 class GameScreen;
 
 class GameController : public IGameController
 {
 public:
-	GameController(void);
+	GameController(IGraphicsEngine *graphicsEngine);
 	~GameController(void);
 
 	bool Initialize();
@@ -31,6 +32,7 @@ public:
 
 private:
 	GameScreen *m_gameScreen;
+	IGraphicsEngine *m_graphicsEngine;
 
 	IScreen *m_activeScreen;
 };

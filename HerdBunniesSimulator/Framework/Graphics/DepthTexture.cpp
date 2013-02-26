@@ -10,7 +10,7 @@ DepthTexture::DepthTexture(int width, int height)
 
 	unsigned err = 0;
 	err = glGetError();
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16_OES,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16,
 		width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	err = glGetError();
 

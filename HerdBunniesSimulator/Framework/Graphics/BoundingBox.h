@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Utils/Math/Vec3.h"
+#include "../Math/Vec3.h"
 
 class Vertex;
 

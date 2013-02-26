@@ -1,6 +1,7 @@
 #include "Animation.h"
 #include "Model.h"
 #include "Mesh.h"
+#include <Math.h>
 
 Animation::Animation(void)
 {
@@ -167,5 +168,5 @@ float Animation::GetAnimLength(int id)
 	if (anim->scale != NULL && anim->scale->GetKeysCount() > 0)
 		anim->scale->GetKeyframe(anim->scale->GetKeysCount() - 1, scaleTime, vdummy, bdummy);
 	
-	return fmax(fmax(posTime, rotTime), scaleTime);
+	return max(max(posTime, rotTime), scaleTime); // TODO, a nie fmax, fmin?
 }

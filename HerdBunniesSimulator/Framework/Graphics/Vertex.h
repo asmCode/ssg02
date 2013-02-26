@@ -1,7 +1,7 @@
 #pragma once
 
-#import "../Utils/Math/Vec3.h"
-#import "../Utils/Math/Vec2.h"
+#include "../Math/Vec3.h"
+#include "../Math/Vec2.h"
 
 class Vertex
 {

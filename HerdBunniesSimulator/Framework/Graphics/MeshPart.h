@@ -2,10 +2,8 @@
 
 //#include "GlExtFactory.h"
 #include "Vertex.h"
-#include "Effect.h"
 #include "Material.h"
 
-#include "Utils.h"
 #include <string>
 
 class Mesh;
@@ -18,7 +16,6 @@ public:
 	unsigned int vboId;
 	unsigned int m_vertexArrayId;
 	Material *material;
-	//Effect *effect;
 
 	int		m_verticesCount;
 	Vertex	*m_vertices;
@@ -35,9 +32,6 @@ public:
 
 	MeshPart(int verticesCount, Vertex *vertices, Mesh *mesh);
 	~MeshPart();
-
-//	void SetEffect(Effect *effect);
-//	Effect *GetEffect();
 
 	void SetMaterial(Material *material);
 	Material *GetMaterial();

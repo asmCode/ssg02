@@ -28,3 +28,4 @@ public:
 	
 	sm::Point<int> MeasureString(const char *text);
 };
+

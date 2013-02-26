@@ -9,3 +9,4 @@ public:
 	sm::Point<int> Size;
 	TexPart Coords;
 };
+

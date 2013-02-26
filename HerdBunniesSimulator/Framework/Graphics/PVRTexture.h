@@ -1,10 +1,8 @@
-#import "Texture.h"
-#import <vector>
-#import <string>
-#include <OpenGLES/ES1/gl.h>
-#include <OpenGLES/ES1/glext.h>
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
+#include "Texture.h"
+#include <vector>
+#include <string>
+#include <gl/gl.h>
+#include <glext.h>
 
 class PVRTexture : public Texture
 {

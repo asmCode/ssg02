@@ -2,12 +2,10 @@
 
 //#include "GlExtFactory.h"
 #include "Vertex.h"
-#include "Effect.h"
 #include "Material.h"
 
-#include "Utils.h"
 #include "MeshPart.h"
-#include "../Utils/Math/Matrix.h"
+#include "../Math/Matrix.h"
 
 Mesh::Mesh()
 {

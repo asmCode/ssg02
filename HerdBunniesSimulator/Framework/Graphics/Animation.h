@@ -1,9 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "../Utils/Math/Vec3.h"
-#include "../Utils/Math/Quat.h"
-#include "../Utils/Math/Matrix.h"
+#include "../Math/Vec3.h"
+#include "../Math/Quat.h"
+#include "../Math/Matrix.h"
 
 #include "Interpolators/InterpolatorFactory.h"
 

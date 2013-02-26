@@ -2,15 +2,14 @@
 #include "FontRenderer.h"
 
 #define TIXML_USE_STL
-#include "../Utils/Xml/tinyxml.h"
-#include "../Utils/Image.h"
-#include "../Utils/Utils/Path.h"
+#include <tinyxml/tinyxml.h>
+#include <Framework/Graphics/Image.h>
+#include <Framework/IO/Path.h>
 #include "SpriteBatch.h"
 
-#include <OpenGLES/ES1/gl.h>
-#include <OpenGLES/ES1/glext.h>
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
+#include <Windows.h>
+#include <gl/gl.h>
+#include <glext.h>
 
 FontRenderer::FontRenderer()
 {

@@ -1,11 +1,12 @@
 #ifndef load_model_test_Shader_h
 #define load_model_test_Shader_h
 
-#include "../Utils/Math/Matrix.h"
-#include "../Utils/Math/Vec3.h"
+#include "../Math/Matrix.h"
+#include "../Math/Vec3.h"
 #include <string>
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
+#include <Windows.h>
+#include <gl/gl.h>
+#include <glext.h>
 
 class Shader
 {

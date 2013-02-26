@@ -1,11 +1,13 @@
 #pragma once
 
 #include "MeshPart.h"
-#include "../Utils/Math/Matrix.h"
+#include "../Math/Matrix.h"
 #include <vector>
 #include <string>
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
+
+#include <Windows.h>
+#include <gl/gl.h>
+#include <glext.h>
 
 class Mesh
 {

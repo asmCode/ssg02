@@ -1,6 +1,6 @@
 #include "PVRTexture.h"
-#import <assert.h>
-#import <math.h>
+#include <assert.h>
+#include <math.h>
 
 PVRTexture::PVRTexture(unsigned width,
 					   unsigned height,

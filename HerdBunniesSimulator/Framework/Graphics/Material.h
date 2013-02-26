@@ -1,12 +1,11 @@
 #pragma once
 
-#import <string>
-#import "../Utils/Math/Vec3.h"
-#import "../Utils/IDisposable.h"
+#include <string>
+#include "../Math/Vec3.h"
 
 class Texture;
 
-class Material : public IDisposable
+class Material
 {
 private:
 

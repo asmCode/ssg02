@@ -1,5 +1,6 @@
 #include "GameController.h"
 
+#include "IGraphicsEngine.h"
 #include "IScreen.h"
 #include "GameScreen.h"
 #include "../BunniesView/WinShapesRenderer.h"
@@ -7,7 +8,8 @@
 #include <stddef.h>
 #include <assert.h>
 
-GameController::GameController(void) :
+GameController::GameController(IGraphicsEngine *graphicsEngine) :
+	m_graphicsEngine(graphicsEngine),
 	m_gameScreen(NULL),
 	m_activeScreen(NULL)
 {
@@ -21,6 +23,7 @@ bool GameController::Initialize()
 {
 	WinShapesRenderer *winShapeRenderer = new WinShapesRenderer();
 	InterfaceProvider::m_shapesRenderer = winShapeRenderer;
+	InterfaceProvider::m_graphicsEngine = m_graphicsEngine;
 
 	m_gameScreen = new GameScreen();
 	if (!m_gameScreen->Initialize())

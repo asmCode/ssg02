@@ -3,8 +3,9 @@
 #include "BoundingBox.h"
 #include "BoundingSphere.h"
 
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
+#include <Windows.h>
+#include <gl/gl.h>
+#include <glext.h>
 
 MeshPart::MeshPart(int verticesCount, Vertex *vertices, Mesh *mesh)
 {
@@ -20,8 +21,8 @@ MeshPart::MeshPart(int verticesCount, Vertex *vertices, Mesh *mesh)
 	this->m_verticesCount = verticesCount;
 	this->m_vertices = vertices;
 	
-	glGenVertexArraysOES(1, &m_vertexArrayId);
-	glBindVertexArrayOES(m_vertexArrayId);
+	glGenVertexArrays(1, &m_vertexArrayId);
+	glBindVertexArray(m_vertexArrayId);
 	
 	glGenBuffers(1, &vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
@@ -34,7 +35,7 @@ MeshPart::MeshPart(int verticesCount, Vertex *vertices, Mesh *mesh)
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(sm::Vec3) * 3));
 	
-	glBindVertexArrayOES(0);
+	glBindVertexArray(0);
 	
 	material = NULL;
 }
@@ -47,7 +48,7 @@ bool& MeshPart::IsAlvaysVisible()
 MeshPart::~MeshPart()
 {
 	glDeleteBuffers(1, &vboId);
-	glDeleteVertexArraysOES(1, &m_vertexArrayId);
+	glDeleteVertexArrays(1, &m_vertexArrayId);
 
 	delete [] m_vertices;
 	delete m_bbox;
@@ -56,7 +57,7 @@ MeshPart::~MeshPart()
 
 void MeshPart::Draw()
 {
-	glBindVertexArrayOES(m_vertexArrayId);
+	glBindVertexArray(m_vertexArrayId);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
 

@@ -50,9 +50,10 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\majak\code\libs;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Framework;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Framework\;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Contrib\;C:\Users\majak\code\Machineris\Code\headers\;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -68,7 +69,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -78,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BunniesView\GraphicsEngineWin.h" />
     <ClInclude Include="BunniesView\IInputObserver.h" />
     <ClInclude Include="BunniesView\Input.h" />
     <ClInclude Include="BunniesView\IShapesRenderer.h" />
@@ -109,10 +111,13 @@
     <ClInclude Include="Bunnies\Idle.h" />
     <ClInclude Include="Bunnies\GameProps.h" />
     <ClInclude Include="Bunnies\IGameController.h" />
+    <ClInclude Include="Bunnies\IGraphicsEngine.h" />
     <ClInclude Include="Bunnies\IGun.h" />
+    <ClInclude Include="Bunnies\InfectedBunniesFactory.h" />
     <ClInclude Include="Bunnies\InfectedBunny.h" />
     <ClInclude Include="Bunnies\InterfaceProvider.h" />
     <ClInclude Include="Bunnies\IScreen.h" />
+    <ClInclude Include="Bunnies\ITexture.h" />
     <ClInclude Include="Bunnies\Reproducting.h" />
     <ClInclude Include="Bunnies\Respawning.h" />
     <ClInclude Include="Bunnies\RestingAfterFucking.h" />
@@ -130,20 +135,29 @@
     <ClInclude Include="Framework\Graphics\BoundingSphere.h" />
     <ClInclude Include="Framework\Graphics\Color.h" />
     <ClInclude Include="Framework\Graphics\DepthTexture.h" />
-    <ClInclude Include="Framework\Graphics\Effect.h" />
     <ClInclude Include="Framework\Graphics\FontLetter.h" />
     <ClInclude Include="Framework\Graphics\FontRenderer.h" />
     <ClInclude Include="Framework\Graphics\Framebuffer.h" />
     <ClInclude Include="Framework\Graphics\ICgContextService.h" />
     <ClInclude Include="Framework\Graphics\IDrawable.h" />
     <ClInclude Include="Framework\Graphics\IGlContextService.h" />
+    <ClInclude Include="Framework\Graphics\Image.h" />
+    <ClInclude Include="Framework\Graphics\ImageLoader.h" />
+    <ClInclude Include="Framework\Graphics\Interpolators\IInterpolator.h" />
+    <ClInclude Include="Framework\Graphics\Interpolators\IKeysContainer.h" />
+    <ClInclude Include="Framework\Graphics\Interpolators\Interpolator.h" />
+    <ClInclude Include="Framework\Graphics\Interpolators\InterpolatorFactory.h" />
+    <ClInclude Include="Framework\Graphics\Interpolators\KeyFrame.h" />
+    <ClInclude Include="Framework\Graphics\Interpolators\LinearInterpolator.h" />
+    <ClInclude Include="Framework\Graphics\Interpolators\StateInterpolator.h" />
+    <ClInclude Include="Framework\Graphics\Interpolators\TCBInterpolator.h" />
     <ClInclude Include="Framework\Graphics\IUpdateable.h" />
     <ClInclude Include="Framework\Graphics\Material.h" />
     <ClInclude Include="Framework\Graphics\Mesh.h" />
     <ClInclude Include="Framework\Graphics\MeshPart.h" />
     <ClInclude Include="Framework\Graphics\Model.h" />
+    <ClInclude Include="Framework\Graphics\PngLoader.h" />
     <ClInclude Include="Framework\Graphics\Point.h" />
-    <ClInclude Include="Framework\Graphics\PVRTexture.h" />
     <ClInclude Include="Framework\Graphics\Rect.h" />
     <ClInclude Include="Framework\Graphics\Shader.h" />
     <ClInclude Include="Framework\Graphics\SpriteAnim.h" />
@@ -151,12 +165,23 @@
     <ClInclude Include="Framework\Graphics\SteerCamera.h" />
     <ClInclude Include="Framework\Graphics\TexPart.h" />
     <ClInclude Include="Framework\Graphics\Texture.h" />
+    <ClInclude Include="Framework\Graphics\TextureLoader.h" />
     <ClInclude Include="Framework\Graphics\timecontrol.h" />
     <ClInclude Include="Framework\Graphics\Vertex.h" />
+    <ClInclude Include="Framework\Math\MathUtils.h" />
+    <ClInclude Include="Framework\Math\Matrix.h" />
+    <ClInclude Include="Framework\Math\Plane.h" />
+    <ClInclude Include="Framework\Math\Quat.h" />
+    <ClInclude Include="Framework\Math\Vec2.h" />
+    <ClInclude Include="Framework\Math\Vec3.h" />
     <ClInclude Include="Framework\UI\IGestureHandler.h" />
-    <ClInclude Include="Framework\UI\Image.h" />
+    <ClInclude Include="Framework\Utils\Randomizer.h" />
+    <ClInclude Include="Framework\Utils\StringUtils.h" />
+    <ClInclude Include="Framework\XML\XMLLoader.h" />
+    <ClInclude Include="Framework\XML\XMLNode.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BunniesView\GraphicsEngineWin.cpp" />
     <ClCompile Include="BunniesView\OpenglWindow.cpp" />
     <ClCompile Include="BunniesView\Renderer.cpp" />
     <ClCompile Include="BunniesView\Shapes.cpp" />
@@ -181,6 +206,7 @@
     <ClCompile Include="Bunnies\Hunting.cpp" />
     <ClCompile Include="Bunnies\Idle.cpp" />
     <ClCompile Include="Bunnies\GameProps.cpp" />
+    <ClCompile Include="Bunnies\InfectedBunniesFactory.cpp" />
     <ClCompile Include="Bunnies\InfectedBunny.cpp" />
     <ClCompile Include="Bunnies\InterfaceProvider.cpp" />
     <ClCompile Include="Bunnies\Reproducting.cpp" />
@@ -198,23 +224,27 @@
     <ClCompile Include="Framework\Graphics\BoundingSphere.cpp" />
     <ClCompile Include="Framework\Graphics\Color.cpp" />
     <ClCompile Include="Framework\Graphics\DepthTexture.cpp" />
-    <ClCompile Include="Framework\Graphics\Effect.cpp" />
     <ClCompile Include="Framework\Graphics\FontLetter.cpp" />
     <ClCompile Include="Framework\Graphics\FontRenderer.cpp" />
     <ClCompile Include="Framework\Graphics\Framebuffer.cpp" />
+    <ClCompile Include="Framework\Graphics\Image.cpp" />
     <ClCompile Include="Framework\Graphics\Material.cpp" />
     <ClCompile Include="Framework\Graphics\Mesh.cpp" />
     <ClCompile Include="Framework\Graphics\MeshPart.cpp" />
     <ClCompile Include="Framework\Graphics\Model.cpp" />
-    <ClCompile Include="Framework\Graphics\PVRTexture.cpp" />
     <ClCompile Include="Framework\Graphics\Shader.cpp" />
     <ClCompile Include="Framework\Graphics\SpriteAnim.cpp" />
     <ClCompile Include="Framework\Graphics\SpriteBatch.cpp" />
     <ClCompile Include="Framework\Graphics\SteerCamera.cpp" />
     <ClCompile Include="Framework\Graphics\TexPart.cpp" />
     <ClCompile Include="Framework\Graphics\Texture.cpp" />
+    <ClCompile Include="Framework\Graphics\TextureLoader.cpp" />
     <ClCompile Include="Framework\Graphics\TimeControl.cpp" />
-    <ClCompile Include="Framework\UI\Image.cpp" />
+    <ClCompile Include="Framework\Graphics\Win\ImageLoader.cpp" />
+    <ClCompile Include="Framework\Utils\Randomizer.cpp" />
+    <ClCompile Include="Framework\Utils\StringUtils.cpp" />
+    <ClCompile Include="Framework\XML\XMLLoader.cpp" />
+    <ClCompile Include="Framework\XML\XMLNode.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

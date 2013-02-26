@@ -1,12 +1,11 @@
 #pragma once
 
-#include <OpenGLES/ES1/gl.h>
-#include <OpenGLES/ES1/glext.h>
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
-#import "../Utils/Math/Matrix.h"
-#import "../Utils/Math/Vec3.h"
-#import "../Utils/Math/Vec2.h"
+#include "../Math/Matrix.h"
+#include "../Math/Vec3.h"
+#include "../Math/Vec2.h"
+#include <Windows.h>
+#include <gl/GL.h>
+#include <glext.h>
 
 class SteerCamera
 {

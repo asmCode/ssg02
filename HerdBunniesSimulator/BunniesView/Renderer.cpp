@@ -1,8 +1,9 @@
 #include "Renderer.h"
 #include "Shapes.h"
 
-#include "../Bunnies/GameController.h"
+#include "../Bunnies/InfectedBunniesFactory.h"
 #include "../Bunnies/Player.h"
+#include "GraphicsEngineWin.h"
 
 #include <windows.h>
 #include <gl\gl.h>
@@ -10,7 +11,8 @@
 #include <time.h>
 #include <assert.h>
 
-GameController *gctrl;
+IGameController *gctrl;
+GraphicsEngineWin *graphics;
 
 bool mouseDown = false;
 
@@ -26,7 +28,9 @@ void Renderer::Initialize()
 
 	input ->RegisterObserver(this);
 
-	gctrl = new GameController();
+	graphics = new GraphicsEngineWin();
+
+	gctrl = InfectedBunniesFactory::Create(graphics);
 	bool success = gctrl->Initialize();
 	assert(success != NULL);
 }

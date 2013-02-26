@@ -1,9 +1,11 @@
-#import "SpriteBatch.h"
-#import "../Utils/Math/Vec2.h"
-#import "../Utils/Math/Vec3.h"
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
-#import <memory.h>
+#include "SpriteBatch.h"
+#include "../Math/Vec2.h"
+#include "../Math/Vec3.h"
+
+#include <Windows.h>
+#include <gl/gl.h>
+#include <glext.h>
+#include <memory.h>
 
 const float SpriteBatch::Verts[8] = {
 	-0.5f, -0.5f,	

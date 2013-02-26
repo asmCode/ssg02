@@ -1,9 +1,7 @@
 #include "Texture.h"
+#include "D:\stuff\we-can_2012-demo\camera_anim\GraphicsLibrary\GlExtFactory.h"
+
 #include <assert.h>
-#include <OpenGLES/ES1/gl.h>
-#include <OpenGLES/ES1/glext.h>
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
 
 Texture::Texture()
 {
@@ -13,7 +11,15 @@ Texture::Texture()
 	this ->texId = 0;	
 }
 
-Texture::Texture(int width, int height, int bpp, const void *data)
+Texture::Texture(
+	int width,
+	int height,
+	int bpp,
+	const void *data,
+	Wrap wrap,
+	Filter minFilter,
+	Filter magFilter,
+	bool genMipmaps)
 {	
 	this ->width = width;
 	this ->height = height;
@@ -31,14 +37,14 @@ Texture::Texture(int width, int height, int bpp, const void *data)
 	
 	glGenTextures(1, &texId);
 	glBindTexture(GL_TEXTURE_2D, texId);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap);
 	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+
+	if (genMipmaps)
+		glGenerateMipmapEXT(GL_TEXTURE_2D);
 }
 
 Texture::~Texture()

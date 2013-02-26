@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HerdBunniesSimulator", "HerdBunniesSimulator.vcxproj", "{FBCFA621-C7CE-4E14-A97F-1680382163C7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BunniesHerdSimulator", "HerdBunniesSimulator.vcxproj", "{FBCFA621-C7CE-4E14-A97F-1680382163C7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "..\Test\Test.vcxproj", "{16BCA04D-0922-4F64-934D-477F423EA547}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{FBCFA621-C7CE-4E14-A97F-1680382163C7}.Debug|Win32.Build.0 = Debug|Win32
 		{FBCFA621-C7CE-4E14-A97F-1680382163C7}.Release|Win32.ActiveCfg = Release|Win32
 		{FBCFA621-C7CE-4E14-A97F-1680382163C7}.Release|Win32.Build.0 = Release|Win32
+		{16BCA04D-0922-4F64-934D-477F423EA547}.Debug|Win32.ActiveCfg = Debug|Win32
+		{16BCA04D-0922-4F64-934D-477F423EA547}.Debug|Win32.Build.0 = Debug|Win32
+		{16BCA04D-0922-4F64-934D-477F423EA547}.Release|Win32.ActiveCfg = Release|Win32
+		{16BCA04D-0922-4F64-934D-477F423EA547}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

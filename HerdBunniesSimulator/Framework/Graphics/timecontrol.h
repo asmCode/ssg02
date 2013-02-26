@@ -1,6 +1,6 @@
 #pragma once
 
-/*#import <QuartzCore/QuartzCore.h>
+/*#include <QuartzCore/QuartzCore.h>
 
 class TimeControl
 {

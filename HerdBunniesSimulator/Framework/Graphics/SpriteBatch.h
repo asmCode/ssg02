@@ -1,9 +1,9 @@
 #pragma once
 
-#import "Texture.h"
+#include "Texture.h"
 #include "TexPart.h"
-#include "../Utils/Math/Matrix.h"
-#include "../Utils/Math/Vec3.h"
+#include "../Math/Matrix.h"
+#include "../Math/Vec3.h"
 #include "Color.h"
 
 class SpriteBatch

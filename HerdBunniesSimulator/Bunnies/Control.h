@@ -3,7 +3,7 @@
 #include <list>
 #include <map>
 #include <string>
-#include <Utils/Math/Vec2.h>
+#include <Math/Vec2.h>
 #include <Graphics/IDrawable.h>
 #include <Graphics/IUpdateable.h>
 #include "ObserverSubject.h"
