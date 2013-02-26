@@ -16,6 +16,8 @@ public:
 	XMLNode(const std::string &name);
 	XMLNode(const std::string &name, const std::string &value);
 
+	~XMLNode();
+
 	std::string GetName() const;
 
 	std::string GetValueAsString() const;

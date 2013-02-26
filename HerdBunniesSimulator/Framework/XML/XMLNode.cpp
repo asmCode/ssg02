@@ -19,6 +19,12 @@ XMLNode::XMLNode(const std::string &name, const std::string &value) :
 {
 }
 
+XMLNode::~XMLNode()
+{
+	for (uint32_t i = 0; i < m_children.size(); i++)
+		delete m_children[i];
+}
+
 std::string XMLNode::GetName() const
 {
 	return m_name;

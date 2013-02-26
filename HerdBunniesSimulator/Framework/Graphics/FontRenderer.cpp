@@ -1,8 +1,6 @@
 #include <stddef.h>
 #include "FontRenderer.h"
 
-#define TIXML_USE_STL
-#include <tinyxml/tinyxml.h>
 #include <Framework/Graphics/Image.h>
 #include <Framework/IO/Path.h>
 #include "SpriteBatch.h"
