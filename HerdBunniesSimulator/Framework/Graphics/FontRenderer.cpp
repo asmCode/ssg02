@@ -1,8 +1,10 @@
 #include <stddef.h>
 #include "FontRenderer.h"
 
-#include <Framework/Graphics/Image.h>
-#include <Framework/IO/Path.h>
+#include <Graphics/ImageLoader.h>
+#include <IO/Path.h>
+#include <XML/XMLNode.h>
+#include <XML/XMLLoader.h>
 #include "SpriteBatch.h"
 
 #include <Windows.h>
@@ -18,21 +20,35 @@ Texture *FontRenderer::LoadFontBitmap(const std::string &path)
 	if (!Path::IsFileExists(path.c_str()))
 		return NULL;
 	
-	Image *img = Image::LoadImage(path.c_str());
-	if (img == NULL)
+	uint8_t *data;
+	uint32_t width;
+	uint32_t height;
+	uint32_t bytesCount;
+
+	if (!ImageLoader::LoadFromFile(path, data, width, height, bytesCount))
 		return NULL;
-	Texture *texture = new Texture(img ->GetWidth(), img ->GetHeight(), img ->GetBpp(), img ->GetData());
-	delete img;
+	
+	Texture *texture = new Texture(
+		width,
+		height,
+		bytesCount,
+		data,
+		Texture::Wrap_ClampToEdge,
+		Texture::Filter_Nearest,
+		Texture::Filter_Nearest,
+		false);
+
+	delete [] data;
 	
 	texture ->BindTexture();
 	//glGenerateMipmap(GL_TEXTURE_2D);
 //	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 //	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	/*glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);*/
 	
 	return texture;
 }
@@ -52,22 +68,14 @@ bool FontRenderer::ParseBounds(const std::string &strBounds, sm::Rect<int> &boun
 }
 
 FontRenderer* FontRenderer::LoadFromFile(const char *path)
-{
-	TiXmlDocument xmlDoc;
-	if (!xmlDoc.LoadFile(path))
-		return NULL;
-	
-	const TiXmlElement *rootNode = xmlDoc.RootElement();
-	if (rootNode == NULL)
-		return NULL;
-	
-	if (strcmp(rootNode ->Value(), "alphabet") != 0)
-		return NULL;
-	
+{	
 	FontLetter texLetters[256];
+
+	XMLNode *xmlDoc = XMLLoader::LoadFromFile(path);
+	if (xmlDoc == NULL)
+		return NULL;
 	
-	std::string bmpFilename;
-	rootNode ->QueryStringAttribute("bitmap", &bmpFilename);
+	std::string bmpFilename = xmlDoc->GetAttribAsString("bitmap");
 	if (bmpFilename.empty())
 		return NULL;
 	
@@ -75,27 +83,24 @@ FontRenderer* FontRenderer::LoadFromFile(const char *path)
 	Texture *tex = LoadFontBitmap(_path.GetPath() + bmpFilename);
 	if (tex == NULL)
 		return NULL;
-	
-	const TiXmlNode *child = NULL;
-	while((child = rootNode->IterateChildren(child)) != NULL)
+
+	if (xmlDoc->GetName() != "alphabet")
 	{
-		const TiXmlElement *charElement = child ->ToElement();
-		if (strcmp(charElement ->Value(), "char") == 0)
-		{
-			std::string letter;
-			std::string bounds;
-			if (charElement ->QueryStringAttribute("letter", &letter) != TIXML_SUCCESS ||
-				charElement ->QueryStringAttribute("bounds", &bounds) != TIXML_SUCCESS ||
-				letter.size() != 1)
-				return NULL;
-			
-			sm::Rect<int> boundsValues;
-			if (!ParseBounds(bounds, boundsValues))
-				return NULL;
-			
-			texLetters[letter[0]].Size = sm::Point<int>(boundsValues.Width, boundsValues.Height);
-			texLetters[letter[0]].Coords = TexPart(tex, boundsValues);
-		}
+		delete xmlDoc;
+		return NULL;
+	}
+
+	for (uint32_t i = 0; i < xmlDoc->GetChildrenCount(); i++)
+	{
+		std::string letter = xmlDoc[i].GetAttribAsString("letter");
+		std::string bounds = xmlDoc[i].GetAttribAsString("bounds");
+
+		sm::Rect<int> boundsValues;
+		if (!ParseBounds(bounds, boundsValues))
+			return NULL;
+
+		texLetters[letter[0]].Size = sm::Point<int>(boundsValues.Width, boundsValues.Height);
+		texLetters[letter[0]].Coords = TexPart(tex, boundsValues);
 	}
 	
 	FontRenderer *fontRenderer = new FontRenderer();
@@ -142,7 +147,7 @@ sm::Point<int> FontRenderer::MeasureString(const char *text)
 {
 	sm::Point<int> size(0, texLetters['A'].Size.Y);
 	
-	for (int i = 0; i < strlen(text); i++)
+	for (uint32_t i = 0; i < strlen(text); i++)
 		size.X += texLetters[text[i]].Size.X;
 	
 	return size;

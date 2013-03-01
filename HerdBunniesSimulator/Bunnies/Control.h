@@ -6,9 +6,10 @@
 #include <Math/Vec2.h>
 #include <Graphics/IDrawable.h>
 #include <Graphics/IUpdateable.h>
-#include "ObserverSubject.h"
-#include "ITouchObserver.h"
-#include "IGestureHandler.h"
+#include <Graphics/Point.h>
+#include <Core/ObserverSubject.h>
+#include <UI/ITouchObserver.h>
+#include <UI/IGestureHandler.h>
 #include <Graphics/TexPart.h>
 
 class SpriteBatch;
