@@ -1,16 +1,30 @@
 #include "TextureLoader.h"
 
 #include "Texture.h"
-#include "PngLoader.h"
+#include <Graphics/ImageLoader.h>
 
 Texture* TextureLoader::Load(const std::string &path)
 {
-	int width, height, bpp;
-	BYTE *data;
-	PngLoader::LoadImage(path.c_str(), width, height, bpp, data);
+	uint8_t *data;
+	uint32_t width;
+	uint32_t height;
+	uint32_t bytesCount;
 
-	Texture *texture = new Texture(width, height, bpp, data, Texture::Wrap_Repeat, Texture::Filter_LinearMipmapLinear, Texture::Filter_Linear, true);
-	PngLoader::ReleaseData(data);
+	if (!ImageLoader::LoadFromFile(path, data, width, height, bytesCount))
+		return NULL;
+
+	Texture *texture = new Texture(
+		width,
+		height,
+		bytesCount * 8,
+		data,
+		Texture::Wrap_Repeat,
+		Texture::Filter_LinearMipmapLinear,
+		Texture::Filter_Linear,
+		true);
+	
+	delete [] data;
+
 	return texture;
 }
 

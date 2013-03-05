@@ -4,15 +4,15 @@
 #include "BoundingSphere.h"
 
 #include <Windows.h>
+#include <GL/glew.h>
 #include <gl/gl.h>
-#include <glext.h>
 
 MeshPart::MeshPart(int verticesCount, Vertex *vertices, Mesh *mesh)
 {
 	m_bbox = new BoundingBox();
 	(*m_bbox) = BoundingBox::FromVertices(vertices, verticesCount);
-	m_bsphere = new BoundingSphere();
-	(*m_bsphere) = BoundingSphere::FromBBox(*m_bbox);
+	/*m_bsphere = new BoundingSphere();
+	(*m_bsphere) = BoundingSphere::FromBBox(*m_bbox);*/
 
 	visible = true;
 	isAlwaysVisible = false;

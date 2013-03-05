@@ -1,5 +1,4 @@
 #include "Texture.h"
-#include "D:\stuff\we-can_2012-demo\camera_anim\GraphicsLibrary\GlExtFactory.h"
 
 #include <assert.h>
 

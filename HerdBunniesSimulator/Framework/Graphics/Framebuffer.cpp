@@ -1,4 +1,8 @@
 #include "Framebuffer.h"
+
+#include <GL/glew.h>
+#include <gl/gl.h>
+#include <glext.h>
 #include <assert.h>
 
 Framebuffer::Framebuffer()

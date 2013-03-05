@@ -6,8 +6,8 @@
 #include <string>
 
 #include <Windows.h>
+#include <GL/glew.h>
 #include <gl/gl.h>
-#include <glext.h>
 
 class Mesh
 {

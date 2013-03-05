@@ -1,6 +1,5 @@
 #pragma once
 
-//#include "GlExtFactory.h"
 #include "Vertex.h"
 #include "Material.h"
 

@@ -1,8 +1,6 @@
 #pragma once
 
 #include <Windows.h>
-#include <gl/gl.h>
-#include <glext.h>
 
 class Framebuffer
 {

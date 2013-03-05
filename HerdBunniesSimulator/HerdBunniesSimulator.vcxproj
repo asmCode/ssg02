@@ -53,14 +53,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Framework\;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Contrib\;C:\Users\majak\code\Machineris\Code\headers\;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext\opengl;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Framework\;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Contrib\;C:\Users\majak\code\Machineris\Code\headers\;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext\opengl;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext;"d:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext\glew-1.9.0\include";%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;"d:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext\libpng\libpng15.lib";"d:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext\zlib\zlib.lib";"d:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext\glew-1.9.0\lib\glew32.lib";%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -170,6 +169,7 @@
     <ClInclude Include="Framework\Graphics\TextureLoader.h" />
     <ClInclude Include="Framework\Graphics\timecontrol.h" />
     <ClInclude Include="Framework\Graphics\Vertex.h" />
+    <ClInclude Include="Framework\IO\Path.h" />
     <ClInclude Include="Framework\Math\MathUtils.h" />
     <ClInclude Include="Framework\Math\Matrix.h" />
     <ClInclude Include="Framework\Math\Plane.h" />
@@ -221,6 +221,7 @@
     <ClCompile Include="Bunnies\Shotgun.cpp" />
     <ClCompile Include="Bunnies\ShotgunBullet.cpp" />
     <ClCompile Include="Bunnies\Ticker.cpp" />
+    <ClCompile Include="Ext\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="Framework\Graphics\Animation.cpp" />
     <ClCompile Include="Framework\Graphics\BoundingBox.cpp" />
     <ClCompile Include="Framework\Graphics\BoundingSphere.cpp" />
@@ -243,6 +244,7 @@
     <ClCompile Include="Framework\Graphics\TextureLoader.cpp" />
     <ClCompile Include="Framework\Graphics\TimeControl.cpp" />
     <ClCompile Include="Framework\Graphics\Win\ImageLoader.cpp" />
+    <ClCompile Include="Framework\IO\Win32\Path.cpp" />
     <ClCompile Include="Framework\Utils\Randomizer.cpp" />
     <ClCompile Include="Framework\Utils\StringUtils.cpp" />
     <ClCompile Include="Framework\XML\XMLLoader.cpp" />

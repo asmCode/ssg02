@@ -1,5 +1,7 @@
 #include <Windows.h>
 
+#include "../Path.h"
+
 bool Path::IsFileExists(const char *fileName)
 {
 	if (GetFileAttributes(fileName) != INVALID_FILE_ATTRIBUTES)
