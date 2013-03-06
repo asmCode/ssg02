@@ -3,12 +3,14 @@
 #include <UI/IGestureHandler.h>
 #include "IGameController.h"
 #include <stdint.h>
+#include <string>
 
 #include "Player.h" // TODO PROTO
 
 class IGraphicsEngine;
 class IScreen;
 class GameScreen;
+class Content;
 
 class GameController : public IGameController
 {
@@ -16,7 +18,7 @@ public:
 	GameController(IGraphicsEngine *graphicsEngine);
 	~GameController(void);
 
-	bool Initialize();
+	bool Initialize(const std::string &basePath);
 
 	void Draw(float time, float seconds);
 	void Update(float time, float seconds);
@@ -33,6 +35,7 @@ public:
 private:
 	GameScreen *m_gameScreen;
 	IGraphicsEngine *m_graphicsEngine;
+	Content *m_content;
 
 	IScreen *m_activeScreen;
 };

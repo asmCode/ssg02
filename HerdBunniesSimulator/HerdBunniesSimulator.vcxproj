@@ -54,7 +54,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Framework\;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Contrib\;C:\Users\majak\code\Machineris\Code\headers\;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext\opengl;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext;"d:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext\glew-1.9.0\include";%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -80,7 +80,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BunniesView\GraphicsEngineWin.h" />
     <ClInclude Include="BunniesView\IInputObserver.h" />
     <ClInclude Include="BunniesView\Input.h" />
     <ClInclude Include="BunniesView\IShapesRenderer.h" />
@@ -112,7 +111,6 @@
     <ClInclude Include="Bunnies\Idle.h" />
     <ClInclude Include="Bunnies\GameProps.h" />
     <ClInclude Include="Bunnies\IGameController.h" />
-    <ClInclude Include="Bunnies\IGraphicsEngine.h" />
     <ClInclude Include="Bunnies\IGun.h" />
     <ClInclude Include="Bunnies\InfectedBunniesFactory.h" />
     <ClInclude Include="Bunnies\InfectedBunny.h" />
@@ -130,18 +128,23 @@
     <ClInclude Include="Bunnies\Player.h" />
     <ClInclude Include="Bunnies\Shotgun.h" />
     <ClInclude Include="Bunnies\ShotgunBullet.h" />
+    <ClInclude Include="Bunnies\SplashScreen.h" />
     <ClInclude Include="Bunnies\Ticker.h" />
     <ClInclude Include="Framework\Graphics\Animation.h" />
     <ClInclude Include="Framework\Graphics\BoundingBox.h" />
     <ClInclude Include="Framework\Graphics\BoundingSphere.h" />
     <ClInclude Include="Framework\Graphics\Color.h" />
+    <ClInclude Include="Framework\Graphics\Content\Content.h" />
     <ClInclude Include="Framework\Graphics\DepthTexture.h" />
     <ClInclude Include="Framework\Graphics\FontLetter.h" />
     <ClInclude Include="Framework\Graphics\FontRenderer.h" />
     <ClInclude Include="Framework\Graphics\Framebuffer.h" />
+    <ClInclude Include="Framework\Graphics\GraphicsEngineFactory.h" />
+    <ClInclude Include="Framework\Graphics\GraphicsEngineWin.h" />
     <ClInclude Include="Framework\Graphics\ICgContextService.h" />
     <ClInclude Include="Framework\Graphics\IDrawable.h" />
     <ClInclude Include="Framework\Graphics\IGlContextService.h" />
+    <ClInclude Include="Framework\Graphics\IGraphicsEngine.h" />
     <ClInclude Include="Framework\Graphics\Image.h" />
     <ClInclude Include="Framework\Graphics\ImageLoader.h" />
     <ClInclude Include="Framework\Graphics\Interpolators\IInterpolator.h" />
@@ -183,7 +186,6 @@
     <ClInclude Include="Framework\XML\XMLNode.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BunniesView\GraphicsEngineWin.cpp" />
     <ClCompile Include="BunniesView\OpenglWindow.cpp" />
     <ClCompile Include="BunniesView\Renderer.cpp" />
     <ClCompile Include="BunniesView\Shapes.cpp" />
@@ -220,16 +222,20 @@
     <ClCompile Include="Bunnies\Player.cpp" />
     <ClCompile Include="Bunnies\Shotgun.cpp" />
     <ClCompile Include="Bunnies\ShotgunBullet.cpp" />
+    <ClCompile Include="Bunnies\SplashScreen.cpp" />
     <ClCompile Include="Bunnies\Ticker.cpp" />
     <ClCompile Include="Ext\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="Framework\Graphics\Animation.cpp" />
     <ClCompile Include="Framework\Graphics\BoundingBox.cpp" />
     <ClCompile Include="Framework\Graphics\BoundingSphere.cpp" />
     <ClCompile Include="Framework\Graphics\Color.cpp" />
+    <ClCompile Include="Framework\Graphics\Content\Content.cpp" />
     <ClCompile Include="Framework\Graphics\DepthTexture.cpp" />
     <ClCompile Include="Framework\Graphics\FontLetter.cpp" />
     <ClCompile Include="Framework\Graphics\FontRenderer.cpp" />
     <ClCompile Include="Framework\Graphics\Framebuffer.cpp" />
+    <ClCompile Include="Framework\Graphics\GraphicsEngineFactory.cpp" />
+    <ClCompile Include="Framework\Graphics\GraphicsEngineWin.cpp" />
     <ClCompile Include="Framework\Graphics\Image.cpp" />
     <ClCompile Include="Framework\Graphics\Material.cpp" />
     <ClCompile Include="Framework\Graphics\Mesh.cpp" />

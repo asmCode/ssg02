@@ -1,15 +1,22 @@
 #include <windows.h>
 
+#include <GL/glew.h>
 #include "OpenglWindow.h"
 #include "TimeControl.h"
 #include "Renderer.h"
 #include <stdio.h>
+#include <assert.h>
 
 OpenglWindow *glwnd;
 Renderer *renderer;
 
 void InitGl()
 {
+	if (glewInit() != GLEW_OK)
+	{
+		assert(false);
+	}
+
 	glViewport(0, 0, 800, 800);
 
 	glMatrixMode(GL_PROJECTION);

@@ -1,10 +1,11 @@
 #include "GameController.h"
 
-#include "IGraphicsEngine.h"
 #include "IScreen.h"
 #include "GameScreen.h"
 #include "../BunniesView/WinShapesRenderer.h"
 #include "InterfaceProvider.h"
+#include <Graphics/IGraphicsEngine.h>
+#include <Graphics/Content/Content.h>
 #include <stddef.h>
 #include <assert.h>
 
@@ -19,16 +20,19 @@ GameController::~GameController(void)
 {
 }
 
-bool GameController::Initialize()
+bool GameController::Initialize(const std::string &basePath)
 {
 	WinShapesRenderer *winShapeRenderer = new WinShapesRenderer();
 	InterfaceProvider::m_shapesRenderer = winShapeRenderer;
 	InterfaceProvider::m_graphicsEngine = m_graphicsEngine;
 
+	m_content = new Content(m_graphicsEngine);
+	m_content->LoadTextures(basePath + "/data/gui/");
+	Texture *tex = m_content->Get<Texture>("SplashScreen");
+
 	m_gameScreen = new GameScreen();
 	if (!m_gameScreen->Initialize())
 		return false;
-
 
 	m_activeScreen = m_gameScreen;
 

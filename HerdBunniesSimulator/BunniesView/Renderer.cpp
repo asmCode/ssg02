@@ -3,16 +3,17 @@
 
 #include "../Bunnies/InfectedBunniesFactory.h"
 #include "../Bunnies/Player.h"
-#include "GraphicsEngineWin.h"
 
 #include <windows.h>
 #include <gl\gl.h>
 #include <gl\glu.h>
 #include <time.h>
 #include <assert.h>
+#include <Graphics/IGraphicsEngine.h>
+#include <Graphics/GraphicsEngineFactory.h>
 
 IGameController *gctrl;
-GraphicsEngineWin *graphics;
+IGraphicsEngine *graphics;
 
 bool mouseDown = false;
 
@@ -24,14 +25,17 @@ Renderer::Renderer(OpenglWindow *glwnd)
 
 void Renderer::Initialize()
 {
+	char currentDir[MAX_PATH + 1];
+	GetCurrentDirectory(MAX_PATH + 1, currentDir);
+
 	srand(time(NULL));
 
 	input ->RegisterObserver(this);
 
-	graphics = new GraphicsEngineWin();
+	graphics = GraphicsEngineFactory::Create();
 
 	gctrl = InfectedBunniesFactory::Create(graphics);
-	bool success = gctrl->Initialize();
+	bool success = gctrl->Initialize(currentDir);
 	assert(success != NULL);
 }
 

@@ -3,13 +3,14 @@
 
 #include <UI/IGestureHandler.h>
 #include <Math/Vec3.h>
+#include <string>
 
 class Player;
 
 class IGameController : public IGestureHandler
 {
 public:
-	virtual bool Initialize() = 0;
+	virtual bool Initialize(const std::string &basePath) = 0;
 
 	virtual void Draw(float time, float seconds) = 0;
 	virtual void Update(float time, float seconds) = 0;
