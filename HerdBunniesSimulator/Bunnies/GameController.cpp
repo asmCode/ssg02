@@ -2,6 +2,7 @@
 
 #include "IScreen.h"
 #include "GameScreen.h"
+#include "SplashScreen.h"
 #include "../BunniesView/WinShapesRenderer.h"
 #include "InterfaceProvider.h"
 #include <Graphics/IGraphicsEngine.h>
@@ -12,6 +13,7 @@
 GameController::GameController(IGraphicsEngine *graphicsEngine) :
 	m_graphicsEngine(graphicsEngine),
 	m_gameScreen(NULL),
+	m_splashScreen(NULL),
 	m_activeScreen(NULL)
 {
 }
@@ -23,18 +25,26 @@ GameController::~GameController(void)
 bool GameController::Initialize(const std::string &basePath)
 {
 	WinShapesRenderer *winShapeRenderer = new WinShapesRenderer();
-	InterfaceProvider::m_shapesRenderer = winShapeRenderer;
-	InterfaceProvider::m_graphicsEngine = m_graphicsEngine;
 
 	m_content = new Content(m_graphicsEngine);
 	m_content->LoadTextures(basePath + "/data/gui/");
-	Texture *tex = m_content->Get<Texture>("SplashScreen");
+	m_content->LoadShaders(basePath + "/data/shaders/");
+
+	Shader *shader = m_content->Get<Shader>("sprite");
+
+	InterfaceProvider::m_shapesRenderer = winShapeRenderer;
+	InterfaceProvider::m_graphicsEngine = m_graphicsEngine;
+	InterfaceProvider::m_content = m_content;
 
 	m_gameScreen = new GameScreen();
 	if (!m_gameScreen->Initialize())
 		return false;
 
-	m_activeScreen = m_gameScreen;
+	m_splashScreen = new SplashScreen();
+	if (!m_splashScreen->InitResources())
+		return false;
+
+	m_activeScreen = m_splashScreen;
 
 	return true;
 }

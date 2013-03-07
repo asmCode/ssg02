@@ -16,6 +16,6 @@ public:
 	void Update(float time, float seconds);
 
 private:
-//	Tex
+	Texture *m_splashScreenTex;
 };
 

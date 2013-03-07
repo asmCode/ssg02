@@ -115,7 +115,7 @@ void Shader::SetMatrixParameter(const char *name, const sm::Matrix &matrix)
 
 GLuint Shader::CompileShader(GLenum shaderType, const char* file)
 {
-	std::ifstream fileStream(file);
+	std::ifstream fileStream(file, std::ios::binary);
 	if (!fileStream.is_open() || fileStream.fail())
 	{
 		assert(false);
@@ -130,12 +130,17 @@ GLuint Shader::CompileShader(GLenum shaderType, const char* file)
 	fileStream.read(fileContent, fileSize);
 	fileStream.close();
 	fileContent[fileSize] = 0;
+
+	GLchar **cipa = new GLchar*[2];
+	cipa[0] = fileContent;
+	cipa[1] = 0;
 	
 	GLuint shaderId = glCreateShader(shaderType);
-    glShaderSource(shaderId, 1, (const GLchar**)&fileContent, NULL);
+    //glShaderSource(shaderId, 1, (const GLchar**)&fileContent, NULL);
+	glShaderSource(shaderId, 1, (const GLchar**)cipa, NULL);
     glCompileShader(shaderId);
     
-#ifdef DEBUG
+#ifdef _DEBUG
     GLint logLength;
     glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength > 0) {
@@ -163,16 +168,21 @@ bool Shader::ValidateProgram(GLuint programId)
 	GLint status;
     
     glValidateProgram(programId);
-    glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &logLength);
-    if (logLength > 0)
+	glGetProgramiv(programId, GL_VALIDATE_STATUS, &status);
+
+	if (status != GL_TRUE)
 	{
-		GLchar *_log = new GLchar[logLength];
-        glGetProgramInfoLog(programId, logLength, &logLength, _log);
-		printf("validate log: %s\n", _log);
-        delete _log;
-		assert(false);
-    }
+		glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &logLength);
+		if (logLength > 0)
+		{
+			GLchar *_log = new GLchar[logLength];
+			glGetProgramInfoLog(programId, logLength, &logLength, _log);
+			printf("validate log: %s\n", _log);
+			delete _log;
+			//assert(false);
+		}
+	}    
     
-    glGetProgramiv(programId, GL_VALIDATE_STATUS, &status);
     return status == 0;
 }
+

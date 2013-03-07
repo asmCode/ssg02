@@ -90,7 +90,6 @@
     <ClInclude Include="BunniesView\WinShapesRenderer.h" />
     <ClInclude Include="Bunnies\AnimButton.h" />
     <ClInclude Include="Bunnies\BeeingFucked.h" />
-    <ClInclude Include="Bunnies\BoundingSphere.h" />
     <ClInclude Include="Bunnies\BunniesManager.h" />
     <ClInclude Include="Bunnies\Bunny.h" />
     <ClInclude Include="Bunnies\ChangingToInfected.h" />
@@ -170,7 +169,6 @@
     <ClInclude Include="Framework\Graphics\TexPart.h" />
     <ClInclude Include="Framework\Graphics\Texture.h" />
     <ClInclude Include="Framework\Graphics\TextureLoader.h" />
-    <ClInclude Include="Framework\Graphics\timecontrol.h" />
     <ClInclude Include="Framework\Graphics\Vertex.h" />
     <ClInclude Include="Framework\IO\Path.h" />
     <ClInclude Include="Framework\Math\MathUtils.h" />
@@ -194,7 +192,6 @@
     <ClCompile Include="BunniesView\WinShapesRenderer.cpp" />
     <ClCompile Include="Bunnies\AnimButton.cpp" />
     <ClCompile Include="Bunnies\BeeingFucked.cpp" />
-    <ClCompile Include="Bunnies\BoundingSphere.cpp" />
     <ClCompile Include="Bunnies\BunniesManager.cpp" />
     <ClCompile Include="Bunnies\Bunny.cpp" />
     <ClCompile Include="Bunnies\ChangingToInfected.cpp" />
@@ -248,13 +245,16 @@
     <ClCompile Include="Framework\Graphics\TexPart.cpp" />
     <ClCompile Include="Framework\Graphics\Texture.cpp" />
     <ClCompile Include="Framework\Graphics\TextureLoader.cpp" />
-    <ClCompile Include="Framework\Graphics\TimeControl.cpp" />
     <ClCompile Include="Framework\Graphics\Win\ImageLoader.cpp" />
     <ClCompile Include="Framework\IO\Win32\Path.cpp" />
     <ClCompile Include="Framework\Utils\Randomizer.cpp" />
     <ClCompile Include="Framework\Utils\StringUtils.cpp" />
     <ClCompile Include="Framework\XML\XMLLoader.cpp" />
     <ClCompile Include="Framework\XML\XMLNode.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shaders\sprite.fpr" />
+    <None Include="data\shaders\sprite.vpr" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

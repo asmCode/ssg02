@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BoundingSphere.h"
+#include <Graphics/BoundingSphere.h>
 
 namespace sm { class Vec3; }
 

@@ -10,6 +10,7 @@
 class IGraphicsEngine;
 class IScreen;
 class GameScreen;
+class SplashScreen;
 class Content;
 
 class GameController : public IGameController
@@ -34,6 +35,8 @@ public:
 
 private:
 	GameScreen *m_gameScreen;
+	SplashScreen *m_splashScreen;
+
 	IGraphicsEngine *m_graphicsEngine;
 	Content *m_content;
 

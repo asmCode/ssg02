@@ -4,6 +4,7 @@
 
 IShapesRenderer *InterfaceProvider::m_shapesRenderer;
 IGraphicsEngine *InterfaceProvider::m_graphicsEngine;
+Content *InterfaceProvider::m_content;
 
 IShapesRenderer* InterfaceProvider::GetShapesRenderer()
 {
@@ -15,5 +16,10 @@ IGraphicsEngine* InterfaceProvider::GetGraphicsEngine()
 {
 	assert(m_graphicsEngine != NULL);
 	return m_graphicsEngine;
+}
+
+Content* InterfaceProvider::GetContent()
+{
+	return m_content;
 }
 

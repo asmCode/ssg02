@@ -10,6 +10,7 @@ Content::Content(IGraphicsEngine *graphicsEngine) :
 
 Content::~Content()
 {
+
 }
 
 void Content::LoadTextures(const std::string &fullPath)
@@ -21,7 +22,22 @@ void Content::LoadTextures(const std::string &fullPath)
 	{
 		Path path(fullPath + filesNames[i]);
 
-		m_textures[path.GetFilename()] = m_graphicsEngine->Loadtexture(path.GetFullPath());
+		m_textures[path.GetFilename()] = m_graphicsEngine->LoadTexture(path.GetFullPath());
+	}
+}
+
+void Content::LoadShaders(const std::string &fullPath)
+{
+	std::vector<std::string> filesNames;
+	Path::GetAllFiles(filesNames, fullPath, "*.vpr");
+
+	for (uint32_t i = 0 ; i < filesNames.size(); i++)
+	{
+		// all vertex programs must have corresponding fragment program
+		Path vprPath(fullPath + filesNames[i]);
+		Path fprPath(fullPath + vprPath.GetFilename() + ".fpr");
+
+		m_shaders[vprPath.GetFilename()] = m_graphicsEngine->LoadShader(vprPath.GetFullPath(), fprPath.GetFullPath());
 	}
 }
 
