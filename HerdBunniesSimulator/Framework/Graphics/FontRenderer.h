@@ -11,14 +11,14 @@ class FontRenderer
 {
 private:
 	FontLetter texLetters[256];
-	SpriteBatch *spriteBatch;
+	SpriteBatch *m_spriteBatch;
 	
 	FontRenderer();
 	static bool ParseBounds(const std::string &strBounds, sm::Rect<int> &bounds);
 	static Texture *LoadFontBitmap(const std::string &path);
 	
 public:
-	static FontRenderer* LoadFromFile(const char *path);
+	static FontRenderer* LoadFromFile(const char *path, SpriteBatch *spriteBatch);
 	~FontRenderer();
 	
 	void DrawString(const char *text,

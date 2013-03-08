@@ -6,19 +6,12 @@
 #include "../Math/Vec3.h"
 #include "Color.h"
 
+class Shader;
+
 class SpriteBatch
-{
-private:
-	sm::Matrix proj;
-	float prevProjMatrix[16];
-	float prevModelMatrix[16];
-	
-	static const float Verts[8];
-	static const float Coords[8];
-	static const unsigned char ColorMask[16];
-	
+{	
 public:
-	SpriteBatch();
+	SpriteBatch(Shader *shader, const sm::Matrix &mvp);
 
 	void Begin();
 	void End();
@@ -40,4 +33,16 @@ public:
 		const float *verts,
 		const float *coords,
 		const unsigned char *colorMask);
+
+private:
+	Shader *m_shader;
+
+	sm::Matrix m_mvp;
+
+	bool m_isDepth;
+	bool m_isBlend;
+	
+	static const float Verts[8];
+	static const float Coords[8];
+	static const unsigned char ColorMask[16];
 };

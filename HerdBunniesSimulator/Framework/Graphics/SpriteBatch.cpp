@@ -1,11 +1,13 @@
 #include "SpriteBatch.h"
 #include "../Math/Vec2.h"
 #include "../Math/Vec3.h"
+#include "Shader.h"
 
 #include <Windows.h>
 #include <gl/gl.h>
 #include <glext.h>
 #include <memory.h>
+#include <assert.h>
 
 const float SpriteBatch::Verts[8] = {
 	-0.5f, -0.5f,	
@@ -28,45 +30,37 @@ const unsigned char SpriteBatch::ColorMask[16] = {
 	255, 255, 255, 255
 };
 
-SpriteBatch::SpriteBatch()
+SpriteBatch::SpriteBatch(Shader *shader, const sm::Matrix &mvp) :
+	m_shader(shader),
+	m_mvp(mvp),
+	m_isDepth(false),
+	m_isBlend(false)
 {
-	int viewportBound[4];
-	glGetIntegerv(GL_VIEWPORT, viewportBound);
-	proj = sm::Matrix::Ortho2DMatrix(0, viewportBound[2], viewportBound[3], 0);
+	assert(m_shader != NULL);
 }
 
 void SpriteBatch::Begin()
 {
-	glGetFloatv(GL_PROJECTION_MATRIX, prevProjMatrix);
-	glGetFloatv(GL_MODELVIEW_MATRIX, prevModelMatrix);
+	m_shader->UseProgram();
+	//m_shader->SetMatrixParameter("u_mvp", m_mvp);
 	
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glMultMatrixf(proj);
+	m_isDepth = glIsEnabled(GL_DEPTH_TEST) == GL_TRUE;
+	m_isBlend = glIsEnabled(GL_BLEND) == GL_TRUE;
 	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	
-	bool isTex = glIsEnabled(GL_TEXTURE_2D);
-	bool isDepth = glIsEnabled(GL_DEPTH_TEST);
-	bool isBlend = glIsEnabled(GL_BLEND);
-	
-	glDisable(GL_DEPTH_TEST);
-	
-	if (isTex) glEnable(GL_TEXTURE_2D);
-	if (isDepth) glEnable(GL_DEPTH_TEST);
-	if (isBlend) glEnable(GL_BLEND);
+	if (m_isDepth) glDisable(GL_DEPTH_TEST);
+	if (!m_isBlend) glEnable(GL_BLEND);
+
+	glEnableVertexAttribArray(0); // position
+	glEnableVertexAttribArray(1); // color
 }
 
 void SpriteBatch::End()
 {
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glMultMatrixf(prevProjMatrix);
-	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glMultMatrixf(prevModelMatrix);	
+	if (m_isDepth) glEnable(GL_DEPTH_TEST);
+	if (!m_isBlend) glDisable(GL_BLEND);
+
+	glDisableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
 }
 
 void SpriteBatch::Draw(const Color &color, int x, int y, int width, int height)
@@ -216,39 +210,20 @@ void SpriteBatch::Draw(const TexPart &texPart, const Color &colorMask, const sm:
 	Draw(texPart.Tex, verts, texPart.TexCoords, _color);
 }
 
+// TODO: should be static!
 void SpriteBatch::Draw(Texture *tex,
 		  const float *verts,
 		  const float *coords,
 		  const unsigned char *colorMask)
 {
-	if (tex != NULL)
-	{
-		glEnable(GL_TEXTURE_2D);
-		tex ->BindTexture();
-	}
-	else
-		glDisable(GL_TEXTURE_2D);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, verts);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, coords);
 	
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(2, GL_FLOAT, 0, verts);
-	
-	if (coords != NULL)
-	{
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glTexCoordPointer(2, GL_FLOAT, 0, coords);
-	}
-	
-	if (colorMask != NULL)
+	/*if (colorMask != NULL)
 	{
 		glEnableClientState(GL_COLOR_ARRAY);
 		glColorPointer(4, GL_UNSIGNED_BYTE, 0, colorMask);
-	}
+	}*/
 	
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	
-	glDisableClientState(GL_VERTEX_ARRAY);
-	if (coords != NULL)
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	if (colorMask != NULL)
-		glDisableClientState(GL_COLOR_ARRAY);
 }

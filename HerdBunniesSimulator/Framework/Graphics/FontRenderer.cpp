@@ -11,7 +11,8 @@
 #include <gl/gl.h>
 #include <glext.h>
 
-FontRenderer::FontRenderer()
+FontRenderer::FontRenderer() :
+	m_spriteBatch(NULL)
 {
 }
 
@@ -67,8 +68,10 @@ bool FontRenderer::ParseBounds(const std::string &strBounds, sm::Rect<int> &boun
 	return true;
 }
 
-FontRenderer* FontRenderer::LoadFromFile(const char *path)
-{	
+FontRenderer* FontRenderer::LoadFromFile(const char *path, SpriteBatch *spriteBatch)
+{
+	assert(spriteBatch != NULL);
+
 	FontLetter texLetters[256];
 
 	XMLNode *xmlDoc = XMLLoader::LoadFromFile(path);
@@ -104,10 +107,10 @@ FontRenderer* FontRenderer::LoadFromFile(const char *path)
 	}
 	
 	FontRenderer *fontRenderer = new FontRenderer();
+	fontRenderer->m_spriteBatch = spriteBatch;
 	if (fontRenderer != NULL)
 	{
 		memcpy(fontRenderer ->texLetters, texLetters, sizeof(FontLetter) * 256);
-		fontRenderer ->spriteBatch = new SpriteBatch();
 	}
 	return fontRenderer;
 }
@@ -121,7 +124,7 @@ void FontRenderer::DrawString(const char *text, unsigned x, unsigned y, const Co
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	spriteBatch ->Begin();
+	m_spriteBatch->Begin();
 	unsigned xShift = x;
 	unsigned yShift = y;
 	unsigned rowHeight = texLetters['A'].Size.Y;
@@ -135,12 +138,12 @@ void FontRenderer::DrawString(const char *text, unsigned x, unsigned y, const Co
 		}
 		
 		FontLetter letter = texLetters[text[i]];
-		spriteBatch ->Draw(letter.Coords, color, xShift, yShift);//, letter.Size.X, letter.Size.Y);
+		m_spriteBatch ->Draw(letter.Coords, color, xShift, yShift);//, letter.Size.X, letter.Size.Y);
 		xShift += letter.Size.X;
 		
 	}
 	//spriteBatch ->Draw(texLetters[text[0]].Coords.Tex, Color(255, 0, 0), 0, 40);
-	spriteBatch ->End();
+	m_spriteBatch->End();
 }
 
 sm::Point<int> FontRenderer::MeasureString(const char *text)

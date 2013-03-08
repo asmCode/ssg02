@@ -41,5 +41,7 @@ private:
 	Content *m_content;
 
 	IScreen *m_activeScreen;
+
+	bool InitializeGraphics(const std::string &basePath);
 };
 

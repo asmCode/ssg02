@@ -7,6 +7,7 @@
 #include "InterfaceProvider.h"
 #include <Graphics/IGraphicsEngine.h>
 #include <Graphics/Content/Content.h>
+#include <Graphics/SpriteBatch.h>
 #include <stddef.h>
 #include <assert.h>
 
@@ -22,7 +23,7 @@ GameController::~GameController(void)
 {
 }
 
-bool GameController::Initialize(const std::string &basePath)
+bool GameController::InitializeGraphics(const std::string &basePath)
 {
 	WinShapesRenderer *winShapeRenderer = new WinShapesRenderer();
 
@@ -32,9 +33,23 @@ bool GameController::Initialize(const std::string &basePath)
 
 	Shader *shader = m_content->Get<Shader>("sprite");
 
+	SpriteBatch *spriteBatch = new SpriteBatch(shader, sm::Matrix::IdentityMatrix());
+
 	InterfaceProvider::m_shapesRenderer = winShapeRenderer;
 	InterfaceProvider::m_graphicsEngine = m_graphicsEngine;
 	InterfaceProvider::m_content = m_content;
+	InterfaceProvider::m_spriteBatch = spriteBatch;
+	
+	return true;
+}
+
+bool GameController::Initialize(const std::string &basePath)
+{
+	if (!InitializeGraphics(basePath))
+	{
+		assert(false);
+		return false;
+	}
 
 	m_gameScreen = new GameScreen();
 	if (!m_gameScreen->Initialize())
