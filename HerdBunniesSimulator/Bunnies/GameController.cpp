@@ -33,7 +33,7 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 
 	Shader *shader = m_content->Get<Shader>("sprite");
 
-	SpriteBatch *spriteBatch = new SpriteBatch(shader, sm::Matrix::IdentityMatrix());
+	SpriteBatch *spriteBatch = new SpriteBatch(shader, sm::Matrix::Ortho2DMatrix(0, 800, 800, 0));
 
 	InterfaceProvider::m_shapesRenderer = winShapeRenderer;
 	InterfaceProvider::m_graphicsEngine = m_graphicsEngine;

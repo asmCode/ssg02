@@ -37,12 +37,17 @@ SpriteBatch::SpriteBatch(Shader *shader, const sm::Matrix &mvp) :
 	m_isBlend(false)
 {
 	assert(m_shader != NULL);
+
+	m_shader->BindVertexChannel(0, "a_position");
+	m_shader->BindVertexChannel(1, "a_coords");
+	m_shader->LinkProgram();
 }
 
 void SpriteBatch::Begin()
 {
 	m_shader->UseProgram();
-	//m_shader->SetMatrixParameter("u_mvp", m_mvp);
+	m_shader->SetMatrixParameter("u_mvp", m_mvp);
+	m_shader->SetParameter("u_color", 1, 1, 1, 1);
 	
 	m_isDepth = glIsEnabled(GL_DEPTH_TEST) == GL_TRUE;
 	m_isBlend = glIsEnabled(GL_BLEND) == GL_TRUE;
@@ -51,7 +56,7 @@ void SpriteBatch::Begin()
 	if (!m_isBlend) glEnable(GL_BLEND);
 
 	glEnableVertexAttribArray(0); // position
-	glEnableVertexAttribArray(1); // color
+	glEnableVertexAttribArray(1); // coords
 }
 
 void SpriteBatch::End()
@@ -216,8 +221,10 @@ void SpriteBatch::Draw(Texture *tex,
 		  const float *coords,
 		  const unsigned char *colorMask)
 {
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, verts);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, coords);
+	m_shader->SetTextureParameter("u_tex", 0, tex->GetId());
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_TRUE, 0, verts);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_TRUE, 0, coords);
 	
 	/*if (colorMask != NULL)
 	{
@@ -227,3 +234,4 @@ void SpriteBatch::Draw(Texture *tex,
 	
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
+

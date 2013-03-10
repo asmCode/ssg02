@@ -39,31 +39,7 @@ Shader* Shader::LoadFromFile(const char *vertexShaderFile,
 	glAttachShader(shader->m_programId, shader->m_vertShaderId);
 	glAttachShader(shader->m_programId, shader->m_fragShaderId);
 	
-	glBindAttribLocation(shader->m_programId, 0, "position");
-	glBindAttribLocation(shader->m_programId, 1, "normal");
-	glBindAttribLocation(shader->m_programId, 2, "coords");
-	
-	GLint status;
-    glLinkProgram(shader->m_programId);
-    
-#if defined(DEBUG)
-    GLint logLength;
-    glGetProgramiv(shader->m_programId, GL_INFO_LOG_LENGTH, &logLength);
-    if (logLength > 0) {
-        GLchar *log = (GLchar *)malloc(logLength);
-        glGetProgramInfoLog(shader->m_programId, logLength, &logLength, log);
-        printf("Program link log:\n%s", log);
-        free(log);
-    }
-#endif
-    
-    glGetProgramiv(shader->m_programId, GL_LINK_STATUS, &status);
-    if (status == 0)
-	{
-        return NULL;
-    }
-	
-	ValidateProgram(shader->m_programId);
+	shader->LinkProgram();
 	
 	return shader;
 }
@@ -75,6 +51,7 @@ void Shader::UseProgram()
 
 void Shader::BindVertexChannel(unsigned channel, const char *name)
 {
+	glBindAttribLocation(m_programId, channel, name);
 }
 
 void Shader::SetParameter(const char *name, float val)
@@ -87,6 +64,10 @@ void Shader::SetParameter(const char *name, float val1, float val2, float val3)
 
 void Shader::SetParameter(const char *name, float val1, float val2, float val3, float val4)
 {
+	int uniformParam = glGetUniformLocation(m_programId, name);
+	assert(uniformParam != -1);
+	
+	glUniform4f(uniformParam, val1, val2, val3, val4);
 }
 
 void Shader::SetParameter(const char *name, const sm::Vec3 &val)
@@ -160,6 +141,32 @@ GLuint Shader::CompileShader(GLenum shaderType, const char* file)
     }
     
     return shaderId;
+}
+
+void Shader::LinkProgram()
+{
+	GLint status;
+    glLinkProgram(m_programId);
+    
+#if defined(_DEBUG)
+    GLint logLength;
+    glGetProgramiv(m_programId, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0) {
+        GLchar *log = (GLchar *)malloc(logLength);
+        glGetProgramInfoLog(m_programId, logLength, &logLength, log);
+        printf("Program link log:\n%s", log);
+        free(log);
+    }
+#endif
+    
+    glGetProgramiv(m_programId, GL_LINK_STATUS, &status);
+    if (status == 0)
+	{
+        return;
+		assert(false);
+    }
+	
+	ValidateProgram(m_programId);
 }
 
 bool Shader::ValidateProgram(GLuint programId)
