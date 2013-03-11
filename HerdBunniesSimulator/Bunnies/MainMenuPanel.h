@@ -1,26 +1,26 @@
 #pragma once
 
-#include <UI/ITouchObserver.h>
 #include "Control.h"
-#include "AnimButton.h"
+#include "IControlEventsObserver.h"
+
+class GameController;
 
 class MainMenuPanel :
 	public Control,
-	public ITouchObserver
+	public IControlEventsObserver
 {
-private:
-	AnimButton *playGameBtn;
-	AnimButton *freePlayBtn;
-	AnimButton *optionsBtn;
-	AnimButton *leaderBtn;	// leaderboard
-	AnimButton *achBtn;		// achievements
+private:	
+	MainMenuPanel(GameController *gameController);
 	
-	MainMenuPanel();
-	
-	void TouchPressed(Control *control, int x, int y);
+	// Control interface
 	void OnDraw(float time, float seconds);
+
+	// IControlEventsObserver interface
+	void Clicked(Control *control, uint32_t x, uint32_t y);
 	
 public:
-	static MainMenuPanel *Create();
+	static MainMenuPanel *Create(GameController *gameController);
+
+	GameController *m_gameController;
 };
 

@@ -19,7 +19,7 @@ MainMenuScreen::~MainMenuScreen(void)
 
 bool MainMenuScreen::InitResources()
 {
-	m_mainMenuPanel = MainMenuPanel::Create();
+	m_mainMenuPanel = MainMenuPanel::Create(m_gameController);
 
 	return true;
 }
@@ -38,5 +38,15 @@ void MainMenuScreen::Draw(float time, float seconds)
 
 void MainMenuScreen::Update(float time, float seconds)
 {
+}
+
+void MainMenuScreen::HandleRelease(uint32_t pointIndex, const sm::Vec2 &point)
+{
+	m_mainMenuPanel->HandleRelease(pointIndex, point);
+}
+
+void MainMenuScreen::HandleTapGesture(const sm::Vec2 &point)
+{
+	m_mainMenuPanel->HandleTapGesture(point);
 }
 

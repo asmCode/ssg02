@@ -99,6 +99,13 @@ void GameController::Update(float time, float seconds)
 	m_activeScreen->Update(time, seconds);
 }
 
+void GameController::HandleTapGesture(const sm::Vec2 &point)
+{
+	assert(m_activeScreen != NULL);
+
+	m_activeScreen->HandleTapGesture(point);
+}
+
 void GameController::HandlePress(uint32_t pointIndex, const sm::Vec2 &point)
 {
 	assert(m_activeScreen != NULL);

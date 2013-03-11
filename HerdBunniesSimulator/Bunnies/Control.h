@@ -8,7 +8,7 @@
 #include <Graphics/IUpdateable.h>
 #include <Graphics/Point.h>
 #include <Core/ObserverSubject.h>
-#include <UI/ITouchObserver.h>
+#include "IControlEventsObserver.h"
 #include <UI/IGestureHandler.h>
 #include <Graphics/TexPart.h>
 
@@ -18,7 +18,7 @@ class Control :
 	public virtual IUpdateable,
 	public virtual IDrawable,
 	public virtual IGestureHandler,
-	public ObserversContainer<ITouchObserver*>
+	public ObserversContainer<IControlEventsObserver*>
 {	
 protected:
 	int x;
@@ -85,9 +85,9 @@ public:
 						  const sm::Vec2 &pos,
 						  const sm::Vec2 &trans,
 						  const sm::Vec2 &velocity);
-	void HandleTapGesture(const sm::Point<int> &point);
+	void HandleTapGesture(const sm::Vec2 &point);
 	void HandlePress(const sm::Point<int> &point);
-	void HandleRelease(const sm::Point<int> &point);
+	void HandleRelease(uint32_t pointIndex, const sm::Vec2 &point);
 
 	virtual bool HitTest(int x, int y) const;
 	

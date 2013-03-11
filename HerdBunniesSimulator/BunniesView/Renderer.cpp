@@ -72,6 +72,7 @@ void Renderer::KeyDown(int keyCode)
 			mouseDown = true;
 			POINT p;
 			GetCursorPos(&p);
+			ScreenToClient(glwnd->GetHwnd(), &p);
 			gctrl->HandlePress(0, sm::Vec2(p.x, p.y));
 		}
 	}
@@ -105,7 +106,8 @@ void Renderer::KeyUp(int keyCode)
 			mouseDown = false;
 			POINT p;
 			GetCursorPos(&p);
-			gctrl->HandleRelease(0, sm::Vec2(p.x, p.y));
+			ScreenToClient(glwnd->GetHwnd(), &p);
+			gctrl->HandleTapGesture(sm::Vec2(p.x, p.y));
 		}
 	}
 }

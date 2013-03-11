@@ -3,6 +3,7 @@
 #include "InterfaceProvider.h"
 #include "AnimButton.h"
 #include "SpritesMap.h"
+#include "GameController.h"
 #include <Graphics/TexPart.h>
 #include <Graphics/Content/Content.h>
 #include <XML/XMLLoader.h>
@@ -10,19 +11,15 @@
 //#include "MessageBox.h"
 //#include "SoundManager.h"
 
-MainMenuPanel::MainMenuPanel() :
-	Control("MainMenuPanel")
+MainMenuPanel::MainMenuPanel(GameController *gameController) :
+	Control("MainMenuPanel"),
+	m_gameController(gameController)
 {
-	playGameBtn = NULL;
-	freePlayBtn = NULL;
-	optionsBtn = NULL;
-	leaderBtn = NULL;
-	achBtn = NULL;
 }
 
-MainMenuPanel *MainMenuPanel::Create()
+MainMenuPanel *MainMenuPanel::Create(GameController *gameController)
 {	
-	MainMenuPanel *ret = new MainMenuPanel();
+	MainMenuPanel *ret = new MainMenuPanel(gameController);
 	if (ret != NULL)
 	{		
 		ret ->x = 0;
@@ -59,7 +56,7 @@ MainMenuPanel *MainMenuPanel::Create()
 
 				ret->AddChild(ctrl);
 
-				ObsCast(ITouchObserver, ctrl)->AddObserver(ret);
+				ObsCast(IControlEventsObserver, ctrl)->AddObserver(ret);
 			}
 			else if (type == "Image")
 			{
@@ -78,14 +75,14 @@ MainMenuPanel *MainMenuPanel::Create()
 	return ret;
 }
 
-void MainMenuPanel::TouchPressed(Control *control, int x, int y)
+void MainMenuPanel::Clicked(Control *control, uint32_t x, uint32_t y)
 {
+	if (control->GetName() == "start_game_btn")
+		m_gameController->ShowGameScreen();
 }
 
 void MainMenuPanel::OnDraw(float time, float seconds)
 {
 	this->Control::OnDraw(time, seconds);
 }
-
-
 

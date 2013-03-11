@@ -25,6 +25,7 @@ public:
 	void Draw(float time, float seconds);
 	void Update(float time, float seconds);
 
+	void HandleTapGesture(const sm::Vec2 &point);
 	void HandlePress(uint32_t pointIndex, const sm::Vec2 &point);
     void HandleRelease(uint32_t pointIndex, const sm::Vec2 &point);
 	void HandleMove(uint32_t pointIndex, const sm::Vec2 &point);
