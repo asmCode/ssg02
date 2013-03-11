@@ -11,7 +11,8 @@ void Control::SetSpriteBatch(SpriteBatch *spriteBatch)
 	Control::spriteBatch = spriteBatch;
 }
 
-Control::Control()
+Control::Control(const std::string &name) :
+	m_name(name)
 {
 	x = 0;
 	y = 0;
@@ -24,7 +25,8 @@ Control::Control()
 	enabled		= true;
 }
 
-Control::Control(int x, int y, int width, int height)
+Control::Control(const std::string &name, int x, int y, int width, int height) :
+	m_name(name)
 {
 	this ->x = x;
 	this ->y = y;
@@ -37,7 +39,8 @@ Control::Control(int x, int y, int width, int height)
 	enabled		= true;
 }
 
-Control::Control(int x, int y, const TexPart &bg)
+Control::Control(const std::string &name, int x, int y, const TexPart &bg) :
+	m_name(name)
 {
 	this ->x = x;
 	this ->y = y;
@@ -51,7 +54,8 @@ Control::Control(int x, int y, const TexPart &bg)
 	this ->bg = bg;
 }
 
-Control::Control(int x, int y, int width, int height, const TexPart &bg)
+Control::Control(const std::string &name, int x, int y, int width, int height, const TexPart &bg) :
+	m_name(name)
 {
 	this ->x = x;
 	this ->y = y;
@@ -128,6 +132,11 @@ sm::Vec2 Control::GetGlobalPos()
 	if (parent != NULL)
 		pos += parent ->GetLocalPos();
 	return pos;
+}
+
+std::string Control::GetName() const
+{
+	return m_name;
 }
 
 void Control::HandleTapGesture(const sm::Point<int> &point)
@@ -207,6 +216,8 @@ void Control::Update(float time, float ms)
 
 void Control::Draw(float time, float ms)
 {
+	assert(spriteBatch != NULL);
+
 	if (!visible)
 		return;
 	

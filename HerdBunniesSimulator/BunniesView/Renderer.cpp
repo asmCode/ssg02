@@ -3,6 +3,7 @@
 
 #include "../Bunnies/InfectedBunniesFactory.h"
 #include "../Bunnies/Player.h"
+#include "../Bunnies/Environment.h"
 
 #include <windows.h>
 #include <gl\gl.h>
@@ -35,7 +36,11 @@ void Renderer::Initialize()
 	graphics = GraphicsEngineFactory::Create();
 
 	gctrl = InfectedBunniesFactory::Create(graphics);
-	bool success = gctrl->Initialize(currentDir);
+
+	Environment::GetInstance()->SetScreenSize(960, 640);
+	Environment::GetInstance()->SetBasePath(currentDir);
+
+	bool success = gctrl->Initialize();
 	assert(success != NULL);
 }
 

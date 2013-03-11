@@ -1,0 +1,42 @@
+#include "MainMenuScreen.h"
+#include "InterfaceProvider.h"
+#include "GameProps.h"
+#include "GameController.h"
+#include "MainMenuPanel.h"
+#include <Graphics/Content/Content.h>
+#include <Graphics/SpriteBatch.h>
+
+MainMenuScreen::MainMenuScreen(GameController *gameController) :
+	m_gameController(gameController),
+	m_mainMenuPanel(NULL)
+{
+}
+
+
+MainMenuScreen::~MainMenuScreen(void)
+{
+}
+
+bool MainMenuScreen::InitResources()
+{
+	m_mainMenuPanel = MainMenuPanel::Create();
+
+	return true;
+}
+
+bool MainMenuScreen::ReleaseResources()
+{
+	return true;
+}
+
+void MainMenuScreen::Draw(float time, float seconds)
+{
+	InterfaceProvider::GetSpriteBatch()->Begin();
+	m_mainMenuPanel->Draw(time, seconds);
+	InterfaceProvider::GetSpriteBatch()->End();
+}
+
+void MainMenuScreen::Update(float time, float seconds)
+{
+}
+

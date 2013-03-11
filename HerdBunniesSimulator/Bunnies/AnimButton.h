@@ -19,12 +19,14 @@ public:
 	sm::Vec2 pushedShift;
 	sm::Vec2 currentShift;
 	
-	AnimButton(float x, float y,
+	AnimButton(const std::string &name,
+			   float x, float y,
 			   TexPart normalState,
 			   TexPart pushedState,
 			   TexPart shadow);
 
-	AnimButton(float x, float y,
+	AnimButton(const std::string &name,
+		       float x, float y,
 			   TexPart normalState,
 			   TexPart pushedState);
 	

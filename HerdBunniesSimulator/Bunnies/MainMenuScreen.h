@@ -2,15 +2,15 @@
 
 #include "IScreen.h"
 #include <Graphics/Texture.h>
-#include "Ticker.h"
 
 class GameController;
+class MainMenuPanel;
 
-class SplashScreen : public IScreen
+class MainMenuScreen : public IScreen
 {
 public:
-	SplashScreen(GameController *gameController);
-	~SplashScreen(void);
+	MainMenuScreen(GameController *gameController);
+	~MainMenuScreen(void);
 
 	bool InitResources();
 	bool ReleaseResources();
@@ -21,8 +21,6 @@ public:
 private:
 	GameController *m_gameController;
 
-	Texture *m_splashScreenTex;
-
-	Ticker m_timeout;
+	MainMenuPanel *m_mainMenuPanel;
 };
 

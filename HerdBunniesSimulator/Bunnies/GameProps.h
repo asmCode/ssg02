@@ -3,6 +3,7 @@
 class GameProps
 {
 public:
+	// gameplay
 	static const float RespawnDelay;
 	static const float ReproductionDelay;
 
@@ -36,5 +37,9 @@ public:
 	static const float ShotgunRange;
 	static const float ShotgunFieldOfDamage;
 	static const float ShotgunDamage;
+
+	// GUI
+	static const float SplashScreenDuration;
+
 };
 

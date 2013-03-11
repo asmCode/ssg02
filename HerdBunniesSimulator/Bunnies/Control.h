@@ -37,6 +37,8 @@ protected:
 	
 	TexPart bg;
 	static SpriteBatch *spriteBatch;
+
+	std::string m_name;
 	
 	virtual void OnTouch(int x, int y);
 	virtual void OnTouchBegin(int x, int y);
@@ -47,10 +49,10 @@ protected:
 public:
 	static void SetSpriteBatch(SpriteBatch *spriteBatch);
 	
-	Control();
-	Control(int x, int y, int width, int height);
-	Control(int x, int y, const TexPart &bg);
-	Control(int x, int y, int width, int height, const TexPart &bg);
+	Control(const std::string &name);
+	Control(const std::string &name, int x, int y, int width, int height);
+	Control(const std::string &name, int x, int y, const TexPart &bg);
+	Control(const std::string &name, int x, int y, int width, int height, const TexPart &bg);
 	~Control();
 	
 	Control *GetParent();
@@ -70,6 +72,8 @@ public:
 	int GetHeight() const;
 	bool IsVisible() const;
 	bool IsEnabled() const;
+
+	std::string GetName() const;
 	
 	float GetOpacity() const;
 	void SetOpacity(float opacity);

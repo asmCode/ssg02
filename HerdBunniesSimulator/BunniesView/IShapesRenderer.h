@@ -1,7 +1,7 @@
 #ifndef _SHAPES_RENDERER_
 #define _SHAPES_RENDERER_
 
-#include <GenericSingleton.h>
+#include <Core/GenericSingleton.h>
 
 class HealthyBunny;
 class InfectedBunny;

@@ -6,6 +6,7 @@ IShapesRenderer *InterfaceProvider::m_shapesRenderer;
 IGraphicsEngine *InterfaceProvider::m_graphicsEngine;
 Content *InterfaceProvider::m_content;
 SpriteBatch *InterfaceProvider::m_spriteBatch;
+SpritesMap* InterfaceProvider::m_spritesMap;
 
 IShapesRenderer* InterfaceProvider::GetShapesRenderer()
 {
@@ -27,5 +28,10 @@ Content* InterfaceProvider::GetContent()
 SpriteBatch* InterfaceProvider::GetSpriteBatch()
 {
 	return m_spriteBatch;
+}
+
+SpritesMap* InterfaceProvider::GetSpritesMap()
+{
+	return m_spritesMap;
 }
 

@@ -97,6 +97,7 @@
     <ClInclude Include="Bunnies\CollisionManager.h" />
     <ClInclude Include="Bunnies\Control.h" />
     <ClInclude Include="Bunnies\Dying.h" />
+    <ClInclude Include="Bunnies\Environment.h" />
     <ClInclude Include="Bunnies\Fucking.h" />
     <ClInclude Include="Bunnies\GameController.h" />
     <ClInclude Include="Bunnies\GameObjectType.h" />
@@ -116,6 +117,8 @@
     <ClInclude Include="Bunnies\InterfaceProvider.h" />
     <ClInclude Include="Bunnies\IScreen.h" />
     <ClInclude Include="Bunnies\ITexture.h" />
+    <ClInclude Include="Bunnies\MainMenuPanel.h" />
+    <ClInclude Include="Bunnies\MainMenuScreen.h" />
     <ClInclude Include="Bunnies\Reproducting.h" />
     <ClInclude Include="Bunnies\Respawning.h" />
     <ClInclude Include="Bunnies\RestingAfterFucking.h" />
@@ -128,6 +131,7 @@
     <ClInclude Include="Bunnies\Shotgun.h" />
     <ClInclude Include="Bunnies\ShotgunBullet.h" />
     <ClInclude Include="Bunnies\SplashScreen.h" />
+    <ClInclude Include="Bunnies\SpritesMap.h" />
     <ClInclude Include="Bunnies\Ticker.h" />
     <ClInclude Include="Framework\Graphics\Animation.h" />
     <ClInclude Include="Framework\Graphics\BoundingBox.h" />
@@ -199,6 +203,7 @@
     <ClCompile Include="Bunnies\CollisionManager.cpp" />
     <ClCompile Include="Bunnies\Control.cpp" />
     <ClCompile Include="Bunnies\Dying.cpp" />
+    <ClCompile Include="Bunnies\Environment.cpp" />
     <ClCompile Include="Bunnies\Fucking.cpp" />
     <ClCompile Include="Bunnies\GameController.cpp" />
     <ClCompile Include="Bunnies\GameScreen.cpp" />
@@ -210,6 +215,8 @@
     <ClCompile Include="Bunnies\InfectedBunniesFactory.cpp" />
     <ClCompile Include="Bunnies\InfectedBunny.cpp" />
     <ClCompile Include="Bunnies\InterfaceProvider.cpp" />
+    <ClCompile Include="Bunnies\MainMenuPanel.cpp" />
+    <ClCompile Include="Bunnies\MainMenuScreen.cpp" />
     <ClCompile Include="Bunnies\Reproducting.cpp" />
     <ClCompile Include="Bunnies\Respawning.cpp" />
     <ClCompile Include="Bunnies\RestingAfterFucking.cpp" />
@@ -220,6 +227,7 @@
     <ClCompile Include="Bunnies\Shotgun.cpp" />
     <ClCompile Include="Bunnies\ShotgunBullet.cpp" />
     <ClCompile Include="Bunnies\SplashScreen.cpp" />
+    <ClCompile Include="Bunnies\SpritesMap.cpp" />
     <ClCompile Include="Bunnies\Ticker.cpp" />
     <ClCompile Include="Ext\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="Framework\Graphics\Animation.cpp" />

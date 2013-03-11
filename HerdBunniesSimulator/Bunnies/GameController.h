@@ -11,6 +11,7 @@ class IGraphicsEngine;
 class IScreen;
 class GameScreen;
 class SplashScreen;
+class MainMenuScreen;
 class Content;
 
 class GameController : public IGameController
@@ -19,7 +20,7 @@ public:
 	GameController(IGraphicsEngine *graphicsEngine);
 	~GameController(void);
 
-	bool Initialize(const std::string &basePath);
+	bool Initialize();
 
 	void Draw(float time, float seconds);
 	void Update(float time, float seconds);
@@ -33,9 +34,13 @@ public:
 	void proto_SetLookTarget(const sm::Vec3 &lookTarget);
 	Player* proto_GetPlayer();
 
+	void ShowGameScreen();
+	void ShowMainMenuScreen();
+
 private:
 	GameScreen *m_gameScreen;
 	SplashScreen *m_splashScreen;
+	MainMenuScreen *m_mainMenuScreen;
 
 	IGraphicsEngine *m_graphicsEngine;
 	Content *m_content;

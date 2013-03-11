@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IBunnyState.h"
-#include <GenericSingleton.h>
+#include <Core/GenericSingleton.h>
 
 class IBunny;
 

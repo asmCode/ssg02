@@ -3,6 +3,10 @@
 #include "IScreen.h"
 #include "GameScreen.h"
 #include "SplashScreen.h"
+#include "MainMenuScreen.h"
+#include "SpritesMap.h"
+#include "Environment.h"
+#include "Control.h"
 #include "../BunniesView/WinShapesRenderer.h"
 #include "InterfaceProvider.h"
 #include <Graphics/IGraphicsEngine.h>
@@ -13,8 +17,9 @@
 
 GameController::GameController(IGraphicsEngine *graphicsEngine) :
 	m_graphicsEngine(graphicsEngine),
-	m_gameScreen(NULL),
 	m_splashScreen(NULL),
+	m_mainMenuScreen(NULL),
+	m_gameScreen(NULL),
 	m_activeScreen(NULL)
 {
 }
@@ -27,24 +32,36 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 {
 	WinShapesRenderer *winShapeRenderer = new WinShapesRenderer();
 
+	uint32_t screenWidth = Environment::GetInstance()->GetScreenWidth();
+	uint32_t screenHeight = Environment::GetInstance()->GetScreenHeight();
+
 	m_content = new Content(m_graphicsEngine);
 	m_content->LoadTextures(basePath + "/data/gui/");
 	m_content->LoadShaders(basePath + "/data/shaders/");
 
 	Shader *shader = m_content->Get<Shader>("sprite");
 
-	SpriteBatch *spriteBatch = new SpriteBatch(shader, sm::Matrix::Ortho2DMatrix(0, 800, 800, 0));
+	SpriteBatch *spriteBatch = new SpriteBatch(shader, sm::Matrix::Ortho2DMatrix(0, screenWidth, screenHeight, 0));
+
+	SpritesMap *spritesMap = new SpritesMap();
+	if (!spritesMap->LoadFromFile(basePath + "/data/gui/SpritesMap.xml", m_content))
+		return false;
 
 	InterfaceProvider::m_shapesRenderer = winShapeRenderer;
 	InterfaceProvider::m_graphicsEngine = m_graphicsEngine;
 	InterfaceProvider::m_content = m_content;
 	InterfaceProvider::m_spriteBatch = spriteBatch;
+	InterfaceProvider::m_spritesMap = spritesMap;
+
+	Control::SetSpriteBatch(spriteBatch);
 	
 	return true;
 }
 
-bool GameController::Initialize(const std::string &basePath)
+bool GameController::Initialize()
 {
+	std::string basePath = Environment::GetInstance()->GetBasePath();
+
 	if (!InitializeGraphics(basePath))
 	{
 		assert(false);
@@ -55,8 +72,12 @@ bool GameController::Initialize(const std::string &basePath)
 	if (!m_gameScreen->Initialize())
 		return false;
 
-	m_splashScreen = new SplashScreen();
+	m_splashScreen = new SplashScreen(this);
 	if (!m_splashScreen->InitResources())
+		return false;
+
+	m_mainMenuScreen = new MainMenuScreen(this);
+	if (!m_mainMenuScreen->InitResources())
 		return false;
 
 	m_activeScreen = m_splashScreen;
@@ -121,4 +142,15 @@ Player* GameController::proto_GetPlayer()
 {
 	return m_gameScreen->GetPlayer();
 }
+
+void GameController::ShowGameScreen()
+{
+	m_activeScreen = m_gameScreen;
+}
+
+void GameController::ShowMainMenuScreen()
+{
+	m_activeScreen = m_mainMenuScreen;
+}
+
 

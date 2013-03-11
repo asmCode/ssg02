@@ -17,7 +17,7 @@ void InitGl()
 		assert(false);
 	}
 
-	glViewport(0, 0, 800, 800);
+	glViewport(0, 0, 960, 640);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -57,7 +57,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int)
 
 	glwnd = new OpenglWindow();
 	glwnd ->SetCurrentContext();
-	glwnd ->Initialize(NULL, "dupa", 800, 800, 32, 0, false, true, NULL);
+	glwnd ->Initialize(NULL, "dupa", 960, 640, 32, 0, false, true, NULL);
 
 	InitGl();
 

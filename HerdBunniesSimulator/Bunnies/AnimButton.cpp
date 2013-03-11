@@ -1,10 +1,12 @@
 #include "AnimButton.h"
 #include <Graphics/SpriteBatch.h>
 
-AnimButton::AnimButton(float x, float y,
+AnimButton::AnimButton(const std::string &name,
+					   float x, float y,
 					   TexPart normalState,
 					   TexPart pushedState,
-					   TexPart shadow)
+					   TexPart shadow) :
+	Control(m_name)
 {
 	this->x = x;
 	this->y = y;
@@ -19,9 +21,11 @@ AnimButton::AnimButton(float x, float y,
 	this->shadow = shadow;
 }
 
-AnimButton::AnimButton(float x, float y,
+AnimButton::AnimButton(const std::string &name,
+					   float x, float y,
 					   TexPart normalState,
-					   TexPart pushedState)
+					   TexPart pushedState) :
+	Control(name)
 {
 	this->x = x;
 	this->y = y;
