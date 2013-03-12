@@ -175,6 +175,8 @@
     <ClInclude Include="Framework\Graphics\Texture.h" />
     <ClInclude Include="Framework\Graphics\TextureLoader.h" />
     <ClInclude Include="Framework\Graphics\Vertex.h" />
+    <ClInclude Include="Framework\IO\BinaryReader.h" />
+    <ClInclude Include="Framework\IO\BinaryWriter.h" />
     <ClInclude Include="Framework\IO\Path.h" />
     <ClInclude Include="Framework\Math\MathUtils.h" />
     <ClInclude Include="Framework\Math\Matrix.h" />
@@ -183,6 +185,7 @@
     <ClInclude Include="Framework\Math\Vec2.h" />
     <ClInclude Include="Framework\Math\Vec3.h" />
     <ClInclude Include="Framework\UI\IGestureHandler.h" />
+    <ClInclude Include="Framework\Utils\Log.h" />
     <ClInclude Include="Framework\Utils\Randomizer.h" />
     <ClInclude Include="Framework\Utils\StringUtils.h" />
     <ClInclude Include="Framework\XML\XMLLoader.h" />
@@ -255,7 +258,10 @@
     <ClCompile Include="Framework\Graphics\Texture.cpp" />
     <ClCompile Include="Framework\Graphics\TextureLoader.cpp" />
     <ClCompile Include="Framework\Graphics\Win\ImageLoader.cpp" />
+    <ClCompile Include="Framework\IO\BinaryReader.cpp" />
+    <ClCompile Include="Framework\IO\BinaryWriter.cpp" />
     <ClCompile Include="Framework\IO\Win32\Path.cpp" />
+    <ClCompile Include="Framework\Utils\Log.cpp" />
     <ClCompile Include="Framework\Utils\Randomizer.cpp" />
     <ClCompile Include="Framework\Utils\StringUtils.cpp" />
     <ClCompile Include="Framework\XML\XMLLoader.cpp" />

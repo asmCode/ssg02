@@ -44,7 +44,7 @@ public:
 
 	int GetKeysCount()
 	{
-		return keys.size();
+		return static_cast<int>(keys.size());
 	}
 
 	void DeleteKey(int index)

@@ -10,7 +10,7 @@ class LinearInterpolator : public Interpolator<Type>
 public:
 	void GetValue(float time, Type &value)
 	{
-		int keysCount = keys.size();
+		int keysCount = static_cast<int>(keys.size());
 
 		if (keysCount == 0)
 			return;

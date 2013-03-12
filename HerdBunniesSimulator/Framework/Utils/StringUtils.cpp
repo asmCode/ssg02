@@ -18,3 +18,13 @@ std::string StringUtils::LowerCase(const std::string &str)
 	return result;
 }
 
+std::wstring StringUtils::ToWide(const std::string &str)
+{
+	return std::wstring(str.begin(), str.end());
+}
+
+std::string StringUtils::ToNarrow(const std::wstring &str)
+{
+	return std::string(str.begin(), str.end());
+}
+

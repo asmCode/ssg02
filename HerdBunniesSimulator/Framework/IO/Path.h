@@ -19,8 +19,8 @@ public:
 		if (path.empty())
 			return;
 
-		int strLen;
-		int lastSlash = path.find_last_of("/");
+		std::size_t strLen;
+		std::size_t lastSlash = path.find_last_of("/");
 
 		// splitting path and filename + ext
 		strLen = path.size();
@@ -36,7 +36,7 @@ public:
 
 		// splitting filename and ext
 		strLen = file_name.size();
-		int lastDot = file_name.find_last_of(".");		
+		std::size_t lastDot = file_name.find_last_of(".");		
 		if (lastDot != -1 && lastDot != 0)
 		{
 			if (lastDot + 1 != strLen)
@@ -106,6 +106,8 @@ public:
 		file.read(reinterpret_cast<char*>(data), size);
 		
 		file.close();
+
+		return true;
 	}
 };
 
