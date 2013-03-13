@@ -159,11 +159,13 @@
     <ClInclude Include="Framework\Graphics\Interpolators\LinearInterpolator.h" />
     <ClInclude Include="Framework\Graphics\Interpolators\StateInterpolator.h" />
     <ClInclude Include="Framework\Graphics\Interpolators\TCBInterpolator.h" />
+    <ClInclude Include="Framework\Graphics\ITransformable.h" />
     <ClInclude Include="Framework\Graphics\IUpdateable.h" />
     <ClInclude Include="Framework\Graphics\Material.h" />
     <ClInclude Include="Framework\Graphics\Mesh.h" />
     <ClInclude Include="Framework\Graphics\MeshPart.h" />
     <ClInclude Include="Framework\Graphics\Model.h" />
+    <ClInclude Include="Framework\Graphics\ModelLoader.h" />
     <ClInclude Include="Framework\Graphics\PngLoader.h" />
     <ClInclude Include="Framework\Graphics\Point.h" />
     <ClInclude Include="Framework\Graphics\Rect.h" />
@@ -250,6 +252,7 @@
     <ClCompile Include="Framework\Graphics\Mesh.cpp" />
     <ClCompile Include="Framework\Graphics\MeshPart.cpp" />
     <ClCompile Include="Framework\Graphics\Model.cpp" />
+    <ClCompile Include="Framework\Graphics\ModelLoader.cpp" />
     <ClCompile Include="Framework\Graphics\Shader.cpp" />
     <ClCompile Include="Framework\Graphics\SpriteAnim.cpp" />
     <ClCompile Include="Framework\Graphics\SpriteBatch.cpp" />

@@ -1,42 +1,50 @@
 #include "MeshPart.h"
+
 #include "Mesh.h"
 #include "BoundingBox.h"
 #include "BoundingSphere.h"
 
-#include <Windows.h>
 #include <GL/glew.h>
-#include <gl/gl.h>
 
 MeshPart::MeshPart(int verticesCount, Vertex *vertices, Mesh *mesh)
 {
-	m_bbox = new BoundingBox();
-	(*m_bbox) = BoundingBox::FromVertices(vertices, verticesCount);
-	/*m_bsphere = new BoundingSphere();
-	(*m_bsphere) = BoundingSphere::FromBBox(*m_bbox);*/
+	bbox = new BoundingBox();
+	(*bbox) = BoundingBox::FromVertices(vertices, verticesCount);
+	bsphere = new BoundingSphere();
+	(*bsphere) = BoundingSphere::FromBBox(*bbox);
 
 	visible = true;
 	isAlwaysVisible = false;
 
-	this->m_mesh = mesh;
-	this->m_verticesCount = verticesCount;
-	this->m_vertices = vertices;
-	
-	glGenVertexArrays(1, &m_vertexArrayId);
-	glBindVertexArray(m_vertexArrayId);
-	
-	glGenBuffers(1, &vboId);
-	glBindBuffer(GL_ARRAY_BUFFER, vboId);
-	glBufferData(GL_ARRAY_BUFFER, verticesCount * sizeof(Vertex), vertices, GL_STATIC_DRAW);
+	this->mesh = mesh;
+	this ->verticesCount = verticesCount;
+	this ->vertices = vertices;
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)sizeof(sm::Vec3));
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(sm::Vec3) * 3));
+	/*sm::Vec3 *tangents = new sm::Vec3[verticesCount];
+	Utils::CalcTangents(vertices, verticesCount / 3, tangents);
+
+	for (int i = 0; i < verticesCount; i++)
+		vertices[i].tangent = tangents[i];*/
 	
-	glBindVertexArray(0);
-	
+	glGenBuffersARB(1, &vboId);
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, vboId);
+	glBufferDataARB(GL_ARRAY_BUFFER_ARB, verticesCount * sizeof(Vertex),
+		vertices, GL_STATIC_DRAW_ARB);
+
+	int positionOffset = 0;
+	int normalOffset = positionOffset + sizeof(sm::Vec3);
+	int tangentOffset = normalOffset + sizeof(sm::Vec3);
+	int coordsOffset = tangentOffset + sizeof(sm::Vec3);
+
+	glVertexPointer(4, GL_FLOAT, sizeof(Vertex), (void*)positionOffset);
+	glNormalPointer(GL_FLOAT, sizeof(Vertex), (void*)normalOffset);
+	glClientActiveTextureARB(GL_TEXTURE0_ARB);
+	glTexCoordPointer(4, GL_FLOAT, sizeof(Vertex), (void*)tangentOffset);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glClientActiveTextureARB(GL_TEXTURE1_ARB);
+	glTexCoordPointer(3, GL_FLOAT, sizeof(Vertex), (void*)coordsOffset);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
 	material = NULL;
 }
 
@@ -47,32 +55,74 @@ bool& MeshPart::IsAlvaysVisible()
 
 MeshPart::~MeshPart()
 {
-	glDeleteBuffers(1, &vboId);
-	glDeleteVertexArrays(1, &m_vertexArrayId);
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+	glDeleteBuffersARB(1, &vboId);
 
-	delete [] m_vertices;
-	delete m_bbox;
-	delete m_bsphere;
+	delete [] vertices;
+	delete bbox;
+	delete bsphere;
 }
 
 void MeshPart::Draw()
 {
-	glBindVertexArray(m_vertexArrayId);
-	
-	glBindBuffer(GL_ARRAY_BUFFER, vboId);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, vboId);
 
-	glDrawArrays(GL_TRIANGLES, 0, m_verticesCount);
+	int positionOffset = 0;
+	int normalOffset = positionOffset + sizeof(sm::Vec3);
+	int tangentOffset = normalOffset + sizeof(sm::Vec3);
+	int coordsOffset = tangentOffset + sizeof(sm::Vec3);
+
+	glVertexPointer(4, GL_FLOAT, sizeof(Vertex), (void*)positionOffset);
+	glNormalPointer(GL_FLOAT, sizeof(Vertex), (void*)normalOffset);
+	glClientActiveTextureARB(GL_TEXTURE0_ARB);
+	glTexCoordPointer(4, GL_FLOAT, sizeof(Vertex), (void*)tangentOffset);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glClientActiveTextureARB(GL_TEXTURE1_ARB);
+	glTexCoordPointer(3, GL_FLOAT, sizeof(Vertex), (void*)coordsOffset);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glDrawArrays(GL_TRIANGLES, 0, verticesCount);
+
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glClientActiveTextureARB(GL_TEXTURE0_ARB);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glClientActiveTextureARB(GL_TEXTURE1_ARB);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
-//void MeshPart::SetEffect(Effect *effect)
-//{
-//	this ->effect = effect;
-//}
-//
-//Effect *MeshPart::GetEffect()
-//{
-//	return effect;
-//}
+void MeshPart::DrawOnlyTex()
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, vboId);
+
+	int positionOffset = 0;
+	int normalOffset = positionOffset + sizeof(sm::Vec3);
+	int tangentOffset = normalOffset + sizeof(sm::Vec3);
+	int coordsOffset = tangentOffset + sizeof(sm::Vec3);
+
+	glVertexPointer(4, GL_FLOAT, sizeof(Vertex), (void*)positionOffset);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glClientActiveTextureARB(GL_TEXTURE0_ARB);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(3, GL_FLOAT, sizeof(Vertex), (void*)coordsOffset);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glDrawArrays(GL_TRIANGLES, 0, verticesCount);
+
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glClientActiveTextureARB(GL_TEXTURE0_ARB);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glClientActiveTextureARB(GL_TEXTURE1_ARB);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
 
 void MeshPart::SetMaterial(Material *material)
 {
@@ -86,12 +136,12 @@ Material *MeshPart::GetMaterial()
 
 int MeshPart::GetVerticesCount()
 {
-	return m_verticesCount;
+	return verticesCount;
 }
 
 const Vertex* MeshPart::GetVertices()
 {
-	return m_vertices;
+	return vertices;
 }
 
 void MeshPart::SetVisibility(bool visible)

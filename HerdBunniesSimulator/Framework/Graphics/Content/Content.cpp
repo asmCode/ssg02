@@ -41,3 +41,16 @@ void Content::LoadShaders(const std::string &fullPath)
 	}
 }
 
+void Content::LoadModels(const std::string &fullPath)
+{
+	std::vector<std::string> filesNames;
+	Path::GetAllFiles(filesNames, fullPath, "*.geo");
+
+	for (uint32_t i = 0 ; i < filesNames.size(); i++)
+	{
+		Path path(fullPath + filesNames[i]);
+
+		m_models[path.GetFilename()] = m_graphicsEngine->LoadModel(path.GetFullPath());
+	}
+}
+

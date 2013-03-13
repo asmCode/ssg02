@@ -11,6 +11,7 @@
 #include "InterfaceProvider.h"
 #include <Graphics/IGraphicsEngine.h>
 #include <Graphics/Content/Content.h>
+#include <Graphics/Model.h>
 #include <Graphics/SpriteBatch.h>
 #include <stddef.h>
 #include <assert.h>
@@ -38,8 +39,10 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 	m_content = new Content(m_graphicsEngine);
 	m_content->LoadTextures(basePath + "/data/gui/");
 	m_content->LoadShaders(basePath + "/data/shaders/");
+	m_content->LoadModels(basePath + "/data/models/");
 
 	Shader *shader = m_content->Get<Shader>("sprite");
+	Model *model = m_content->Get<Model>("cube");
 
 	SpriteBatch *spriteBatch = new SpriteBatch(shader, sm::Matrix::Ortho2DMatrix(0, screenWidth, screenHeight, 0));
 

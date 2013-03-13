@@ -8,7 +8,7 @@ class Vertex
 public:
 	sm::Vec3 position;
 	sm::Vec3 normal;
-	sm::Vec3 tangent;
+	//sm::Vec3 tangent;
 	sm::Vec2 texCoord;
 };
  

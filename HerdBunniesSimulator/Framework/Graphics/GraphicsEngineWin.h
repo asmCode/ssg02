@@ -15,6 +15,8 @@ public:
 	Shader* LoadShader(const std::string &vertexShaderPath,
 					   const std::string &fragmentShaderPath);
 
+	Model* LoadModel(const std::string &path);
+
 	void DrawSprite(Texture *texture, uint32_t x, uint32_t y);
 
 	//void DrawImage(Image *image, float x, float y);

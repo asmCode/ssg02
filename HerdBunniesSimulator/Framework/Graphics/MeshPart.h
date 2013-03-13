@@ -4,6 +4,7 @@
 #include "Material.h"
 
 #include <string>
+#include <stdint.h>
 
 class Mesh;
 class BoundingBox;
@@ -12,17 +13,15 @@ class BoundingSphere;
 class MeshPart
 {
 public:
-	unsigned int vboId;
-	unsigned int m_vertexArrayId;
+	uint32_t vboId;
 	Material *material;
 
-	int		m_verticesCount;
-	Vertex	*m_vertices;
-	Mesh	*m_mesh;
+	int verticesCount;
+	Vertex *vertices;
+	Mesh *mesh;
 
-	BoundingBox		*m_bbox;
-	BoundingSphere	*m_bsphere;
-	
+	BoundingBox *bbox;
+	BoundingSphere *bsphere;
 	bool visible;
 	bool isAlwaysVisible;
 
@@ -42,4 +41,5 @@ public:
 	bool& IsAlvaysVisible();
 
 	void Draw();
+	void DrawOnlyTex();
 };

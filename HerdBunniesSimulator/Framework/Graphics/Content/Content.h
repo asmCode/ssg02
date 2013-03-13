@@ -8,6 +8,7 @@
 class IGraphicsEngine;
 class Texture;
 class Shader;
+class Model;
 
 class Content
 {
@@ -17,6 +18,7 @@ public:
 
 	void LoadTextures(const std::string &fullPath);
 	void LoadShaders(const std::string &fullPath);
+	void LoadModels(const std::string &fullPath);
 
 	template <typename T>
 	T* Get(const std::string &name)
@@ -34,6 +36,7 @@ private:
 
 	std::map<std::string, Texture*> m_textures;
 	std::map<std::string, Shader*> m_shaders;
+	std::map<std::string, Model*> m_models;
 
 	template <typename T>
 	std::map<std::string, T*>& GetContentMap()
@@ -53,6 +56,12 @@ private:
 	std::map<std::string, Shader*>& GetContentMap<Shader>()
 	{
 		return m_shaders;
+	}
+
+	template <>
+	std::map<std::string, Model*>& GetContentMap<Model>()
+	{
+		return m_models;
 	}
 };
 
