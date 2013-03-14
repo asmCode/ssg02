@@ -15,10 +15,20 @@
 #include "RestingAfterFucking.h"
 #include "BeeingFucked.h"
 #include "Shotgun.h"
+#include "InterfaceProvider.h"
 #include <Windows.h>
 
 #include "../BunniesView/IShapesRenderer.h"
 #include "../BunniesView/WinShapesRenderer.h"
+
+#include <Graphics/Shader.h>
+#include <Graphics/Model.h>
+#include <Graphics/Mesh.h>
+#include <Graphics/MeshPart.h>
+#include <Graphics/Content/Content.h>
+
+Model *model;
+Shader *shader;
 
 GameScreen::GameScreen(void) :
 	m_player(NULL),
@@ -33,6 +43,13 @@ GameScreen::~GameScreen(void)
 
 bool GameScreen::Initialize()
 {
+	model = InterfaceProvider::GetContent()->Get<Model>("cube");
+	shader = InterfaceProvider::GetContent()->Get<Shader>("CelShading");
+	shader->BindVertexChannel(0, "a_position");
+	shader->BindVertexChannel(1, "a_normal");
+	shader->BindVertexChannel(2, "a_coords");
+	shader->LinkProgram();
+
 	m_player = new Player();
 	m_bunniesMgr = new BunniesManager();
 	m_bunniesMgr->ResetForNewGame(4);
@@ -63,8 +80,16 @@ bool GameScreen::ReleaseResources()
 
 void GameScreen::Draw(float time, float seconds)
 {
-	m_player->Draw(time, seconds);
-	m_bunniesMgr->Draw(time, seconds);
+	/*m_player->Draw(time, seconds);
+	m_bunniesMgr->Draw(time, seconds);*/
+
+	shader->UseProgram();
+	shader->SetMatrixParameter("u_viewProj", sm::Matrix::PerspectiveMatrix(60.0f, 1.0f, 0.1f, 100.0f));
+	shader->SetMatrixParameter("u_world", sm::Matrix::TranslateMatrix(0, 0, -80));
+
+	std::vector<MeshPart*> meshParts;
+	model->GetMeshParts(meshParts);
+	meshParts[1]->Draw();
 }
 
 void GameScreen::Update(float time, float seconds)

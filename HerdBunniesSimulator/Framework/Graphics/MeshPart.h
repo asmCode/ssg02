@@ -41,5 +41,4 @@ public:
 	bool& IsAlvaysVisible();
 
 	void Draw();
-	void DrawOnlyTex();
 };

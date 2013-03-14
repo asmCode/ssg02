@@ -271,6 +271,8 @@
     <ClCompile Include="Framework\XML\XMLNode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="data\shaders\CelShading.fpr" />
+    <None Include="data\shaders\CelShading.vpr" />
     <None Include="data\shaders\sprite.fpr" />
     <None Include="data\shaders\sprite.vpr" />
   </ItemGroup>

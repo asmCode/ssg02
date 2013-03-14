@@ -42,7 +42,6 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 	m_content->LoadModels(basePath + "/data/models/");
 
 	Shader *shader = m_content->Get<Shader>("sprite");
-	Model *model = m_content->Get<Model>("cube");
 
 	SpriteBatch *spriteBatch = new SpriteBatch(shader, sm::Matrix::Ortho2DMatrix(0, screenWidth, screenHeight, 0));
 
