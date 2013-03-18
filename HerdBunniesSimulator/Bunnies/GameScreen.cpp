@@ -16,6 +16,7 @@
 #include "BeeingFucked.h"
 #include "Shotgun.h"
 #include "InterfaceProvider.h"
+#include "Environment.h"
 #include <Windows.h>
 
 #include "../BunniesView/IShapesRenderer.h"
@@ -25,10 +26,14 @@
 #include <Graphics/Model.h>
 #include <Graphics/Mesh.h>
 #include <Graphics/MeshPart.h>
+#include <Graphics/Texture.h>
 #include <Graphics/Content/Content.h>
 
 Model *model;
 Shader *shader;
+Shader *outlineShader;
+Texture *celLightTex;
+Texture *woodTex;
 
 GameScreen::GameScreen(void) :
 	m_player(NULL),
@@ -45,10 +50,18 @@ bool GameScreen::Initialize()
 {
 	model = InterfaceProvider::GetContent()->Get<Model>("cube");
 	shader = InterfaceProvider::GetContent()->Get<Shader>("CelShading");
+	outlineShader = InterfaceProvider::GetContent()->Get<Shader>("Outline");
+	celLightTex = InterfaceProvider::GetContent()->Get<Texture>("cel_light");
+	woodTex = InterfaceProvider::GetContent()->Get<Texture>("wood");
+
 	shader->BindVertexChannel(0, "a_position");
 	shader->BindVertexChannel(1, "a_normal");
 	shader->BindVertexChannel(2, "a_coords");
 	shader->LinkProgram();
+
+	outlineShader->BindVertexChannel(0, "a_position");
+	outlineShader->BindVertexChannel(1, "a_normal");
+	outlineShader->LinkProgram();
 
 	m_player = new Player();
 	m_bunniesMgr = new BunniesManager();
@@ -78,17 +91,43 @@ bool GameScreen::ReleaseResources()
 	return false;
 }
 
+float rotate;
+
 void GameScreen::Draw(float time, float seconds)
 {
+	rotate += seconds;
 	/*m_player->Draw(time, seconds);
 	m_bunniesMgr->Draw(time, seconds);*/
 
-	shader->UseProgram();
-	shader->SetMatrixParameter("u_viewProj", sm::Matrix::PerspectiveMatrix(60.0f, 1.0f, 0.1f, 100.0f));
-	shader->SetMatrixParameter("u_world", sm::Matrix::TranslateMatrix(0, 0, -80));
+	float width = Environment::GetInstance()->GetScreenWidth();
+	float height = Environment::GetInstance()->GetScreenHeight();
+
+	sm::Matrix projMatrix = sm::Matrix::PerspectiveMatrix(60.0f, width / height, 0.1f, 100.0f);
+	sm::Matrix worldMatrix = sm::Matrix::TranslateMatrix(0, -10, -30) * sm::Matrix::RotateAxisMatrix(rotate, 0, 1, 0);
 
 	std::vector<MeshPart*> meshParts;
 	model->GetMeshParts(meshParts);
+
+	glDepthMask(GL_FALSE);
+
+	outlineShader->UseProgram();
+	outlineShader->SetMatrixParameter("u_mvpMatrix", projMatrix * worldMatrix);
+	outlineShader->SetParameter("u_outlineWidth", 0.4f);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	meshParts[1]->Draw();
+
+	glDepthMask(GL_TRUE);
+
+	shader->UseProgram();
+	shader->SetMatrixParameter("u_viewProjMatrix", projMatrix);
+	shader->SetMatrixParameter("u_worldMatrix", worldMatrix);
+	shader->SetTextureParameter("u_diffTex", 0, woodTex->GetId());
+	shader->SetTextureParameter("u_celLight", 1, celLightTex->GetId());
+	shader->SetParameter("u_lightPosition", 50.0f, 30.0f, 50.0f);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 	meshParts[1]->Draw();
 }
 

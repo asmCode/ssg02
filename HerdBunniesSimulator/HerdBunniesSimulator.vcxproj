@@ -273,6 +273,8 @@
   <ItemGroup>
     <None Include="data\shaders\CelShading.fpr" />
     <None Include="data\shaders\CelShading.vpr" />
+    <None Include="data\shaders\Outline.fpr" />
+    <None Include="data\shaders\Outline.vpr" />
     <None Include="data\shaders\sprite.fpr" />
     <None Include="data\shaders\sprite.vpr" />
   </ItemGroup>

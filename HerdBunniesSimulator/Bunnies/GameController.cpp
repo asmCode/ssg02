@@ -38,6 +38,7 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 
 	m_content = new Content(m_graphicsEngine);
 	m_content->LoadTextures(basePath + "/data/gui/");
+	m_content->LoadTextures(basePath + "/data/textures/");
 	m_content->LoadShaders(basePath + "/data/shaders/");
 	m_content->LoadModels(basePath + "/data/models/");
 
