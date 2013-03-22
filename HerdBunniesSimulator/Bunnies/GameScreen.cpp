@@ -95,6 +95,8 @@ float rotate;
 
 void GameScreen::Draw(float time, float seconds)
 {
+	m_activeGun->Draw(time, seconds);
+
 	rotate += seconds;
 	/*m_player->Draw(time, seconds);
 	m_bunniesMgr->Draw(time, seconds);*/
@@ -103,19 +105,25 @@ void GameScreen::Draw(float time, float seconds)
 	float height = Environment::GetInstance()->GetScreenHeight();
 
 	sm::Matrix projMatrix = sm::Matrix::PerspectiveMatrix(60.0f, width / height, 0.1f, 100.0f);
-	sm::Matrix worldMatrix = sm::Matrix::TranslateMatrix(0, -10, -30) * sm::Matrix::RotateAxisMatrix(rotate, 0, 1, 0);
+	//sm::Matrix worldMatrix = sm::Matrix::TranslateMatrix(0, -0, -10) * sm::Matrix::RotateAxisMatrix(rotate, 0, 1, 0);
+	//sm::Matrix worldMatrix = sm::Matrix::TranslateMatrix(-1, -1, -1);
+	sm::Matrix worldMatrix = sm::Matrix::TranslateMatrix(0, 0, 0);
 
 	std::vector<MeshPart*> meshParts;
-	model->GetMeshParts(meshParts);
+	//model->GetMeshParts(meshParts);
+	//m_->GetMeshParts(meshParts);
 
 	glDepthMask(GL_FALSE);
 
 	outlineShader->UseProgram();
 	outlineShader->SetMatrixParameter("u_mvpMatrix", projMatrix * worldMatrix);
-	outlineShader->SetParameter("u_outlineWidth", 0.4f);
+	outlineShader->SetParameter("u_outlineWidth", 0.05f);
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
-	meshParts[1]->Draw();
+	//meshParts[0]->Draw();
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	//meshParts[1]->Draw();
 
 	glDepthMask(GL_TRUE);
 
@@ -128,7 +136,11 @@ void GameScreen::Draw(float time, float seconds)
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
-	meshParts[1]->Draw();
+	//meshParts[0]->Draw();
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+	//meshParts[1]->Draw();
 }
 
 void GameScreen::Update(float time, float seconds)

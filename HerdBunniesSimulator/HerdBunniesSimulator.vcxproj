@@ -135,6 +135,7 @@
     <ClInclude Include="Bunnies\SpritesMap.h" />
     <ClInclude Include="Bunnies\Ticker.h" />
     <ClInclude Include="Framework\Graphics\Animation.h" />
+    <ClInclude Include="Framework\Graphics\AnimationLoader.h" />
     <ClInclude Include="Framework\Graphics\BoundingBox.h" />
     <ClInclude Include="Framework\Graphics\BoundingSphere.h" />
     <ClInclude Include="Framework\Graphics\Color.h" />
@@ -237,6 +238,7 @@
     <ClCompile Include="Bunnies\Ticker.cpp" />
     <ClCompile Include="Ext\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="Framework\Graphics\Animation.cpp" />
+    <ClCompile Include="Framework\Graphics\AnimationLoader.cpp" />
     <ClCompile Include="Framework\Graphics\BoundingBox.cpp" />
     <ClCompile Include="Framework\Graphics\BoundingSphere.cpp" />
     <ClCompile Include="Framework\Graphics\Color.cpp" />

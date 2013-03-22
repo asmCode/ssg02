@@ -6,6 +6,10 @@
 class ShotgunBullet;
 class Player;
 
+class Model;
+class Shader;
+class Texture;
+
 class Shotgun : public IGun
 {
 public:
@@ -28,5 +32,12 @@ private:
 	bool m_justShooted;
 
 	Ticker m_shotTicker;
+
+	Shader *m_celShadingShader;
+	Shader *m_outlineShader;
+	Texture *m_celLightTex;
+	Texture *m_rifleTex;
+	Texture *m_handTex;
+	Model *m_shotgunModel;
 };
 
