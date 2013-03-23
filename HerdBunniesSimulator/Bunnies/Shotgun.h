@@ -9,6 +9,7 @@ class Player;
 class Model;
 class Shader;
 class Texture;
+class Animation;
 
 class Shotgun : public IGun
 {
@@ -31,6 +32,8 @@ private:
 	bool m_isTriggerPulled;
 	bool m_justShooted;
 
+	float m_shootProgress;
+
 	Ticker m_shotTicker;
 
 	Shader *m_celShadingShader;
@@ -39,5 +42,8 @@ private:
 	Texture *m_rifleTex;
 	Texture *m_handTex;
 	Model *m_shotgunModel;
+	Animation *m_shotAnimation;
+
+	float m_shotAnimLength;
 };
 

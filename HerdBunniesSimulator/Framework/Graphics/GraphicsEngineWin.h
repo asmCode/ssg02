@@ -17,6 +17,8 @@ public:
 
 	Model* LoadModel(const std::string &path);
 
+	Animation* LoadAnimation(const std::string &path);
+
 	void DrawSprite(Texture *texture, uint32_t x, uint32_t y);
 
 	//void DrawImage(Image *image, float x, float y);

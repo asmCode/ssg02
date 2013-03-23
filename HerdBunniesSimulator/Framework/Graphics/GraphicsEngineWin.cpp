@@ -1,6 +1,7 @@
 #include "GraphicsEngineWin.h"
 #include "ImageLoader.h"
 #include "ModelLoader.h"
+#include "AnimationLoader.h"
 #include "Texture.h"
 #include "Model.h"
 #include "Shader.h"
@@ -48,6 +49,11 @@ Shader* GraphicsEngineWin::LoadShader(const std::string &vertexShaderPath,
 Model* GraphicsEngineWin::LoadModel(const std::string &path)
 {
 	return ModelLoader::LoadFromFile(path);
+}
+
+Animation* GraphicsEngineWin::LoadAnimation(const std::string &path)
+{
+	return AnimationLoader::LoadFromFile(path);
 }
 
 void GraphicsEngineWin::DrawSprite(Texture *texture, uint32_t x, uint32_t y)

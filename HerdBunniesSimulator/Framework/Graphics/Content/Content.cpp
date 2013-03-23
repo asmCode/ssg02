@@ -54,3 +54,15 @@ void Content::LoadModels(const std::string &fullPath)
 	}
 }
 
+void Content::LoadAnimations(const std::string &fullPath)
+{
+	std::vector<std::string> filesNames;
+	Path::GetAllFiles(filesNames, fullPath, "*.ani");
+
+	for (uint32_t i = 0 ; i < filesNames.size(); i++)
+	{
+		Path path(fullPath + filesNames[i]);
+
+		m_animations[path.GetFilename()] = m_graphicsEngine->LoadAnimation(path.GetFullPath());
+	}
+}

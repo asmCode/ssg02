@@ -44,5 +44,5 @@ public:
 	void Update(float time, const sm::Matrix &transform, float seconds);
 
 	Animation *GetAnimationById(int id);
-	float GetAnimLength(int id);
+	float GetAnimLength();
 };
