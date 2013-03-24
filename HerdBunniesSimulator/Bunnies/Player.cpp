@@ -65,3 +65,32 @@ const sm::Vec3& Player::GetLookTarget() const
 	return m_lookTarget;
 }
 
+static sm::Matrix CalcBoneMatrixZ(const sm::Vec3 &jointStart, const sm::Vec3 &jointEnd)
+{
+	sm::Matrix rot = sm::Matrix::IdentityMatrix();
+
+	sm::Vec3 zAxis = (jointEnd - jointStart).GetNormalized().GetReversed();
+	sm::Vec3 xAxis = (zAxis * sm::Vec3(0, 1, 0)).GetNormalized();
+	sm::Vec3 yAxis = xAxis * zAxis;
+
+	rot.a[0] = xAxis.x;
+	rot.a[1] = xAxis.y;
+	rot.a[2] = xAxis.z;
+
+	rot.a[4] = yAxis.x;
+	rot.a[5] = yAxis.y;
+	rot.a[6] = yAxis.z;
+
+	rot.a[8] = zAxis.x;
+	rot.a[9] = zAxis.y;
+	rot.a[10] = zAxis.z;
+
+	return sm::Matrix::TranslateMatrix(jointStart) * rot;
+}
+
+sm::Matrix Player::GetViewMatrix() const
+{
+	return (CalcBoneMatrixZ(m_position, m_position + m_lookTarget) *
+		sm::Matrix::TranslateMatrix(0, GameProps::PlayerHeight, 0)).GetInversed();
+}
+

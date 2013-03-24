@@ -49,5 +49,13 @@ public:
 	
 	void SetTextureData(const void *data);	
 	void SetTextureData(int x, int y, int width, int height, int bpp, const void *data);
-	
+
+	// Bind texture before this method
+	void SetWrappingMode(Wrap wrapModel);
+
+	// Bind texture before this method
+	void SetFilterModel(Filter filterMinMode, Filter filterMaxMode);
+
+	// Bind texture before this method
+	void GenerateMipmaps();
 };

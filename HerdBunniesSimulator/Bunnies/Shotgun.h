@@ -7,8 +7,6 @@ class ShotgunBullet;
 class Player;
 
 class Model;
-class Shader;
-class Texture;
 class Animation;
 
 class Shotgun : public IGun
@@ -36,11 +34,6 @@ private:
 
 	Ticker m_shotTicker;
 
-	Shader *m_celShadingShader;
-	Shader *m_outlineShader;
-	Texture *m_celLightTex;
-	Texture *m_rifleTex;
-	Texture *m_handTex;
 	Model *m_shotgunModel;
 	Animation *m_shotAnimation;
 

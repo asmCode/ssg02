@@ -7,6 +7,7 @@ class Player;
 class IGun;
 class IShapesRenderer;
 class BunniesManager;
+class Ground;
 
 class GameScreen : public IScreen,
 				   public IDamageableProvider
@@ -48,5 +49,6 @@ private:
 	Player *m_player;
 	IGun *m_activeGun;
 	BunniesManager *m_bunniesMgr;
+	Ground *m_ground;
 };
 

@@ -34,5 +34,7 @@ const float GameProps::ShotgunRange = 20.0f;
 const float GameProps::ShotgunFieldOfDamage = cosf(3.1415f / 32.0f);
 const float GameProps::ShotgunDamage = 100.0f;
 
+const float GameProps::PlayerHeight = 5.0f;
+
 const float GameProps::SplashScreenDuration = 1.0f;
 

@@ -43,7 +43,7 @@ Texture::Texture(
 	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 
 	if (genMipmaps)
-		glGenerateMipmapEXT(GL_TEXTURE_2D);
+		glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 Texture::~Texture()
@@ -97,3 +97,21 @@ void Texture::SetTextureData(int x, int y, int width, int height, int bpp, const
 	
 	glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, width, height, format, GL_UNSIGNED_BYTE, data);
 }
+
+void Texture::SetWrappingMode(Texture::Wrap wrapModel)
+{
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapModel);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapModel);
+}
+
+void Texture::SetFilterModel(Filter filterMinMode, Filter filterMaxMode)
+{
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMinMode);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMaxMode);
+}
+
+void Texture::GenerateMipmaps()
+{
+	glGenerateMipmap(GL_TEXTURE_2D);
+}
+

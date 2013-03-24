@@ -17,6 +17,7 @@
 #include "Shotgun.h"
 #include "InterfaceProvider.h"
 #include "Environment.h"
+#include "Ground.h"
 #include <Windows.h>
 
 #include "../BunniesView/IShapesRenderer.h"
@@ -28,12 +29,6 @@
 #include <Graphics/MeshPart.h>
 #include <Graphics/Texture.h>
 #include <Graphics/Content/Content.h>
-
-Model *model;
-Shader *shader;
-Shader *outlineShader;
-Texture *celLightTex;
-Texture *woodTex;
 
 GameScreen::GameScreen(void) :
 	m_player(NULL),
@@ -48,27 +43,14 @@ GameScreen::~GameScreen(void)
 
 bool GameScreen::Initialize()
 {
-	model = InterfaceProvider::GetContent()->Get<Model>("cube");
-	shader = InterfaceProvider::GetContent()->Get<Shader>("CelShading");
-	outlineShader = InterfaceProvider::GetContent()->Get<Shader>("Outline");
-	celLightTex = InterfaceProvider::GetContent()->Get<Texture>("cel_light");
-	woodTex = InterfaceProvider::GetContent()->Get<Texture>("wood");
-
-	shader->BindVertexChannel(0, "a_position");
-	shader->BindVertexChannel(1, "a_normal");
-	shader->BindVertexChannel(2, "a_coords");
-	shader->LinkProgram();
-
-	outlineShader->BindVertexChannel(0, "a_position");
-	outlineShader->BindVertexChannel(1, "a_normal");
-	outlineShader->LinkProgram();
-
 	m_player = new Player();
 	m_bunniesMgr = new BunniesManager();
 	m_bunniesMgr->ResetForNewGame(4);
 
 	Shotgun *shotgun = new Shotgun(m_player);
 	m_activeGun = shotgun;
+
+	m_ground = new Ground();
 
 	Idle::GetInstance()->Initialize(m_player);
 	SettingsInRanks::GetInstance()->Initialize(m_player, m_bunniesMgr);
@@ -91,60 +73,24 @@ bool GameScreen::ReleaseResources()
 	return false;
 }
 
-float rotate;
-
 void GameScreen::Draw(float time, float seconds)
 {
+	m_ground->Draw(time, seconds);
+	m_player->Draw(time, seconds);
+	m_bunniesMgr->Draw(time, seconds);
 	m_activeGun->Draw(time, seconds);
-
-	rotate += seconds;
-	/*m_player->Draw(time, seconds);
-	m_bunniesMgr->Draw(time, seconds);*/
 
 	float width = Environment::GetInstance()->GetScreenWidth();
 	float height = Environment::GetInstance()->GetScreenHeight();
-
-	sm::Matrix projMatrix = sm::Matrix::PerspectiveMatrix(60.0f, width / height, 0.1f, 100.0f);
-	//sm::Matrix worldMatrix = sm::Matrix::TranslateMatrix(0, -0, -10) * sm::Matrix::RotateAxisMatrix(rotate, 0, 1, 0);
-	//sm::Matrix worldMatrix = sm::Matrix::TranslateMatrix(-1, -1, -1);
-	sm::Matrix worldMatrix = sm::Matrix::TranslateMatrix(0, 0, 0);
-
-	std::vector<MeshPart*> meshParts;
-	//model->GetMeshParts(meshParts);
-	//m_->GetMeshParts(meshParts);
-
-	glDepthMask(GL_FALSE);
-
-	outlineShader->UseProgram();
-	outlineShader->SetMatrixParameter("u_mvpMatrix", projMatrix * worldMatrix);
-	outlineShader->SetParameter("u_outlineWidth", 0.05f);
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	//meshParts[0]->Draw();
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	//meshParts[1]->Draw();
-
-	glDepthMask(GL_TRUE);
-
-	shader->UseProgram();
-	shader->SetMatrixParameter("u_viewProjMatrix", projMatrix);
-	shader->SetMatrixParameter("u_worldMatrix", worldMatrix);
-	shader->SetTextureParameter("u_diffTex", 0, woodTex->GetId());
-	shader->SetTextureParameter("u_celLight", 1, celLightTex->GetId());
-	shader->SetParameter("u_lightPosition", 50.0f, 30.0f, 50.0f);
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-	//meshParts[0]->Draw();
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-	//meshParts[1]->Draw();
 }
 
 void GameScreen::Update(float time, float seconds)
 {
+	m_player->Update(time, seconds);
+	sm::Matrix viewMatrix = m_player->GetViewMatrix();
+
+	m_ground->SetViewMatrix(viewMatrix);
+	m_ground->Update(time, seconds);
 	m_activeGun->Update(time, seconds);
 	IBullet *bullet = m_activeGun->GetBullet();
 	if (bullet != NULL)
@@ -152,7 +98,6 @@ void GameScreen::Update(float time, float seconds)
 		bullet->TakeDamage(this);
 	}
 
-	m_player->Update(time, seconds);
 	m_bunniesMgr->Update(time, seconds);
 }
 

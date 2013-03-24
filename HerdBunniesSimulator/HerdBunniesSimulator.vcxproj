@@ -105,6 +105,7 @@
     <ClInclude Include="Bunnies\GameScreen.h" />
     <ClInclude Include="Bunnies\GoingToReproduction.h" />
     <ClInclude Include="Bunnies\Arena.h" />
+    <ClInclude Include="Bunnies\Ground.h" />
     <ClInclude Include="Bunnies\Hunting.h" />
     <ClInclude Include="Bunnies\IBullet.h" />
     <ClInclude Include="Bunnies\IControlEventsObserver.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="Bunnies\GameScreen.cpp" />
     <ClCompile Include="Bunnies\GoingToReproduction.cpp" />
     <ClCompile Include="Bunnies\Arena.cpp" />
+    <ClCompile Include="Bunnies\Ground.cpp" />
     <ClCompile Include="Bunnies\Hunting.cpp" />
     <ClCompile Include="Bunnies\Idle.cpp" />
     <ClCompile Include="Bunnies\GameProps.cpp" />

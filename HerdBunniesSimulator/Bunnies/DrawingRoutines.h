@@ -13,7 +13,7 @@ class DrawingRoutines
 public:
 	static bool Initialize();
 
-	static void DrawCelShaded(Model *model);
+	static void DrawCelShaded(Model *model, const sm::Matrix &viewMatrix, sm::Matrix &worldMatrix);
 
 	static void SetLightPosition(const sm::Vec3 &lightPosition);
 	static void SetOutlineWidth(float outlineWidth);

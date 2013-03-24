@@ -47,6 +47,11 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 	m_content->LoadMaterials(basePath + "/data/materials/");
 	m_content->CombineResources();
 
+	m_content->Get<Texture>("grass")->BindTexture();
+	m_content->Get<Texture>("grass")->SetFilterModel(Texture::Filter_LinearMipmapLinear, Texture::Filter_Linear);
+	m_content->Get<Texture>("grass")->SetWrappingMode(Texture::Wrap_Repeat);
+	m_content->Get<Texture>("grass")->GenerateMipmaps();
+
 	DrawingRoutines::Initialize();
 	DrawingRoutines::SetLightPosition(sm::Vec3(-5.0f, 30.0f, -5.0f));
 	DrawingRoutines::SetProjectionMatrix(sm::Matrix::PerspectiveMatrix(45.0f, static_cast<float>(screenWidth) / static_cast<float>(screenHeight), 0.1f, 100.0f));
@@ -170,5 +175,4 @@ void GameController::ShowMainMenuScreen()
 {
 	m_activeScreen = m_mainMenuScreen;
 }
-
 

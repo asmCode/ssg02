@@ -113,8 +113,14 @@ void Renderer::KeyUp(int keyCode)
 	}
 }
 
+float xAngle;
+float yAngle;
+
 void Renderer::MouseMove(int x, int y, int xShift, int yShift)
 {
+	xAngle += static_cast<float>(xShift) * 0.004f;
+	yAngle += static_cast<float>(yShift) * 0.004f;
+
 	double modelView[16];
 	double projMatrix[16];
 	int viewport[4];
@@ -130,7 +136,10 @@ void Renderer::MouseMove(int x, int y, int xShift, int yShift)
 	Player *player = gctrl->proto_GetPlayer();
 
 	sm::Vec3 pos = player->GetPosition();
-	sm::Vec3 trg = (sm::Vec3(dx, 0.0f, -dy) - pos).GetNormalized();
+	sm::Vec3 trg = sm::Vec3(0, 0, -1);
+	trg.RotateX(yAngle);
+	trg.RotateY(xAngle);
+	trg.Normalize();
 	
 	player->SetLookTarget(trg);
 
@@ -138,6 +147,8 @@ void Renderer::MouseMove(int x, int y, int xShift, int yShift)
 	{
 		gctrl->HandleMove(0, sm::Vec2(x, y));
 	}
+
+	//SetCursorPos(960 / 2, 640 / 2);
 }
 
 void Renderer::Update(float time, float seconds)

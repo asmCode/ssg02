@@ -192,7 +192,7 @@ void Control::HandleRelease(uint32_t pointIndex, const sm::Vec2 &point)
 	for (it = children.begin(); it != children.end(); it++)
 		(*it) ->HandleRelease(pointIndex, sm::Vec2(point.x - this->x, point.y - this->y));
 	
-	//if (HitTest(point.X, point.Y))
+	if (HitTest(point.x, point.x))
 	{
 		OnTouchEnd(point.x - this->x, point.y - this->y);
 		OnTouch(point.x - this->x, point.y - this->y);

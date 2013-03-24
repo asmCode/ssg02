@@ -38,6 +38,8 @@ public:
 	static const float ShotgunFieldOfDamage;
 	static const float ShotgunDamage;
 
+	static const float PlayerHeight;
+
 	// GUI
 	static const float SplashScreenDuration;
 
