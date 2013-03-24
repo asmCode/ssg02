@@ -1,6 +1,7 @@
 #ifndef PATH_H
 #define PATH_H
 
+#include <Math/MathUtils.h>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -20,7 +21,8 @@ public:
 			return;
 
 		std::size_t strLen;
-		std::size_t lastSlash = path.find_last_of("/");
+		std::size_t lastSlash = MathUtils::Max(static_cast<int>(path.find_last_of("/")),
+										       static_cast<int>(path.find_last_of("\\")));
 
 		// splitting path and filename + ext
 		strLen = path.size();
@@ -77,7 +79,8 @@ public:
 	// ads slash at the end of the string, if required
 	static void FixFoldername(std::string &folderName)
 	{
-		if (folderName.find_last_of("/") == folderName.size() - 1)
+		if (MathUtils::Max(static_cast<int>(folderName.find_last_of("/")),
+			               static_cast<int>(folderName.find_last_of("\\"))) == folderName.size() - 1)
 			return;
 
 		folderName += "/";

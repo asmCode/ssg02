@@ -10,6 +10,7 @@ class Texture;
 class Shader;
 class Model;
 class Animation;
+class Material;
 
 class Content
 {
@@ -21,6 +22,7 @@ public:
 	void LoadShaders(const std::string &fullPath);
 	void LoadModels(const std::string &fullPath);
 	void LoadAnimations(const std::string &fullPath);
+	void LoadMaterials(const std::string &fullPath);
 
 	template <typename T>
 	T* Get(const std::string &name)
@@ -40,6 +42,7 @@ private:
 	std::map<std::string, Shader*> m_shaders;
 	std::map<std::string, Model*> m_models;
 	std::map<std::string, Animation*> m_animations;
+	std::map<std::string, Material*> m_materials;
 
 	template <typename T>
 	std::map<std::string, T*>& GetContentMap()
@@ -71,6 +74,12 @@ private:
 	std::map<std::string, Animation*>& GetContentMap<Animation>()
 	{
 		return m_animations;
+	}
+
+	template <>
+	std::map<std::string, Material*>& GetContentMap<Material>()
+	{
+		return m_materials;
 	}
 };
 

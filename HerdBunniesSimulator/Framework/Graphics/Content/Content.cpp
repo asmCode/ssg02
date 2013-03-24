@@ -66,3 +66,17 @@ void Content::LoadAnimations(const std::string &fullPath)
 		m_animations[path.GetFilename()] = m_graphicsEngine->LoadAnimation(path.GetFullPath());
 	}
 }
+
+void Content::LoadMaterials(const std::string &fullPath)
+{
+	std::vector<std::string> filesNames;
+	Path::GetAllFiles(filesNames, fullPath, "*.mat");
+
+	for (uint32_t i = 0 ; i < filesNames.size(); i++)
+	{
+		Path path(fullPath + filesNames[i]);
+
+		m_materials[path.GetFilename()] = m_graphicsEngine->LoadMaterial(path.GetFullPath());
+	}
+}
+

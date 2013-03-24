@@ -2,6 +2,7 @@
 #include "ImageLoader.h"
 #include "ModelLoader.h"
 #include "AnimationLoader.h"
+#include "MaterialLoader.h"
 #include "Texture.h"
 #include "Model.h"
 #include "Shader.h"
@@ -54,6 +55,11 @@ Model* GraphicsEngineWin::LoadModel(const std::string &path)
 Animation* GraphicsEngineWin::LoadAnimation(const std::string &path)
 {
 	return AnimationLoader::LoadFromFile(path);
+}
+
+Material* GraphicsEngineWin::LoadMaterial(const std::string &path)
+{
+	return MaterialLoader::LoadFromFile(path);
 }
 
 void GraphicsEngineWin::DrawSprite(Texture *texture, uint32_t x, uint32_t y)

@@ -163,6 +163,7 @@
     <ClInclude Include="Framework\Graphics\ITransformable.h" />
     <ClInclude Include="Framework\Graphics\IUpdateable.h" />
     <ClInclude Include="Framework\Graphics\Material.h" />
+    <ClInclude Include="Framework\Graphics\MaterialLoader.h" />
     <ClInclude Include="Framework\Graphics\Mesh.h" />
     <ClInclude Include="Framework\Graphics\MeshPart.h" />
     <ClInclude Include="Framework\Graphics\Model.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="Framework\Graphics\GraphicsEngineWin.cpp" />
     <ClCompile Include="Framework\Graphics\Image.cpp" />
     <ClCompile Include="Framework\Graphics\Material.cpp" />
+    <ClCompile Include="Framework\Graphics\MaterialLoader.cpp" />
     <ClCompile Include="Framework\Graphics\Mesh.cpp" />
     <ClCompile Include="Framework\Graphics\MeshPart.cpp" />
     <ClCompile Include="Framework\Graphics\Model.cpp" />

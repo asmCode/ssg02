@@ -11,10 +11,12 @@ Material::Material()
 	glossiness = 0.3f;
 	specularLevel = 1.0f;
 	emissiveAmount = 0.0f;
+	reflectionValue = 0.0f;
 
 	diffuseTex = NULL;
 	opacityTex = NULL;
 	normalTex = NULL;
+	//environmentTex = NULL;
 }
 
 Material::~Material(void)

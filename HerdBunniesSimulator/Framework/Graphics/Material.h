@@ -1,9 +1,11 @@
-#pragma once
+#ifndef MATERIAL
+#define MATERIAL
 
+#include <Math\Vec3.h>
 #include <string>
-#include "../Math/Vec3.h"
 
-class Texture;
+#include "Texture.h"
+//#include "CubeTexture.h"
 
 class Material
 {
@@ -21,6 +23,7 @@ public:
 	float glossiness;
 	float specularLevel;
 	float emissiveAmount;
+	float reflectionValue; // for evironment mapping
 
 	std::string diffuseTexName;
 	Texture *diffuseTex;
@@ -31,6 +34,12 @@ public:
 	std::string normalTexName;
 	Texture *normalTex;
 
+	std::string environmentTexName;
+	//CubeTexture *environmentTex;
+
 	Material(void);
 	~Material(void);
 };
+
+#endif // MATERIAL
+

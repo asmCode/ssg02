@@ -107,8 +107,8 @@ void Renderer::KeyUp(int keyCode)
 			POINT p;
 			GetCursorPos(&p);
 			ScreenToClient(glwnd->GetHwnd(), &p);
-			gctrl->HandleTapGesture(sm::Vec2(p.x, p.y));
 			gctrl->HandleRelease(0, sm::Vec2(p.x, p.y));
+			gctrl->HandleTapGesture(sm::Vec2(p.x, p.y));
 		}
 	}
 }
