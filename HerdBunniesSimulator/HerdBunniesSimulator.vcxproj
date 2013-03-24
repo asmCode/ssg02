@@ -96,6 +96,7 @@
     <ClInclude Include="Bunnies\CollideObject.h" />
     <ClInclude Include="Bunnies\CollisionManager.h" />
     <ClInclude Include="Bunnies\Control.h" />
+    <ClInclude Include="Bunnies\DrawingRoutines.h" />
     <ClInclude Include="Bunnies\Dying.h" />
     <ClInclude Include="Bunnies\Environment.h" />
     <ClInclude Include="Bunnies\Fucking.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="Bunnies\CollideObject.cpp" />
     <ClCompile Include="Bunnies\CollisionManager.cpp" />
     <ClCompile Include="Bunnies\Control.cpp" />
+    <ClCompile Include="Bunnies\DrawingRoutines.cpp" />
     <ClCompile Include="Bunnies\Dying.cpp" />
     <ClCompile Include="Bunnies\Environment.cpp" />
     <ClCompile Include="Bunnies\Fucking.cpp" />

@@ -7,6 +7,7 @@
 #include "SpritesMap.h"
 #include "Environment.h"
 #include "Control.h"
+#include "DrawingRoutines.h"
 #include "../BunniesView/WinShapesRenderer.h"
 #include "InterfaceProvider.h"
 #include <Graphics/IGraphicsEngine.h>
@@ -37,12 +38,18 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 	uint32_t screenHeight = Environment::GetInstance()->GetScreenHeight();
 
 	m_content = new Content(m_graphicsEngine);
+	InterfaceProvider::m_content = m_content;
 	m_content->LoadTextures(basePath + "/data/gui/");
 	m_content->LoadTextures(basePath + "/data/textures/");
 	m_content->LoadShaders(basePath + "/data/shaders/");
 	m_content->LoadModels(basePath + "/data/models/");
 	m_content->LoadAnimations(basePath + "/data/animations/");
 	m_content->LoadMaterials(basePath + "/data/materials/");
+	m_content->CombineResources();
+
+	DrawingRoutines::Initialize();
+	DrawingRoutines::SetLightPosition(sm::Vec3(-5.0f, 30.0f, -5.0f));
+	DrawingRoutines::SetProjectionMatrix(sm::Matrix::PerspectiveMatrix(45.0f, static_cast<float>(screenWidth) / static_cast<float>(screenHeight), 0.1f, 100.0f));
 
 	Shader *shader = m_content->Get<Shader>("sprite");
 
@@ -54,7 +61,6 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 
 	InterfaceProvider::m_shapesRenderer = winShapeRenderer;
 	InterfaceProvider::m_graphicsEngine = m_graphicsEngine;
-	InterfaceProvider::m_content = m_content;
 	InterfaceProvider::m_spriteBatch = spriteBatch;
 	InterfaceProvider::m_spritesMap = spritesMap;
 

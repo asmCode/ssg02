@@ -24,6 +24,9 @@ public:
 	void LoadAnimations(const std::string &fullPath);
 	void LoadMaterials(const std::string &fullPath);
 
+	// Assign textures to materials and materials to models
+	void CombineResources();
+
 	template <typename T>
 	T* Get(const std::string &name)
 	{

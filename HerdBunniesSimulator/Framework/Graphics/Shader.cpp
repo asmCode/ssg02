@@ -79,7 +79,8 @@ void Shader::SetParameter(const char *name, float val1, float val2, float val3, 
 }
 
 void Shader::SetParameter(const char *name, const sm::Vec3 &val)
-{	
+{
+	SetParameter(name, val.x, val.y, val.z);
 }
 
 void Shader::SetTextureParameter(const char *name, unsigned channel, unsigned texId)

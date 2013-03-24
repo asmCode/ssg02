@@ -1,6 +1,9 @@
 #include "Content.h"
 
 #include "../IGraphicsEngine.h"
+#include "../MeshPart.h"
+#include "../Material.h"
+#include "../Model.h"
 #include <IO/Path.h>
 
 Content::Content(IGraphicsEngine *graphicsEngine) :
@@ -77,6 +80,28 @@ void Content::LoadMaterials(const std::string &fullPath)
 		Path path(fullPath + filesNames[i]);
 
 		m_materials[path.GetFilename()] = m_graphicsEngine->LoadMaterial(path.GetFullPath());
+	}
+}
+
+void Content::CombineResources()
+{
+	std::map<std::string, Model*>::iterator modelsIt;
+	for (modelsIt = m_models.begin(); modelsIt != m_models.end(); ++modelsIt)
+	{
+		std::vector<MeshPart*> meshParts;
+		modelsIt->second->GetMeshParts(meshParts);
+
+		for (uint32_t i = 0; i < meshParts.size(); i++)
+			meshParts[i]->SetMaterial(Get<Material>(meshParts[i]->materialName));
+	}
+
+	std::map<std::string, Material*>::iterator materialsIt;
+	for (materialsIt = m_materials.begin(); materialsIt != m_materials.end(); ++materialsIt)
+	{
+		materialsIt->second->diffuseTex = Get<Texture>(materialsIt->second->diffuseTexName);
+		materialsIt->second->normalTex = Get<Texture>(materialsIt->second->normalTexName);
+		materialsIt->second->opacityTex = Get<Texture>(materialsIt->second->opacityTexName);
+		// materialsIt->second->environmentTex = Get<CubeTexture>(materialsIt->second->environmentTexName); not implemented yet
 	}
 }
 
