@@ -11,6 +11,8 @@ class HealthyBunny;
 
 class InfectedBunny : public Bunny
 {
+	friend class RestingAfterFucking;
+
 public:
 	InfectedBunny(void);
 	~InfectedBunny(void);
@@ -61,11 +63,7 @@ private:
 
 	Model *m_bunnyModel;
 
-	sm::Vec3 m_position;
-	sm::Vec3 m_moveTarget;
-
 	float m_targetPositionRefreshColldown;
-	sm::Vec3 m_targetPosition; // target which bunny should reach
 
 	Ticker m_fuckingProgress;
 	Ticker m_restingAfterFuckingProgress;

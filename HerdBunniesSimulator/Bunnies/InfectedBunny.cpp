@@ -104,7 +104,7 @@ static sm::Matrix CalcBoneMatrixZ(const sm::Vec3 &jointStart, const sm::Vec3 &jo
 
 void InfectedBunny::Draw(float time, float seconds, const sm::Matrix &viewMatrix)
 {
-	DrawingRoutines::DrawCelShaded(m_bunnyModel, viewMatrix, CalcBoneMatrixZ(m_position, m_position + m_moveTarget));
+	DrawingRoutines::DrawCelShaded(m_bunnyModel, viewMatrix, CalcBoneMatrixZ(m_position, m_position + m_moveTarget) * sm::Matrix::RotateAxisMatrix(3.1415f, 0, 1, 0));
 }
 
 void InfectedBunny::Respawn(const sm::Vec3 &position)
@@ -170,9 +170,8 @@ void InfectedBunny::RefreshNewTargetPosition(float seconds)
 			GameProps::RefreshNewTargetPositionFrom,
 			GameProps::RefreshNewTargetPositionTo);
 
-		m_targetPosition.x = random.GetFloat(-50.0f, 50.0f);
-		m_targetPosition.y = 0.0f;
-		m_targetPosition.z = random.GetFloat(-50.0f, 50.0f);
+		sm::Vec3 newPos(random.GetFloat(-50.0f, 50.0f), 0.0f, random.GetFloat(-50.0f, 50.0f));
+		SetDestinationPosition(newPos);
 	}
 }
 

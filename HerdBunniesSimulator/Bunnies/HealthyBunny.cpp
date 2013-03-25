@@ -66,7 +66,7 @@ static sm::Matrix CalcBoneMatrixZ(const sm::Vec3 &jointStart, const sm::Vec3 &jo
 
 void HealthyBunny::Draw(float time, float seconds, const sm::Matrix &viewMatrix)
 {
-	DrawingRoutines::DrawCelShaded(m_bunnyModel, viewMatrix, CalcBoneMatrixZ(m_position, m_position + m_moveTarget));
+	DrawingRoutines::DrawCelShaded(m_bunnyModel, viewMatrix, CalcBoneMatrixZ(m_position, m_position + m_moveTarget) * sm::Matrix::RotateAxisMatrix(3.1415f, 0, 1, 0));
 }
 
 void HealthyBunny::Reset()

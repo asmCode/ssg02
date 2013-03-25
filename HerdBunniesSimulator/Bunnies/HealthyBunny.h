@@ -80,9 +80,6 @@ private:
 	bool m_useRunningAwayInitialDirection;
 	sm::Vec3 m_runningAwayInitialDirection;
 
-	sm::Vec3 m_position;
-	sm::Vec3 m_moveTarget;
-
 	HealthyBunny *m_reproductionPartner;
 	float m_reproductingTime;
 	float m_restingAfterReproduction;
@@ -91,7 +88,6 @@ private:
 	float m_growingUpTime;
 	sm::Vec3 m_borningJumpOutVector;
 	float m_targetPositionRefreshColldown;
-	sm::Vec3 m_targetPosition; // target which bunny should reach
 };
 
 #endif

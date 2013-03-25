@@ -24,6 +24,7 @@ void RestingAfterFucking::Initialize(BunniesManager *bunniesManager)
 
 void RestingAfterFucking::Enter(IBunny *bunny)
 {
+	dynamic_cast<InfectedBunny*>(bunny)->m_targetPositionRefreshColldown = 0.0f;
 }
 
 void RestingAfterFucking::Leave(IBunny *bunny)
@@ -40,12 +41,13 @@ void RestingAfterFucking::Update(IBunny *bunny, float time, float seconds)
 	assert(ibunny != NULL);
 
 	ibunny->RefreshNewTargetPosition(seconds);
+	ibunny->UpdateMovement(seconds, GameProps::InfectedBunnyRestingSpeed);
 
 	sm::Vec3 moveTarget = ibunny->GetTargetPosition() - ibunny->GetPosition();
 	moveTarget.y = 0.0f;
 	moveTarget.Normalize();
 
-	ibunny->SetPosition(ibunny->GetPosition() + moveTarget * GameProps::InfectedBunnyRestingSpeed * seconds);
+	//ibunny->SetPosition(ibunny->GetPosition() + moveTarget * GameProps::InfectedBunnyRestingSpeed * seconds);
 
 	ibunny->RestingAfterFuckingProgress().Progress(seconds);
 	if (ibunny->RestingAfterFuckingProgress().IsTimeout())

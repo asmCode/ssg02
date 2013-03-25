@@ -94,11 +94,14 @@ void SettingsInRanks::Update(IBunny *bunny, float time, float seconds)
 	}
 	else
 	{
-		bunnyMoveTarget.Normalize();
-		sm::Vec3 newBunnyPosition = bunnyPosition + (bunnyMoveTarget * GameProps::HealthyBunnyWalkSpeed * seconds);
+		hbunny->SetDestinationPosition(bunnyPosition + bunnyMoveTarget);
+		hbunny->UpdateMovement(seconds, GameProps::HealthyBunnyWalkSpeed);
 
-		if (!m_bunniesManager->CheckCollision(newBunnyPosition, 0.4f, bunny)) // TODO
-			bunny->SetPosition(newBunnyPosition);
+		//bunnyMoveTarget.Normalize();
+		//sm::Vec3 newBunnyPosition = bunnyPosition + (bunnyMoveTarget * GameProps::HealthyBunnyWalkSpeed * seconds);
+
+		//if (!m_bunniesManager->CheckCollision(newBunnyPosition, 0.4f, bunny)) // TODO
+		//	bunny->SetPosition(newBunnyPosition);
 	}
 }
 
