@@ -140,17 +140,19 @@ void BunniesManager::Update(float time, float seconds)
 		SpawnInfectedBunny();
 }
 
-void BunniesManager::Draw(float time, float seconds)
+void BunniesManager::Draw(float time, float seconds, const sm::Matrix &viewMatrix)
 {
 	IShapesRenderer *shapesRenderer = InterfaceProvider::GetShapesRenderer();
 
 	for (uint32_t i = 0; i < MaxBunniesCount; i++)
 	{
 		if (m_healthyBunnies[i]->IsActive())
-			shapesRenderer->DrawHealthyBunny(m_healthyBunnies[i]);
+			//shapesRenderer->DrawHealthyBunny(m_healthyBunnies[i]);
+			m_healthyBunnies[i]->Draw(time, seconds, viewMatrix);
 
 		if (m_infectedBunnies[i]->IsActive())
-			shapesRenderer->DrawInfectedBunny(m_infectedBunnies[i]);
+			//shapesRenderer->DrawInfectedBunny(m_infectedBunnies[i]);
+			m_infectedBunnies[i]->Draw(time, seconds, viewMatrix);
 	}
 }
 

@@ -77,7 +77,7 @@ void GameScreen::Draw(float time, float seconds)
 {
 	m_ground->Draw(time, seconds);
 	m_player->Draw(time, seconds);
-	m_bunniesMgr->Draw(time, seconds);
+	m_bunniesMgr->Draw(time, seconds, m_player->GetViewMatrix());
 	m_activeGun->Draw(time, seconds);
 
 	float width = Environment::GetInstance()->GetScreenWidth();

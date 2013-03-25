@@ -2,6 +2,7 @@
 
 #include "Texture.h"
 #include <Graphics/ImageLoader.h>
+#include <Graphics/ImageUtils.h>
 
 Texture* TextureLoader::Load(const std::string &path)
 {
@@ -13,12 +14,14 @@ Texture* TextureLoader::Load(const std::string &path)
 	if (!ImageLoader::LoadFromFile(path, data, width, height, bytesCount))
 		return NULL;
 
+	ImageUtils::FlipVertical(data, width, height, bytesCount);
+
 	Texture *texture = new Texture(
 		width,
 		height,
 		bytesCount * 8,
 		data,
-		Texture::Wrap_Repeat,
+		Texture::Wrap_ClampToEdge,
 		Texture::Filter_LinearMipmapLinear,
 		Texture::Filter_Linear,
 		true);

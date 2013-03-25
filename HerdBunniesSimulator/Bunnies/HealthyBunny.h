@@ -4,9 +4,11 @@
 #include "Bunny.h"
 #include "Ticker.h"
 #include <Math\Vec3.h>
+#include <Math\Matrix.h>
 
 class IBunnyState;
 class InfectedBunny;
+class Model;
 
 class HealthyBunny : public Bunny
 {
@@ -15,6 +17,7 @@ public:
 	~HealthyBunny(void);
 
 	void Update(float time, float seconds);
+	void Draw(float time, float seconds, const sm::Matrix &viewMatrix);
 
 	void Reset();
 
@@ -70,6 +73,9 @@ private:
 	bool m_isActive;
 
 	IBunnyState *m_bunnyState;
+
+	Model *m_bunnyModel;
+	//Animation *m_
 
 	bool m_useRunningAwayInitialDirection;
 	sm::Vec3 m_runningAwayInitialDirection;

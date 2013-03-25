@@ -28,6 +28,13 @@ public:
 	void CombineResources();
 
 	template <typename T>
+	void Add(const std::string &name, const T*resource)
+	{
+		std::map<std::string, T*> &resourcesMap = GetContentMap<T>();
+		resourcesMap[name] = resource;
+	}
+
+	template <typename T>
 	T* Get(const std::string &name)
 	{
 		std::map<std::string, T*> &resourcesMap = GetContentMap<T>();

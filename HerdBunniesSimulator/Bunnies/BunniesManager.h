@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Math/Vec3.h>
+#include <Math/Matrix.h>
 #include <vector>
 #include <stdint.h>
 
@@ -17,7 +18,7 @@ public:
 	~BunniesManager(void);
 
 	void Update(float time, float seconds);
-	void Draw(float time, float seconds);
+	void Draw(float time, float seconds, const sm::Matrix &viewMatrix);
 
 	void ClearBunnies();
 	void ResetForNewGame(uint32_t healthyBunniesCount);

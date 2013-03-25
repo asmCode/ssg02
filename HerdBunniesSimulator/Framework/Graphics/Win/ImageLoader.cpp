@@ -81,5 +81,16 @@ bool ImageLoader::LoadFromFile(const std::string &path,
 		return false;
 
 	return ReadPNG(path, data, width, height, bytesCount);
+
+	/*HDC hdc = GetDC(NULL);
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			SetPixel(hdc, x, y, RGB(data[(y * width * bytesCount) + x * bytesCount + 0],
+				data[(y * width * bytesCount) + x * bytesCount + 1],
+								    data[(y * width * bytesCount) + x * bytesCount + 2]));
+		}
+	}*/
 }
 

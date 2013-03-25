@@ -41,7 +41,9 @@ bool SpritesMap::LoadFromFile(const std::string &path, Content *content)
 		Texture *tex = content->Get<Texture>(texName);
 		assert(tex != NULL && "no such resource name");
 
-		TexPart *texPart = new TexPart(tex, sm::Rect<int>(left, top, width, height));
+		//TexPart *texPart = new TexPart(tex, sm::Rect<int>(left, top, width, height));
+		TexPart *texPart = new TexPart(tex, sm::Rect<int>(left, tex->GetHeight() - top - height, width, height)); // TODO: nie zawsze mozna obracac texture
+																												  // jesli tekstura ma wiele innych tekstur, to to nie dziala
 		m_sprites[name] = texPart;
 	}
 

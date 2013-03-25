@@ -2,10 +2,15 @@
 #include "IBunnyState.h"
 #include "HealthyBunny.h"
 #include "Respawning.h"
+#include "InterfaceProvider.h"
 #include "Dying.h"
 #include "RestingAfterFucking.h"
 #include "GameProps.h"
+#include "DrawingRoutines.h"
+
+#include <Graphics/Content/Content.h>
 #include <Utils/Randomizer.h>
+
 #include <stddef.h>
 #include <assert.h>
 
@@ -17,6 +22,8 @@ InfectedBunny::InfectedBunny() :
 	m_targetPositionRefreshColldown(0.0f),
 	m_fuckingProgress(GameProps::FuckingTime)
 {
+	m_bunnyModel = InterfaceProvider::GetContent()->Get<Model>("ibunny");
+	assert(m_bunnyModel != NULL);
 }
 
 InfectedBunny::~InfectedBunny(void)
@@ -72,6 +79,34 @@ void InfectedBunny::Update(float time, float seconds)
 	m_bunnyState->Update(this, time, seconds);
 }
 
+static sm::Matrix CalcBoneMatrixZ(const sm::Vec3 &jointStart, const sm::Vec3 &jointEnd) // todo 
+{
+	sm::Matrix rot = sm::Matrix::IdentityMatrix();
+
+	sm::Vec3 zAxis = (jointEnd - jointStart).GetNormalized().GetReversed();
+	sm::Vec3 xAxis = (zAxis * sm::Vec3(0, 1, 0)).GetNormalized();
+	sm::Vec3 yAxis = xAxis * zAxis;
+
+	rot.a[0] = xAxis.x;
+	rot.a[1] = xAxis.y;
+	rot.a[2] = xAxis.z;
+
+	rot.a[4] = yAxis.x;
+	rot.a[5] = yAxis.y;
+	rot.a[6] = yAxis.z;
+
+	rot.a[8] = zAxis.x;
+	rot.a[9] = zAxis.y;
+	rot.a[10] = zAxis.z;
+
+	return sm::Matrix::TranslateMatrix(jointStart) * rot;
+}
+
+void InfectedBunny::Draw(float time, float seconds, const sm::Matrix &viewMatrix)
+{
+	DrawingRoutines::DrawCelShaded(m_bunnyModel, viewMatrix, CalcBoneMatrixZ(m_position, m_position + m_moveTarget));
+}
+
 void InfectedBunny::Respawn(const sm::Vec3 &position)
 {
 	m_isActive = true;
@@ -83,6 +118,7 @@ void InfectedBunny::Respawn(const sm::Vec3 &position)
 
 void InfectedBunny::Reset()
 {
+	m_moveTarget = sm::Vec3(0, 0, -1);
 	m_isActive = false;	
 	m_huntingTarget = NULL;
 	m_health = 100.0f;

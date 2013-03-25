@@ -3,7 +3,9 @@
 
 #include "Bunny.h"
 #include "Ticker.h"
+#include <Math/Matrix.h>
 
+class Model;
 class IBunnyState;
 class HealthyBunny;
 
@@ -25,6 +27,7 @@ public:
 	const sm::Vec3 GetMoveTarget() const;
 
 	void Update(float time, float seconds);
+	void Draw(float time, float seconds, const sm::Matrix &viewMatrix);
 
 	void Respawn(const sm::Vec3 &position);
 
@@ -55,6 +58,8 @@ private:
 	bool m_isActive;
 
 	IBunnyState *m_bunnyState;
+
+	Model *m_bunnyModel;
 
 	sm::Vec3 m_position;
 	sm::Vec3 m_moveTarget;

@@ -154,6 +154,7 @@
     <ClInclude Include="Framework\Graphics\IGraphicsEngine.h" />
     <ClInclude Include="Framework\Graphics\Image.h" />
     <ClInclude Include="Framework\Graphics\ImageLoader.h" />
+    <ClInclude Include="Framework\Graphics\ImageUtils.h" />
     <ClInclude Include="Framework\Graphics\Interpolators\IInterpolator.h" />
     <ClInclude Include="Framework\Graphics\Interpolators\IKeysContainer.h" />
     <ClInclude Include="Framework\Graphics\Interpolators\Interpolator.h" />
@@ -255,6 +256,7 @@
     <ClCompile Include="Framework\Graphics\GraphicsEngineFactory.cpp" />
     <ClCompile Include="Framework\Graphics\GraphicsEngineWin.cpp" />
     <ClCompile Include="Framework\Graphics\Image.cpp" />
+    <ClCompile Include="Framework\Graphics\ImageUtils.cpp" />
     <ClCompile Include="Framework\Graphics\Material.cpp" />
     <ClCompile Include="Framework\Graphics\MaterialLoader.cpp" />
     <ClCompile Include="Framework\Graphics\Mesh.cpp" />
