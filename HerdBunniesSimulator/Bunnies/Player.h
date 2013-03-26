@@ -20,6 +20,7 @@ public:
 
 	const sm::Vec3& GetPosition() const;
 	const sm::Vec3& GetLookTarget() const;
+	sm::Vec3 GetEyePosition() const;
 
 	sm::Matrix GetViewMatrix() const;
 

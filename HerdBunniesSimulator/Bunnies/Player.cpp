@@ -31,9 +31,6 @@ void Player::Update(float time, float seconds)
 
 void Player::Draw(float time, float seconds)
 {
-	IShapesRenderer *shapesRenderer = InterfaceProvider::GetShapesRenderer();
-
-	shapesRenderer->DrawPlayer(this);
 }
 
 void Player::SetLookTarget(const sm::Vec3 &lookTarget)
@@ -63,6 +60,11 @@ const sm::Vec3& Player::GetPosition() const
 const sm::Vec3& Player::GetLookTarget() const
 {
 	return m_lookTarget;
+}
+
+sm::Vec3 Player::GetEyePosition() const
+{
+	return sm::Vec3(m_position.x, GameProps::PlayerHeight, m_position.z);
 }
 
 static sm::Matrix CalcBoneMatrixZ(const sm::Vec3 &jointStart, const sm::Vec3 &jointEnd)

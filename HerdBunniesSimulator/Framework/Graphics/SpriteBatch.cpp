@@ -51,6 +51,8 @@ void SpriteBatch::Begin()
 	
 	m_isDepth = glIsEnabled(GL_DEPTH_TEST) == GL_TRUE;
 	m_isBlend = glIsEnabled(GL_BLEND) == GL_TRUE;
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	if (m_isDepth) glDisable(GL_DEPTH_TEST);
 	if (!m_isBlend) glEnable(GL_BLEND);

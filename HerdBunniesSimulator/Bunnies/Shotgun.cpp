@@ -5,7 +5,10 @@
 #include "InterfaceProvider.h"
 #include "Environment.h"
 #include "DrawingRoutines.h"
+#include "SpritesMap.h"
 
+#include <Graphics/SpriteBatch.h>
+#include <Graphics/TexPart.h>
 #include <Graphics/Model.h>
 #include <Graphics/Animation.h>
 #include <Graphics/Content/Content.h>
@@ -45,6 +48,31 @@ void Shotgun::ReleaseTrigger()
 	m_justShooted = false;
 }
 
+static sm::Matrix CalcBoneMatrixZ(const sm::Vec3 &jointStart, const sm::Vec3 &jointEnd)
+{
+	sm::Matrix rot = sm::Matrix::IdentityMatrix();
+
+	sm::Vec3 zAxis = (jointEnd - jointStart).GetNormalized().GetReversed();
+	sm::Vec3 xAxis = (zAxis * sm::Vec3(0, 1, 0)).GetNormalized();
+	sm::Vec3 yAxis = xAxis * zAxis;
+
+	rot.a[0] = xAxis.x;
+	rot.a[1] = xAxis.y;
+	rot.a[2] = xAxis.z;
+
+	rot.a[4] = yAxis.x;
+	rot.a[5] = yAxis.y;
+	rot.a[6] = yAxis.z;
+
+	rot.a[8] = zAxis.x;
+	rot.a[9] = zAxis.y;
+	rot.a[10] = zAxis.z;
+
+	return sm::Matrix::TranslateMatrix(jointStart) * rot;
+}
+
+sm::Vec3 p, t;
+
 void Shotgun::Update(float time, float seconds)
 {
 	m_shotTicker.Progress(seconds);
@@ -55,7 +83,9 @@ void Shotgun::Update(float time, float seconds)
 		if (m_shotTicker.IsTimeout())
 		{
 			m_shotTicker.Reset();
-			m_shotgunBullet->SetParams(m_player->GetPosition(), m_player->GetLookTarget());
+			m_shotgunBullet->SetParams(m_player->GetEyePosition(), m_player->GetLookTarget());
+			p = m_player->GetEyePosition();
+			t = m_player->GetLookTarget();
 			m_justShooted = true;
 
 			m_shootProgress = 0.0f;
@@ -77,7 +107,16 @@ void Shotgun::Update(float time, float seconds)
 void Shotgun::Draw(float time, float seconds)
 {
 	DrawingRoutines::SetOutlineWidth(0.02f);
+	DrawingRoutines::DrawCelShaded(InterfaceProvider::GetContent()->Get<Model>("cylinder"), m_player->GetViewMatrix(), CalcBoneMatrixZ(p, p + t));
+	//DrawingRoutines::DrawCelShaded(InterfaceProvider::GetContent()->Get<Model>("cylinder"), m_player->GetViewMatrix(), sm::Matrix::TranslateMatrix(0, 4, 0));
 	DrawingRoutines::DrawCelShaded(m_shotgunModel, sm::Matrix::IdentityMatrix(), sm::Matrix::IdentityMatrix());
+
+	SpritesMap *spritesMap = InterfaceProvider::GetSpritesMap();
+
+
+	InterfaceProvider::GetSpriteBatch()->Begin();
+	InterfaceProvider::GetSpriteBatch()->Draw(*spritesMap->GetTexPart("crosshair"), (960 - 18) / 2, (640 - 18) / 2);
+	InterfaceProvider::GetSpriteBatch()->End();
 }
 
 IBullet* Shotgun::GetBullet() const
