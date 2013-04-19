@@ -72,12 +72,8 @@ void SpriteBatch::End()
 
 void SpriteBatch::Draw(const Color &color, int x, int y, int width, int height)
 {
-	const float verts[8] = {
-		x, y,
-		x + width, y,
-		x, y + height,
-		x + width, y + height
-	};
+	float verts[8];
+	CreateQuad(verts, x, y, width, height);
 	
 	const unsigned char _color[16] = {
 		color.R, color.G, color.B, color.A,
@@ -91,12 +87,8 @@ void SpriteBatch::Draw(const Color &color, int x, int y, int width, int height)
 
 void SpriteBatch::Draw(Texture *tex, int x, int y, int width, int height)
 {
-	const float verts[8] = {
-		x, y,
-		x + width, y,
-		x, y + height,
-		x + width, y + height
-	};
+	float verts[8];
+	CreateQuad(verts, x, y, width, height);
 	
 	Draw(tex, verts, Coords, NULL);	
 }
@@ -108,12 +100,8 @@ void SpriteBatch::Draw(Texture *tex, int x, int y)
 
 void SpriteBatch::Draw(Texture *tex, const float *texCoords, int x, int y, int width, int height)
 {
-	const float verts[8] = {
-		x, y,
-		x + width, y,
-		x, y + height,
-		x + width, y + height
-	};
+	float verts[8];
+	CreateQuad(verts, x, y, width, height);
 	
 	Draw(tex, verts, texCoords, NULL);
 }
@@ -125,12 +113,8 @@ void SpriteBatch::Draw(const TexPart &texPart, int x, int y)
 
 void SpriteBatch::Draw(const TexPart &texPart, int x, int y, int width, int height)
 {
-	const float verts[8] = {
-		x, y,
-		x + width, y,
-		x, y + height,
-		x + width, y + height
-	};
+	float verts[8];
+	CreateQuad(verts, x, y, width, height);
 	
 	Draw(texPart.Tex, verts, texPart.TexCoords, NULL);
 }
@@ -142,12 +126,8 @@ void SpriteBatch::Draw(const TexPart &texPart, const Color &colorMask, int x, in
 
 void SpriteBatch::Draw(const TexPart &texPart, const Color &colorMask, int x, int y, int width, int height)
 {
-	const float verts[8] = {
-		x, y,
-		x + width, y,
-		x, y + height,
-		x + width, y + height
-	};
+	float verts[8];
+	CreateQuad(verts, x, y, width, height);
 	
 	const unsigned char _color[16] = {
 		colorMask.R, colorMask.G, colorMask.B, colorMask.A,
@@ -235,5 +215,17 @@ void SpriteBatch::Draw(Texture *tex,
 	}*/
 	
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+}
+
+void SpriteBatch::CreateQuad(float *vertices, int x, int y, int width, int height)
+{
+	vertices[0] = static_cast<float>(x);
+	vertices[1] = static_cast<float>(y + height);
+	vertices[2] = static_cast<float>(x + width);
+	vertices[3] = static_cast<float>(y + height);
+	vertices[4] = static_cast<float>(x);
+	vertices[5] = static_cast<float>(y);
+	vertices[6] = static_cast<float>(x + width);
+	vertices[7] = static_cast<float>(y);
 }
 

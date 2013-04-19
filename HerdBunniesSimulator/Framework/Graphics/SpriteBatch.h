@@ -45,4 +45,6 @@ private:
 	static const float Verts[8];
 	static const float Coords[8];
 	static const unsigned char ColorMask[16];
+
+	void CreateQuad(float *vertices, int x, int y, int width, int height);
 };
