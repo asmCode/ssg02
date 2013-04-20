@@ -2,6 +2,8 @@
 
 #include "IBunny.h"
 
+class Animation;
+
 class Bunny : public IBunny
 {
 public:
@@ -25,5 +27,15 @@ protected:
 
 	// position which bunny should reach
 	sm::Vec3 m_targetPosition;
+
+	virtual void Draw(float time, float seconds);
+	virtual Animation* GetWalkAnimation() = 0;
+
+private:
+	float m_walkAnimLength;
+	float m_walkAnimProgress;
+	float m_delayBetweenJumps;
+	float m_delayTime;
+	float m_jumpDistance;
 };
 

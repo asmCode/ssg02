@@ -41,12 +41,15 @@ void GoingToReproduction::Update(IBunny *bunny, float time, float seconds)
 		return;
 	}
 
-	sm::Vec3 moveTarget = partner->GetPosition() - hbunny->GetPosition();
+	hbunny->SetDestinationPosition(partner->GetPosition());
+	hbunny->UpdateMovement(seconds, GameProps::HealthyBunnyWalkSpeed);
+
+	/*sm::Vec3 moveTarget = partner->GetPosition() - hbunny->GetPosition();
 	moveTarget.y = 0;
 	moveTarget.Normalize();
 
 	sm::Vec3 newBunnyPosition = hbunny->GetPosition() + (moveTarget * GameProps::HealthyBunnyWalkSpeed * seconds);
-	hbunny->SetPosition(newBunnyPosition);
+	hbunny->SetPosition(newBunnyPosition);*/
 
 	if ((hbunny->GetPosition() - partner->GetPosition()).GetLength() < (0.4f * 2)) // TODO
 		hbunny->SetState(Reproducting::GetInstance());

@@ -85,6 +85,7 @@ void Content::LoadMaterials(const std::string &fullPath)
 
 void Content::CombineResources()
 {
+	// materials to models
 	std::map<std::string, Model*>::iterator modelsIt;
 	for (modelsIt = m_models.begin(); modelsIt != m_models.end(); ++modelsIt)
 	{
@@ -95,6 +96,7 @@ void Content::CombineResources()
 			meshParts[i]->SetMaterial(Get<Material>(meshParts[i]->materialName));
 	}
 
+	// textures to materials
 	std::map<std::string, Material*>::iterator materialsIt;
 	for (materialsIt = m_materials.begin(); materialsIt != m_materials.end(); ++materialsIt)
 	{

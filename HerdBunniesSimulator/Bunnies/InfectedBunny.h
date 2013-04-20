@@ -72,6 +72,8 @@ private:
 
 	float m_spawningProgress;
 	HealthyBunny *m_huntingTarget;
+
+	Animation* GetWalkAnimation();
 };
 
 #endif

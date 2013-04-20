@@ -9,9 +9,12 @@
 class IBunnyState;
 class InfectedBunny;
 class Model;
+class Animation;
 
 class HealthyBunny : public Bunny
 {
+	friend class SettingsInRanks;
+
 public:
 	HealthyBunny(void);
 	~HealthyBunny(void);
@@ -75,7 +78,7 @@ private:
 	IBunnyState *m_bunnyState;
 
 	Model *m_bunnyModel;
-	//Animation *m_
+	Animation *m_walkAnim;
 
 	bool m_useRunningAwayInitialDirection;
 	sm::Vec3 m_runningAwayInitialDirection;
@@ -88,6 +91,8 @@ private:
 	float m_growingUpTime;
 	sm::Vec3 m_borningJumpOutVector;
 	float m_targetPositionRefreshColldown;
+
+	Animation* GetWalkAnimation();
 };
 
 #endif

@@ -223,3 +223,8 @@ void InfectedBunny::Die()
 	SetState(Dying::GetInstance());
 }
 
+Animation* InfectedBunny::GetWalkAnimation()
+{
+	return NULL;
+}
+

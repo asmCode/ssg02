@@ -13,6 +13,7 @@
 #include <Graphics/IGraphicsEngine.h>
 #include <Graphics/Content/Content.h>
 #include <Graphics/Model.h>
+#include <Graphics/Animation.h>
 #include <Graphics/SpriteBatch.h>
 #include <stddef.h>
 #include <assert.h>
@@ -51,6 +52,9 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 	m_content->Get<Texture>("grass")->SetFilterModel(Texture::Filter_LinearMipmapLinear, Texture::Filter_Linear);
 	m_content->Get<Texture>("grass")->SetWrappingMode(Texture::Wrap_Repeat);
 	m_content->Get<Texture>("grass")->GenerateMipmaps();
+
+	m_content->Get<Animation>("shotgun")->AssignModel(m_content->Get<Model>("shotgun"));
+	m_content->Get<Animation>("hbunny_walk")->AssignModel(m_content->Get<Model>("hbunny"));
 
 	DrawingRoutines::Initialize();
 	DrawingRoutines::SetLightPosition(sm::Vec3(-5.0f, 30.0f, -5.0f));

@@ -11,6 +11,7 @@
 #include "GameProps.h"
 #include "DrawingRoutines.h"
 
+#include <Graphics/Animation.h>
 #include <Graphics/Content/Content.h>
 #include <Utils/Randomizer.h>
 
@@ -27,6 +28,7 @@ HealthyBunny::HealthyBunny(void) :
 	m_bunnyState(SettingsInRanks::GetInstance())
 {
 	m_bunnyModel = InterfaceProvider::GetContent()->Get<Model>("hbunny");
+	m_walkAnim = InterfaceProvider::GetContent()->Get<Animation>("hbunny_walk");
 	assert(m_bunnyModel != NULL);
 }
 
@@ -66,6 +68,8 @@ static sm::Matrix CalcBoneMatrixZ(const sm::Vec3 &jointStart, const sm::Vec3 &jo
 
 void HealthyBunny::Draw(float time, float seconds, const sm::Matrix &viewMatrix)
 {
+	this->Bunny::Draw(time, seconds);
+
 	DrawingRoutines::DrawCelShaded(m_bunnyModel, viewMatrix, CalcBoneMatrixZ(m_position, m_position + m_moveTarget) * sm::Matrix::RotateAxisMatrix(3.1415f, 0, 1, 0));
 }
 
@@ -325,5 +329,10 @@ void HealthyBunny::Die()
 		m_reproductionPartner->SetToIdle();
 
 	SetState(Dying::GetInstance());
+}
+
+Animation* HealthyBunny::GetWalkAnimation()
+{
+	return m_walkAnim;
 }
 

@@ -115,7 +115,7 @@ void Shotgun::Draw(float time, float seconds)
 
 
 	InterfaceProvider::GetSpriteBatch()->Begin();
-	InterfaceProvider::GetSpriteBatch()->Draw(*spritesMap->GetTexPart("crosshair"), (960 - 18) / 2, (640 - 18) / 2);
+	InterfaceProvider::GetSpriteBatch()->Draw(*spritesMap->GetTexPart("crosshair"), (960 - 18) / 2, (640 - 18) / 2); // TODO, 
 	InterfaceProvider::GetSpriteBatch()->End();
 }
 
