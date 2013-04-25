@@ -173,11 +173,8 @@ void BunniesManager::GoToReproduce()
 	
 	if (bunny1 != NULL && bunny2 != NULL)
 	{
-		bunny1->SetReproductionPartner(bunny2);
-		bunny1->SetState(GoingToReproduction::GetInstance());
-
-		bunny2->SetReproductionPartner(bunny1);
-		bunny2->SetState(GoingToReproduction::GetInstance());
+		bunny1->StartReproductionProcess(bunny2, true);
+		bunny2->StartReproductionProcess(bunny1, false);
 	}
 	else
 	{

@@ -4,6 +4,7 @@
 #include "SettingsInRanks.h"
 #include "BeeingFucked.h"
 #include "RunningAway.h"
+#include "GoingToReproduction.h"
 #include "ChangingToInfected.h"
 #include "InfectedBunny.h"
 #include "InterfaceProvider.h"
@@ -11,7 +12,11 @@
 #include "GameProps.h"
 #include "DrawingRoutines.h"
 
+#include "d:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Framework\Graphics\Property.h"
+
 #include <Graphics/Animation.h>
+#include <Graphics/Model.h>
+#include <Graphics/Mesh.h>
 #include <Graphics/Content/Content.h>
 #include <Utils/Randomizer.h>
 
@@ -29,7 +34,25 @@ HealthyBunny::HealthyBunny(void) :
 {
 	m_bunnyModel = InterfaceProvider::GetContent()->Get<Model>("hbunny");
 	m_walkAnim = InterfaceProvider::GetContent()->Get<Animation>("hbunny_walk");
+	m_fuckAnim = InterfaceProvider::GetContent()->Get<Animation>("hbunny_fuck");
+
 	assert(m_bunnyModel != NULL);
+
+	InitFuckAnimBounds();
+}
+
+void HealthyBunny::InitFuckAnimBounds()
+{
+	Mesh *bodyMesh = m_bunnyModel->FindMesh("body");
+	assert(bodyMesh  != NULL);
+
+	Property *fuckAnimBounds = bodyMesh->FindProperty("fuck_anim_bounds");
+	assert(fuckAnimBounds != NULL);
+
+	int valDummy;
+	bool stopKeyDumy;
+	fuckAnimBounds->GetKeyframe(0, m_fuckAnimStart, valDummy, stopKeyDumy);
+	fuckAnimBounds->GetKeyframe(1, m_fuckAnimEnd, valDummy, stopKeyDumy);
 }
 
 HealthyBunny::~HealthyBunny(void)
@@ -137,9 +160,11 @@ const sm::Vec3 HealthyBunny::GetMoveTarget() const
 	return m_moveTarget;
 }
 
-void HealthyBunny::SetReproductionPartner(HealthyBunny *bunny)
+void HealthyBunny::StartReproductionProcess(HealthyBunny *partner, bool isActive)
 {
-	m_reproductionPartner = bunny;
+	m_reproductionPartner = partner;
+	m_isActiveReproducer = isActive;
+	SetState(GoingToReproduction::GetInstance());
 }
 
 HealthyBunny *HealthyBunny::GetReproductionPartner()

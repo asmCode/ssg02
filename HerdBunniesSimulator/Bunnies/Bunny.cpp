@@ -9,6 +9,8 @@ Bunny::Bunny(void)
 	m_delayBetweenJumps = 0.1f;
 	m_jumpDistance = 1.0f;
 	m_delayTime = 0.0f;
+
+	m_currentAnim = NULL;
 }
 
 Bunny::~Bunny(void)
@@ -56,6 +58,9 @@ void Bunny::UpdateMovement(float seconds, float movementSpeed)
 		m_moveTarget = moveDirection.GetNormalized();
 		m_position += m_moveTarget * m_jumpDistance * movementSpeed * seconds;
 	}
+
+	m_currentAnim = GetWalkAnimation();
+	m_currentAnimTime = m_walkAnimProgress;
 }
 
 float Bunny::GetHealth() const
@@ -70,5 +75,6 @@ void Bunny::SetDestinationPosition(const sm::Vec3 &position)
 
 void Bunny::Draw(float time, float seconds)
 {
-	GetWalkAnimation()->Update(m_walkAnimProgress, sm::Matrix::IdentityMatrix(), seconds);
+	if (m_currentAnim != NULL)
+		m_currentAnim->Update(m_currentAnimTime, sm::Matrix::IdentityMatrix(), seconds);
 }

@@ -171,6 +171,14 @@ public:
 		return value;
 	}
 
+	template <typename Type>
+	void GetKeyframe(int index, float &time, Type &value, bool &stopKey)
+	{
+		assert(IsAnimatable());
+
+		((IInterpolator<Type>*)m_value)->GetKeyframe(index, time, value, stopKey);
+	}
+
 	sm::Vec3 GetVector3Value()
 	{
 		assert(m_propType == PropertyType_Vector3);

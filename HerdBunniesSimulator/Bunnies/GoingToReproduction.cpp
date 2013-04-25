@@ -15,6 +15,13 @@ GoingToReproduction::~GoingToReproduction(void)
 
 void GoingToReproduction::Enter(IBunny *bunny)
 {
+	HealthyBunny *hbunny = dynamic_cast<HealthyBunny*>(bunny);
+	assert(hbunny != NULL);
+
+	hbunny->m_isAssExposed = false;
+	hbunny->m_exposeAssAnimTime = 0.0f;
+	hbunny->	m_exposeAssAngleDiff = 0.0f;
+	hbunny->m_exposeAssAxis.Set(0.0f, 0.0f, 0.0f);
 }
 
 void GoingToReproduction::Leave(IBunny *bunny)
@@ -41,18 +48,46 @@ void GoingToReproduction::Update(IBunny *bunny, float time, float seconds)
 		return;
 	}
 
-	hbunny->SetDestinationPosition(partner->GetPosition());
-	hbunny->UpdateMovement(seconds, GameProps::HealthyBunnyWalkSpeed);
-
-	/*sm::Vec3 moveTarget = partner->GetPosition() - hbunny->GetPosition();
-	moveTarget.y = 0;
-	moveTarget.Normalize();
-
-	sm::Vec3 newBunnyPosition = hbunny->GetPosition() + (moveTarget * GameProps::HealthyBunnyWalkSpeed * seconds);
-	hbunny->SetPosition(newBunnyPosition);*/
-
-	if ((hbunny->GetPosition() - partner->GetPosition()).GetLength() < (0.4f * 2)) // TODO
+	if ((hbunny->m_isActiveReproducer || (!hbunny->m_isActiveReproducer && hbunny->m_isAssExposed)) &&
+		(hbunny->GetPosition() - partner->GetPosition()).GetLength() < (0.5f * 2)) // TODO
+	{
 		hbunny->SetState(Reproducting::GetInstance());
+	}
+	else if (!hbunny->m_isActiveReproducer &&
+			(hbunny->GetPosition() - partner->GetPosition()).GetLength() < (2.0f * 2)) // TODO
+	{
+		if (hbunny->m_exposeAssAxis == sm::Vec3(0, 0, 0))
+		{
+			hbunny->m_exposeAssAxis = partner->GetMoveTarget() * hbunny->GetMoveTarget();
+			hbunny->m_exposeAssAngleDiff = sm::Vec3::GetAngle(partner->GetMoveTarget(), hbunny->GetMoveTarget());
+			hbunny->m_exposeAssBaseTarget = hbunny->GetMoveTarget();
+		}
+		else
+		{
+			hbunny->m_exposeAssAnimTime += seconds;
+
+			if (hbunny->m_exposeAssAnimTime >= hbunny->m_walkAnimLength)
+			{
+				hbunny->m_exposeAssAnimTime = hbunny->m_walkAnimLength;
+				hbunny->m_isAssExposed = true;
+			}
+
+			if (hbunny->m_exposeAssAnimTime < hbunny->m_walkAnimLength)
+			{
+				float rotAngle = (hbunny->m_exposeAssAnimTime / hbunny->m_walkAnimLength) * hbunny->m_exposeAssAngleDiff;
+				sm::Matrix rot = sm::Matrix::RotateAxisMatrix(rotAngle, hbunny->m_exposeAssAxis);
+				hbunny->SetMoveTarget(rot * hbunny->m_exposeAssBaseTarget);
+			}
+
+			hbunny->m_currentAnim = hbunny->m_walkAnim;
+			hbunny->m_currentAnimTime = hbunny->m_exposeAssAnimTime;
+		}
+	}
+	else
+	{
+		hbunny->SetDestinationPosition(partner->GetPosition());
+		hbunny->UpdateMovement(seconds, GameProps::HealthyBunnyWalkSpeed);
+	}
 }
 
 IBunnyState::State GoingToReproduction::GetStateType() const

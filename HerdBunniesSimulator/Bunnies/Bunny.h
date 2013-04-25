@@ -6,6 +6,9 @@ class Animation;
 
 class Bunny : public IBunny
 {
+	friend class Reproducting;
+	friend class GoingToReproduction;
+
 public:
 	Bunny(void);
 	~Bunny(void);
@@ -37,5 +40,8 @@ private:
 	float m_delayBetweenJumps;
 	float m_delayTime;
 	float m_jumpDistance;
+
+	float m_currentAnimTime;
+	Animation *m_currentAnim;
 };
 

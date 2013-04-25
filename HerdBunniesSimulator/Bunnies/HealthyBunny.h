@@ -14,6 +14,8 @@ class Animation;
 class HealthyBunny : public Bunny
 {
 	friend class SettingsInRanks;
+	friend class Reproducting;
+	friend class GoingToReproduction;
 
 public:
 	HealthyBunny(void);
@@ -28,7 +30,12 @@ public:
 
 	void ActivateOnStart(const sm::Vec3 &position);
 
-	void SetReproductionPartner(HealthyBunny *bunny);
+	/**
+	 * @param isActive if true, then during fucking bunny have m_fuckAnim animation.
+	                   Otherwise it is passive and is not moving.  
+	 */
+	void StartReproductionProcess(HealthyBunny *partner, bool isActive);
+
 	HealthyBunny *GetReproductionPartner();
 
 	void SetReproductingTime(float time);
@@ -79,11 +86,13 @@ private:
 
 	Model *m_bunnyModel;
 	Animation *m_walkAnim;
+	Animation *m_fuckAnim;
 
 	bool m_useRunningAwayInitialDirection;
 	sm::Vec3 m_runningAwayInitialDirection;
 
 	HealthyBunny *m_reproductionPartner;
+	bool m_isActiveReproducer;
 	float m_reproductingTime;
 	float m_restingAfterReproduction;
 	Ticker m_changingProgress;
@@ -92,6 +101,21 @@ private:
 	sm::Vec3 m_borningJumpOutVector;
 	float m_targetPositionRefreshColldown;
 
+	// time when hip sub animation starts and ends in m_fuckAnim animation. Those values are stored
+	// as a Custom Properties in m_bunnyModel model.
+	float m_fuckAnimStart;
+	float m_fuckAnimEnd;
+
+	float m_fuckProgressTime;
+	int m_fuckMoveCycles;
+
+	bool m_isAssExposed;
+	float m_exposeAssAnimTime;
+	float m_exposeAssAngleDiff;
+	sm::Vec3 m_exposeAssBaseTarget;
+	sm::Vec3 m_exposeAssAxis;
+
+	void InitFuckAnimBounds();
 	Animation* GetWalkAnimation();
 };
 
