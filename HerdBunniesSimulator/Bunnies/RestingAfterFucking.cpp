@@ -40,8 +40,9 @@ void RestingAfterFucking::Update(IBunny *bunny, float time, float seconds)
 	InfectedBunny *ibunny = dynamic_cast<InfectedBunny*>(bunny);
 	assert(ibunny != NULL);
 
+	ibunny->m_currentAnim = ibunny->m_walkAnim;
 	ibunny->RefreshNewTargetPosition(seconds);
-	ibunny->UpdateMovement(seconds, GameProps::InfectedBunnyRestingSpeed);
+	ibunny->UpdateMovement(seconds, GameProps::InfectedBunnyRestingSpeed, GameProps::DelayBetweenWalkJump);
 
 	sm::Vec3 moveTarget = ibunny->GetTargetPosition() - ibunny->GetPosition();
 	moveTarget.y = 0.0f;

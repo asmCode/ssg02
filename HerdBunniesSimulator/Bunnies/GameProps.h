@@ -13,9 +13,14 @@ public:
 	static const float HealthyBunnyResistance;
 	static const float InfectedBunnyHuntingSpeed;
 	static const float InfectedBunnyRestingSpeed;
+
+	static const float DelayBetweenWalkJump;
+	static const float DelayBetweenRunJump;
+
 	static const float DangerShotAngle; // value of cos(angle)
 	static const float HealthyBunnyDistanceToFarmer;
-	static const float ReproductionTime;
+	//static const float ReproductionTime;
+	static const float ReproductionHipCycles;
 	static const float RestingAfterReproduction;
 	static const float GrowingUpTime;
 	static const float BorningTime;

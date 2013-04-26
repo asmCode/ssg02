@@ -55,7 +55,10 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 
 	m_content->Get<Animation>("shotgun")->AssignModel(m_content->Get<Model>("shotgun"));
 	m_content->Get<Animation>("hbunny_walk")->AssignModel(m_content->Get<Model>("hbunny"));
+	m_content->Get<Animation>("hbunny_run")->AssignModel(m_content->Get<Model>("hbunny"));
 	m_content->Get<Animation>("hbunny_fuck")->AssignModel(m_content->Get<Model>("hbunny"));
+	m_content->Get<Animation>("ibunny_run")->AssignModel(m_content->Get<Model>("ibunny"));
+	m_content->Get<Animation>("ibunny_walk")->AssignModel(m_content->Get<Model>("ibunny"));
 
 	DrawingRoutines::Initialize();
 	DrawingRoutines::SetLightPosition(sm::Vec3(-5.0f, 30.0f, -5.0f));

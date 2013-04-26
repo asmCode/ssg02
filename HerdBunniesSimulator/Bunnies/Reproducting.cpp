@@ -43,7 +43,7 @@ void Reproducting::Update(IBunny *bunny, float time, float seconds)
 	if (hbunny->m_isActiveReproducer)
 	{
 		hbunny->m_fuckProgressTime += seconds;
-		if (hbunny->m_fuckMoveCycles < 10 && hbunny->m_fuckProgressTime >= hbunny->m_fuckAnimEnd)
+		if (hbunny->m_fuckMoveCycles < GameProps::ReproductionHipCycles && hbunny->m_fuckProgressTime >= hbunny->m_fuckAnimEnd)
 		{
 			hbunny->m_fuckMoveCycles++;
 			hbunny->m_fuckProgressTime = hbunny->m_fuckAnimStart;
@@ -69,22 +69,18 @@ void Reproducting::Update(IBunny *bunny, float time, float seconds)
 		return;
 	}
 
-	hbunny->SetReproductingTime(hbunny->GetReproductingTime() + seconds);
-
-	float repTime = hbunny->GetReproductingTime();
-	if (repTime > GameProps::ReproductionTime)
+	// only active reproducer controls both reproducting bunnies
+	if (hbunny->m_isActiveReproducer && hbunny->m_currentAnimTime >= hbunny->m_fuckAnim->GetAnimLength())
 	{
+		m_bunniesManager->BornNewRabbit(hbunny->GetPosition());
+
 		hbunny->SetRestingAfterReproductionTime(GameProps::RestingAfterReproduction);
-		hbunny->SetReproductingTime(0.0f);
-		hbunny->SetState(Idle::GetInstance());
-
-		HealthyBunny *partner = hbunny->GetReproductionPartner();
-		// to avoid spawning new rabbit in both bunnies witch are reproducting,
-		// only active reproducer can span new bunny
-		if (hbunny->m_isActiveReproducer)
-			m_bunniesManager->BornNewRabbit(hbunny->GetPosition());
-
 		hbunny->m_reproductionPartner = NULL;
+		hbunny->SetToIdle();
+
+		partner->SetRestingAfterReproductionTime(GameProps::RestingAfterReproduction);
+		partner->m_reproductionPartner = NULL;
+		partner->SetToIdle();
 	}
 }
 

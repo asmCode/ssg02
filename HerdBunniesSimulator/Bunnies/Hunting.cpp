@@ -66,8 +66,10 @@ void Hunting::Update(IBunny *bunny, float time, float seconds)
 	{
 		moveTarget.Normalize();
 
+		ibunny->m_currentAnim = ibunny->m_runAnim;
+
 		ibunny->SetDestinationPosition(hbunny->GetPosition());
-		ibunny->UpdateMovement(seconds, GameProps::InfectedBunnyHuntingSpeed);
+		ibunny->UpdateMovement(seconds, GameProps::InfectedBunnyHuntingSpeed, GameProps::DelayBetweenRunJump);
 	}
 }
 

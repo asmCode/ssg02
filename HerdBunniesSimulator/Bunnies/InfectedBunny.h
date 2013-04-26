@@ -8,10 +8,12 @@
 class Model;
 class IBunnyState;
 class HealthyBunny;
+class Animation;
 
 class InfectedBunny : public Bunny
 {
 	friend class RestingAfterFucking;
+	friend class Hunting;
 
 public:
 	InfectedBunny(void);
@@ -62,6 +64,8 @@ private:
 	IBunnyState *m_bunnyState;
 
 	Model *m_bunnyModel;
+	Animation *m_runAnim;
+	Animation *m_walkAnim;
 
 	float m_targetPositionRefreshColldown;
 
@@ -72,8 +76,6 @@ private:
 
 	float m_spawningProgress;
 	HealthyBunny *m_huntingTarget;
-
-	Animation* GetWalkAnimation();
 };
 
 #endif

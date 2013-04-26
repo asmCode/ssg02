@@ -4,10 +4,7 @@
 
 Bunny::Bunny(void)
 {
-	m_walkAnimLength = 0;
-	m_walkAnimProgress = 0.0f;
-	m_delayBetweenJumps = 0.1f;
-	m_jumpDistance = 1.0f;
+	m_moveAnimProgress = 0.0f;
 	m_delayTime = 0.0f;
 
 	m_currentAnim = NULL;
@@ -17,33 +14,30 @@ Bunny::~Bunny(void)
 {
 }
 
-void Bunny::UpdateMovement(float seconds, float movementSpeed)
+void Bunny::UpdateMovement(float seconds, float movementSpeed, float delayBetweenJumps)
 {
-	if (GetWalkAnimation() == NULL)
+	if (m_currentAnim == NULL)
 		return;
 
-	if (m_walkAnimLength == 0.0f)
-		m_walkAnimLength = GetWalkAnimation()->GetAnimLength();
+	float animLength = m_currentAnim->GetAnimLength();
 
 	bool canMove = false;
 
-	if (m_walkAnimProgress < m_walkAnimLength)
+	if (m_moveAnimProgress < animLength)
 	{
-		//canMove = true;
-
-		m_walkAnimProgress += seconds;
+		m_moveAnimProgress += seconds;
 	}
-	else if (m_delayTime < m_delayBetweenJumps)
+	else if (m_delayTime < delayBetweenJumps)
 	{
 		m_delayTime += seconds;
 	}
-	else if (m_delayTime >= m_delayBetweenJumps)
+	else if (m_delayTime >= delayBetweenJumps)
 	{
 		m_delayTime = 0.0f;
-		m_walkAnimProgress = 0.0f;
+		m_moveAnimProgress = 0.0f;
 	}
 
-	if (m_walkAnimProgress < m_walkAnimLength * 0.85f)
+	if (m_moveAnimProgress < animLength * 0.85f)
 		canMove = true;
 
 	if (canMove)
@@ -56,11 +50,10 @@ void Bunny::UpdateMovement(float seconds, float movementSpeed)
 		}
 	
 		m_moveTarget = moveDirection.GetNormalized();
-		m_position += m_moveTarget * m_jumpDistance * movementSpeed * seconds;
+		m_position += m_moveTarget * movementSpeed * seconds;
 	}
 
-	m_currentAnim = GetWalkAnimation();
-	m_currentAnimTime = m_walkAnimProgress;
+	m_currentAnimTime = m_moveAnimProgress;
 }
 
 float Bunny::GetHealth() const

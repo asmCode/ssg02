@@ -8,6 +8,8 @@ class Bunny : public IBunny
 {
 	friend class Reproducting;
 	friend class GoingToReproduction;
+	friend class Hunting;
+	friend class RunningAway;
 
 public:
 	Bunny(void);
@@ -15,7 +17,7 @@ public:
 
 	float GetHealth() const;
 
-	void UpdateMovement(float seconds, float movementSpeed);
+	void UpdateMovement(float seconds, float movementSpeed, float delayBetweenJumps);
 
 	void SetDestinationPosition(const sm::Vec3 &position);
 
@@ -31,17 +33,15 @@ protected:
 	// position which bunny should reach
 	sm::Vec3 m_targetPosition;
 
-	virtual void Draw(float time, float seconds);
-	virtual Animation* GetWalkAnimation() = 0;
-
-private:
-	float m_walkAnimLength;
-	float m_walkAnimProgress;
-	float m_delayBetweenJumps;
-	float m_delayTime;
-	float m_jumpDistance;
-
 	float m_currentAnimTime;
 	Animation *m_currentAnim;
+
+	virtual void Draw(float time, float seconds);
+
+private:
+	float m_moveAnimProgress;
+
+	float m_delayTime;
+	float m_jumpDistance;
 };
 

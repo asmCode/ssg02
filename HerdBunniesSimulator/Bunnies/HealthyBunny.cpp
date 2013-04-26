@@ -34,6 +34,7 @@ HealthyBunny::HealthyBunny(void) :
 {
 	m_bunnyModel = InterfaceProvider::GetContent()->Get<Model>("hbunny");
 	m_walkAnim = InterfaceProvider::GetContent()->Get<Animation>("hbunny_walk");
+	m_runAnim = InterfaceProvider::GetContent()->Get<Animation>("hbunny_run");
 	m_fuckAnim = InterfaceProvider::GetContent()->Get<Animation>("hbunny_fuck");
 
 	assert(m_bunnyModel != NULL);
@@ -354,10 +355,5 @@ void HealthyBunny::Die()
 		m_reproductionPartner->SetToIdle();
 
 	SetState(Dying::GetInstance());
-}
-
-Animation* HealthyBunny::GetWalkAnimation()
-{
-	return m_walkAnim;
 }
 

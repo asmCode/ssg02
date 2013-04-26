@@ -2,6 +2,9 @@
 #include "HealthyBunny.h"
 #include "GameProps.h"
 #include "Reproducting.h"
+
+#include <Graphics/Animation.h>
+
 #include <assert.h>
 
 GoingToReproduction::GoingToReproduction(void) :
@@ -66,15 +69,17 @@ void GoingToReproduction::Update(IBunny *bunny, float time, float seconds)
 		{
 			hbunny->m_exposeAssAnimTime += seconds;
 
-			if (hbunny->m_exposeAssAnimTime >= hbunny->m_walkAnimLength)
+			float walkAnimLength = hbunny->m_walkAnim->GetAnimLength();
+
+			if (hbunny->m_exposeAssAnimTime >= walkAnimLength)
 			{
-				hbunny->m_exposeAssAnimTime = hbunny->m_walkAnimLength;
+				hbunny->m_exposeAssAnimTime = walkAnimLength;
 				hbunny->m_isAssExposed = true;
 			}
 
-			if (hbunny->m_exposeAssAnimTime < hbunny->m_walkAnimLength)
+			if (hbunny->m_exposeAssAnimTime < walkAnimLength)
 			{
-				float rotAngle = (hbunny->m_exposeAssAnimTime / hbunny->m_walkAnimLength) * hbunny->m_exposeAssAngleDiff;
+				float rotAngle = (hbunny->m_exposeAssAnimTime / walkAnimLength) * hbunny->m_exposeAssAngleDiff;
 				sm::Matrix rot = sm::Matrix::RotateAxisMatrix(rotAngle, hbunny->m_exposeAssAxis);
 				hbunny->SetMoveTarget(rot * hbunny->m_exposeAssBaseTarget);
 			}
@@ -86,7 +91,7 @@ void GoingToReproduction::Update(IBunny *bunny, float time, float seconds)
 	else
 	{
 		hbunny->SetDestinationPosition(partner->GetPosition());
-		hbunny->UpdateMovement(seconds, GameProps::HealthyBunnyWalkSpeed);
+		hbunny->UpdateMovement(seconds, GameProps::HealthyBunnyWalkSpeed, GameProps::DelayBetweenWalkJump);
 	}
 }
 

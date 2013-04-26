@@ -23,7 +23,12 @@ InfectedBunny::InfectedBunny() :
 	m_fuckingProgress(GameProps::FuckingTime)
 {
 	m_bunnyModel = InterfaceProvider::GetContent()->Get<Model>("ibunny");
+	m_runAnim = InterfaceProvider::GetContent()->Get<Animation>("ibunny_run");
+	m_walkAnim = InterfaceProvider::GetContent()->Get<Animation>("ibunny_walk");
+
 	assert(m_bunnyModel != NULL);
+	assert(m_runAnim != NULL);
+	assert(m_walkAnim != NULL);
 }
 
 InfectedBunny::~InfectedBunny(void)
@@ -104,6 +109,8 @@ static sm::Matrix CalcBoneMatrixZ(const sm::Vec3 &jointStart, const sm::Vec3 &jo
 
 void InfectedBunny::Draw(float time, float seconds, const sm::Matrix &viewMatrix)
 {
+	this->Bunny::Draw(time, seconds);
+
 	DrawingRoutines::DrawCelShaded(m_bunnyModel, viewMatrix, CalcBoneMatrixZ(m_position, m_position + m_moveTarget) * sm::Matrix::RotateAxisMatrix(3.1415f, 0, 1, 0));
 }
 
@@ -221,10 +228,5 @@ void InfectedBunny::Die()
 		m_huntingTarget->SetToIdle();
 
 	SetState(Dying::GetInstance());
-}
-
-Animation* InfectedBunny::GetWalkAnimation()
-{
-	return NULL;
 }
 

@@ -35,6 +35,8 @@ public:
 	float ownAngle;
 	float angleScale;
 
+	float m_animLength;
+
 public:
 	Animation(void);
 	~Animation(void);

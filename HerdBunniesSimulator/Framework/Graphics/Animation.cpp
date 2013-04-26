@@ -2,7 +2,8 @@
 #include "Model.h"
 #include "Mesh.h"
 
-Animation::Animation(void)
+Animation::Animation(void) :
+	m_animLength(-1.0f)
 {
 	id = 0;
 	mesh = NULL;
@@ -183,6 +184,9 @@ Animation *Animation::GetAnimationById(int id)
 
 float Animation::GetAnimLength()
 {
+	if (m_animLength != -1.0f)
+		return m_animLength;
+
 	float posTime = 0.0f;
 	float rotTime = 0.0f;
 	float scaleTime = 0.0f;
@@ -206,6 +210,8 @@ float Animation::GetAnimLength()
 			maxAnimLength = length;
 	}
 
-	return max(max(max(posTime, rotTime), scaleTime), maxAnimLength);
+	m_animLength = max(max(max(posTime, rotTime), scaleTime), maxAnimLength);
+
+	return m_animLength;
 }
 

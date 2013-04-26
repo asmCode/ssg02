@@ -36,11 +36,15 @@ void RunningAway::Update(IBunny *bunny, float time, float seconds)
 	
 	hbunny->RefreshNewTargetPosition(seconds);
 
-	sm::Vec3 moveTarget = hbunny->GetTargetPosition() - hbunny->GetPosition();
+	/*sm::Vec3 moveTarget = hbunny->GetTargetPosition() - hbunny->GetPosition();
 	moveTarget.y = 0.0f;
 	moveTarget.Normalize();
 
-	hbunny->SetPosition(hbunny->GetPosition() + moveTarget * GameProps::HealthyBunnyRunSpeed * seconds);
+	hbunny->SetPosition(hbunny->GetPosition() + moveTarget * GameProps::HealthyBunnyRunSpeed * seconds);*/
+
+	hbunny->m_currentAnim = hbunny->m_runAnim;
+	hbunny->SetDestinationPosition(hbunny->GetTargetPosition());
+	hbunny->UpdateMovement(seconds, GameProps::HealthyBunnyRunSpeed, GameProps::DelayBetweenRunJump);
 }
 
 IBunnyState::State RunningAway::GetStateType() const

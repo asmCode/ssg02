@@ -16,6 +16,7 @@ class HealthyBunny : public Bunny
 	friend class SettingsInRanks;
 	friend class Reproducting;
 	friend class GoingToReproduction;
+	friend class RunningAway;
 
 public:
 	HealthyBunny(void);
@@ -86,6 +87,7 @@ private:
 
 	Model *m_bunnyModel;
 	Animation *m_walkAnim;
+	Animation *m_runAnim;
 	Animation *m_fuckAnim;
 
 	bool m_useRunningAwayInitialDirection;
@@ -116,7 +118,6 @@ private:
 	sm::Vec3 m_exposeAssAxis;
 
 	void InitFuckAnimBounds();
-	Animation* GetWalkAnimation();
 };
 
 #endif
