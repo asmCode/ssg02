@@ -45,7 +45,7 @@ bool GameScreen::Initialize()
 {
 	m_player = new Player();
 	m_bunniesMgr = new BunniesManager();
-	m_bunniesMgr->ResetForNewGame(4);
+	m_bunniesMgr->ResetForNewGame(8);
 
 	Shotgun *shotgun = new Shotgun(m_player);
 	m_activeGun = shotgun;

@@ -25,10 +25,16 @@ InfectedBunny::InfectedBunny() :
 	m_bunnyModel = InterfaceProvider::GetContent()->Get<Model>("ibunny");
 	m_runAnim = InterfaceProvider::GetContent()->Get<Animation>("ibunny_run");
 	m_walkAnim = InterfaceProvider::GetContent()->Get<Animation>("ibunny_walk");
+	m_fuckAnim = InterfaceProvider::GetContent()->Get<Animation>("ibunny_fuck");
 
 	assert(m_bunnyModel != NULL);
 	assert(m_runAnim != NULL);
 	assert(m_walkAnim != NULL);
+	assert(m_fuckAnim != NULL);
+
+	InitFuckAnimBounds(m_bunnyModel);
+
+	m_currentModel = m_bunnyModel;
 }
 
 InfectedBunny::~InfectedBunny(void)

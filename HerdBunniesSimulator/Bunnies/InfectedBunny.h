@@ -14,6 +14,7 @@ class InfectedBunny : public Bunny
 {
 	friend class RestingAfterFucking;
 	friend class Hunting;
+	friend class Fucking;
 
 public:
 	InfectedBunny(void);
@@ -66,8 +67,12 @@ private:
 	Model *m_bunnyModel;
 	Animation *m_runAnim;
 	Animation *m_walkAnim;
+	Animation *m_fuckAnim;
 
 	float m_targetPositionRefreshColldown;
+
+	float m_fuckProgressTime;
+	int m_fuckMoveCycles;
 
 	Ticker m_fuckingProgress;
 	Ticker m_restingAfterFuckingProgress;

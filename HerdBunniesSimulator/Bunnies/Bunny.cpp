@@ -1,6 +1,10 @@
 #include "Bunny.h"
 
+#include <Graphics/Model.h>
+#include <Graphics/Mesh.h>
 #include <Graphics/Animation.h>
+
+#include "d:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Framework\Graphics\Property.h"
 
 Bunny::Bunny(void)
 {
@@ -8,6 +12,7 @@ Bunny::Bunny(void)
 	m_delayTime = 0.0f;
 
 	m_currentAnim = NULL;
+	m_currentModel = NULL;
 }
 
 Bunny::~Bunny(void)
@@ -71,3 +76,18 @@ void Bunny::Draw(float time, float seconds)
 	if (m_currentAnim != NULL)
 		m_currentAnim->Update(m_currentAnimTime, sm::Matrix::IdentityMatrix(), seconds);
 }
+
+void Bunny::InitFuckAnimBounds(Model *model)
+{
+	Mesh *bodyMesh = model->FindMesh("body");
+	assert(bodyMesh  != NULL);
+
+	Property *fuckAnimBounds = bodyMesh->FindProperty("fuck_anim_bounds");
+	assert(fuckAnimBounds != NULL);
+
+	int valDummy;
+	bool stopKeyDumy;
+	fuckAnimBounds->GetKeyframe(0, m_fuckAnimStart, valDummy, stopKeyDumy);
+	fuckAnimBounds->GetKeyframe(1, m_fuckAnimEnd, valDummy, stopKeyDumy);
+}
+

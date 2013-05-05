@@ -55,7 +55,7 @@ void Hunting::Update(IBunny *bunny, float time, float seconds)
 	{
 		ibunny->FuckingProgress().Reset();
 		ibunny->SetState(Fucking::GetInstance());
-		hbunny->SetToBeeingFucked();
+		hbunny->SetToBeeingFucked(ibunny);
 	}
 	if (moveTarget.GetLength() <= GameProps::RunningAwayDistance && !ibunny->DidTellToGTFO())
 	{

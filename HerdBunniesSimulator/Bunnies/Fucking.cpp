@@ -5,6 +5,7 @@
 #include "HealthyBunny.h"
 #include "GameProps.h"
 #include <Utils/Randomizer.h>
+#include <Graphics/Animation.h>
 #include <assert.h>
 
 Fucking::Fucking(void)
@@ -17,6 +18,11 @@ Fucking::~Fucking(void)
 
 void Fucking::Enter(IBunny *bunny)
 {
+	InfectedBunny *ibunny = dynamic_cast<InfectedBunny*>(bunny);
+	assert(ibunny != NULL);
+
+	ibunny->m_fuckProgressTime = 0.0f;
+	ibunny->m_fuckMoveCycles = 0;
 }
 
 void Fucking::Leave(IBunny *bunny)
@@ -42,8 +48,18 @@ void Fucking::Update(IBunny *bunny, float time, float seconds)
 		return;
 	}
 
+	ibunny->m_fuckProgressTime += seconds;
+	if (ibunny->m_fuckMoveCycles < GameProps::FuckingHipCycles && ibunny->m_fuckProgressTime >= ibunny->m_fuckAnimEnd)
+	{
+		ibunny->m_fuckMoveCycles++;
+		ibunny->m_fuckProgressTime = ibunny->m_fuckAnimStart;
+	}
+
+	ibunny->m_currentAnim = ibunny->m_fuckAnim;
+	ibunny->m_currentAnimTime = ibunny->m_fuckProgressTime;
+
 	ibunny->FuckingProgress().Progress(seconds);
-	if (ibunny->FuckingProgress().IsTimeout())
+	if (ibunny->m_currentAnimTime >= ibunny->m_fuckAnim->GetAnimLength())
 	{
 		static Randomizer random;
 

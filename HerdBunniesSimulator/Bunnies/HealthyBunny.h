@@ -17,6 +17,8 @@ class HealthyBunny : public Bunny
 	friend class Reproducting;
 	friend class GoingToReproduction;
 	friend class RunningAway;
+	friend class BeeingFucked;
+	friend class Idle;
 
 public:
 	HealthyBunny(void);
@@ -65,7 +67,7 @@ public:
 	bool CanBeFucked() const;
 
 	void GetTheFuckOut(InfectedBunny *ibunny); // run away from hunting bunny
-	void SetToBeeingFucked(); // hunting bunny gotcha!
+	void SetToBeeingFucked(Bunny *infectedBunny); // hunting bunny gotcha!
 	void SetToIdle();
 
 	void RefreshNewTargetPosition(float seconds);
@@ -83,12 +85,18 @@ public:
 private:
 	bool m_isActive;
 
+	bool m_useTransform;
+	bool m_mixTransform;
+	sm::Matrix m_transform;
+
 	IBunnyState *m_bunnyState;
 
 	Model *m_bunnyModel;
+	Model *m_babyModel;
 	Animation *m_walkAnim;
 	Animation *m_runAnim;
 	Animation *m_fuckAnim;
+	Animation *m_babyWalkAnim;
 
 	bool m_useRunningAwayInitialDirection;
 	sm::Vec3 m_runningAwayInitialDirection;
@@ -101,12 +109,8 @@ private:
 
 	float m_growingUpTime;
 	sm::Vec3 m_borningJumpOutVector;
+	sm::Vec3 m_borningJumpOutAxis;
 	float m_targetPositionRefreshColldown;
-
-	// time when hip sub animation starts and ends in m_fuckAnim animation. Those values are stored
-	// as a Custom Properties in m_bunnyModel model.
-	float m_fuckAnimStart;
-	float m_fuckAnimEnd;
 
 	float m_fuckProgressTime;
 	int m_fuckMoveCycles;
@@ -116,8 +120,6 @@ private:
 	float m_exposeAssAngleDiff;
 	sm::Vec3 m_exposeAssBaseTarget;
 	sm::Vec3 m_exposeAssAxis;
-
-	void InitFuckAnimBounds();
 };
 
 #endif

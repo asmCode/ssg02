@@ -94,7 +94,16 @@ void SettingsInRanks::Update(IBunny *bunny, float time, float seconds)
 	}
 	else
 	{
-		hbunny->m_currentAnim = hbunny->m_walkAnim;
+		if (hbunny->IsGrowingUp())
+		{
+			hbunny->m_currentAnim = hbunny->m_babyWalkAnim;
+			hbunny->m_currentModel = hbunny->m_babyModel;
+		}
+		else
+		{
+			hbunny->m_currentAnim = hbunny->m_walkAnim;
+			hbunny->m_currentModel = hbunny->m_bunnyModel;
+		}
 
 		hbunny->SetDestinationPosition(bunnyPosition + bunnyMoveTarget);
 		hbunny->UpdateMovement(seconds, GameProps::HealthyBunnyWalkSpeed, GameProps::DelayBetweenWalkJump);

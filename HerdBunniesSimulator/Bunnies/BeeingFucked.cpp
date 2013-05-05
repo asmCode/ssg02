@@ -25,6 +25,18 @@ void BeeingFucked::Leave(IBunny *bunny)
 
 void BeeingFucked::Update(IBunny *bunny, float time, float seconds)
 {
+	HealthyBunny *hbunny = dynamic_cast<HealthyBunny*>(bunny);
+	assert(hbunny != NULL);
+
+	if (!hbunny->m_isAssExposed)
+	{
+		hbunny->m_isAssExposed = true;
+		hbunny->SetMoveTarget(hbunny->m_exposeAssBaseTarget);
+	}
+
+	hbunny->m_currentAnim = hbunny->m_walkAnim;
+	hbunny->m_currentAnimTime = 0.0f;
+
 	assert(bunny != NULL);
 }
 

@@ -336,6 +336,28 @@ namespace sm
 			return Vec3(xAxis.GetLength(), yAxis.GetLength(), zAxis.GetLength());
 			//return Vec3(1, 1, 1);
 		}
+
+		static Matrix CreateLookAt(const sm::Vec3 &direction, const sm::Vec3 &up)
+		{
+			sm::Matrix rot = sm::Matrix::IdentityMatrix();
+
+			sm::Vec3 right = (direction * up).GetNormalized();
+			sm::Vec3 yAxis = right * direction;
+
+			rot.a[0] = right.x;
+			rot.a[1] = right.y;
+			rot.a[2] = right.z;
+
+			rot.a[4] = up.x;
+			rot.a[5] = up.y;
+			rot.a[6] = up.z;
+
+			rot.a[8] = direction.x;
+			rot.a[9] = direction.y;
+			rot.a[10] = direction.z;
+
+			return rot;
+		}
 	};
 }
 

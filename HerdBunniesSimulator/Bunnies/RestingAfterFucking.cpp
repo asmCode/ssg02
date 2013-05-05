@@ -44,12 +44,6 @@ void RestingAfterFucking::Update(IBunny *bunny, float time, float seconds)
 	ibunny->RefreshNewTargetPosition(seconds);
 	ibunny->UpdateMovement(seconds, GameProps::InfectedBunnyRestingSpeed, GameProps::DelayBetweenWalkJump);
 
-	sm::Vec3 moveTarget = ibunny->GetTargetPosition() - ibunny->GetPosition();
-	moveTarget.y = 0.0f;
-	moveTarget.Normalize();
-
-	//ibunny->SetPosition(ibunny->GetPosition() + moveTarget * GameProps::InfectedBunnyRestingSpeed * seconds);
-
 	ibunny->RestingAfterFuckingProgress().Progress(seconds);
 	if (ibunny->RestingAfterFuckingProgress().IsTimeout())
 	{

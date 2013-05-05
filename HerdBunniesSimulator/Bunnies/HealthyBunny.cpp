@@ -12,8 +12,6 @@
 #include "GameProps.h"
 #include "DrawingRoutines.h"
 
-#include "d:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Framework\Graphics\Property.h"
-
 #include <Graphics/Animation.h>
 #include <Graphics/Model.h>
 #include <Graphics/Mesh.h>
@@ -30,30 +28,23 @@ HealthyBunny::HealthyBunny(void) :
 	m_restingAfterReproduction(0.0f),
 	m_growingUpTime(0.0f),
 	m_changingProgress(GameProps::ChangingToInfectedTime),
-	m_bunnyState(SettingsInRanks::GetInstance())
+	m_bunnyState(SettingsInRanks::GetInstance()),
+	m_useTransform(false),
+	m_mixTransform(false)
 {
 	m_bunnyModel = InterfaceProvider::GetContent()->Get<Model>("hbunny");
+	m_babyModel = InterfaceProvider::GetContent()->Get<Model>("baby");
 	m_walkAnim = InterfaceProvider::GetContent()->Get<Animation>("hbunny_walk");
 	m_runAnim = InterfaceProvider::GetContent()->Get<Animation>("hbunny_run");
 	m_fuckAnim = InterfaceProvider::GetContent()->Get<Animation>("hbunny_fuck");
+	m_babyWalkAnim = InterfaceProvider::GetContent()->Get<Animation>("baby_walk");
 
 	assert(m_bunnyModel != NULL);
+	assert(m_babyModel != NULL);
 
-	InitFuckAnimBounds();
-}
+	InitFuckAnimBounds(m_bunnyModel);
 
-void HealthyBunny::InitFuckAnimBounds()
-{
-	Mesh *bodyMesh = m_bunnyModel->FindMesh("body");
-	assert(bodyMesh  != NULL);
-
-	Property *fuckAnimBounds = bodyMesh->FindProperty("fuck_anim_bounds");
-	assert(fuckAnimBounds != NULL);
-
-	int valDummy;
-	bool stopKeyDumy;
-	fuckAnimBounds->GetKeyframe(0, m_fuckAnimStart, valDummy, stopKeyDumy);
-	fuckAnimBounds->GetKeyframe(1, m_fuckAnimEnd, valDummy, stopKeyDumy);
+	m_currentModel = m_bunnyModel;
 }
 
 HealthyBunny::~HealthyBunny(void)
@@ -94,7 +85,26 @@ void HealthyBunny::Draw(float time, float seconds, const sm::Matrix &viewMatrix)
 {
 	this->Bunny::Draw(time, seconds);
 
-	DrawingRoutines::DrawCelShaded(m_bunnyModel, viewMatrix, CalcBoneMatrixZ(m_position, m_position + m_moveTarget) * sm::Matrix::RotateAxisMatrix(3.1415f, 0, 1, 0));
+	sm::Matrix worldMatrix;
+
+	if (m_useTransform)
+		worldMatrix = m_transform;
+	else if (m_mixTransform)
+	{
+		worldMatrix =
+			CalcBoneMatrixZ(m_position, m_position + m_moveTarget) *
+			sm::Matrix::RotateAxisMatrix(3.1415f, 0, 1, 0) *
+			m_transform;
+	}
+	else
+		worldMatrix = 
+			CalcBoneMatrixZ(m_position, m_position + m_moveTarget) *
+			sm::Matrix::RotateAxisMatrix(3.1415f, 0, 1, 0);
+
+	DrawingRoutines::DrawCelShaded(
+		m_currentModel,
+		viewMatrix,
+		worldMatrix);
 }
 
 void HealthyBunny::Reset()
@@ -197,12 +207,18 @@ void HealthyBunny::DecreaseRestingAfterReproductionTime(float seconds)
 
 void HealthyBunny::SetNewborn()
 {
+	m_useTransform = true;
+	m_transform = sm::Matrix::IdentityMatrix();
+
 	m_growingUpTime = GameProps::GrowingUpTime;
 
 	static Randomizer rand;
 
 	m_borningJumpOutVector = sm::Vec3(rand.GetFloat(-1.0f, 1.0), 0.0f, rand.GetFloat(-1.0f, 1.0f));
 	m_borningJumpOutVector.Normalize();
+
+	m_borningJumpOutAxis = m_borningJumpOutVector * sm::Vec3(0, 1, 0);
+	m_borningJumpOutAxis.Normalize();
 
 	SetState(Idle::GetInstance());
 }
@@ -278,8 +294,11 @@ void HealthyBunny::GetTheFuckOut(InfectedBunny *ibunny)
 	SetState(RunningAway::GetInstance());
 }
 
-void HealthyBunny::SetToBeeingFucked()
+void HealthyBunny::SetToBeeingFucked(Bunny *infectedBunny)
 {
+	m_isAssExposed = false;
+	m_exposeAssBaseTarget = infectedBunny->GetMoveTarget();
+
 	SetState(BeeingFucked::GetInstance());
 }
 
