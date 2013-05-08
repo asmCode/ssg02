@@ -15,6 +15,7 @@
 #include <Graphics/Animation.h>
 #include <Graphics/Model.h>
 #include <Graphics/Mesh.h>
+#include <Graphics/Texture.h>
 #include <Graphics/Content/Content.h>
 #include <Utils/Randomizer.h>
 
@@ -30,7 +31,8 @@ HealthyBunny::HealthyBunny(void) :
 	m_changingProgress(GameProps::ChangingToInfectedTime),
 	m_bunnyState(SettingsInRanks::GetInstance()),
 	m_useTransform(false),
-	m_mixTransform(false)
+	m_mixTransform(false),
+	m_mutatingValue(0.0f)
 {
 	m_bunnyModel = InterfaceProvider::GetContent()->Get<Model>("hbunny");
 	m_babyModel = InterfaceProvider::GetContent()->Get<Model>("baby");
@@ -38,9 +40,11 @@ HealthyBunny::HealthyBunny(void) :
 	m_runAnim = InterfaceProvider::GetContent()->Get<Animation>("hbunny_run");
 	m_fuckAnim = InterfaceProvider::GetContent()->Get<Animation>("hbunny_fuck");
 	m_babyWalkAnim = InterfaceProvider::GetContent()->Get<Animation>("baby_walk");
+	m_mutatingTex = InterfaceProvider::GetContent()->Get<Texture>("hbunny_mutating");
 
 	assert(m_bunnyModel != NULL);
 	assert(m_babyModel != NULL);
+	assert(m_mutatingTex != NULL);
 
 	InitFuckAnimBounds(m_bunnyModel);
 
@@ -101,10 +105,22 @@ void HealthyBunny::Draw(float time, float seconds, const sm::Matrix &viewMatrix)
 			CalcBoneMatrixZ(m_position, m_position + m_moveTarget) *
 			sm::Matrix::RotateAxisMatrix(3.1415f, 0, 1, 0);
 
-	DrawingRoutines::DrawCelShaded(
-		m_currentModel,
-		viewMatrix,
-		worldMatrix);
+	if (m_mutatingValue == 0.0f)
+	{
+		DrawingRoutines::DrawCelShaded(
+			m_currentModel,
+			viewMatrix,
+			worldMatrix);
+	}
+	else
+	{
+		DrawingRoutines::DrawCelShadedMutating(
+			m_currentModel,
+			viewMatrix,
+			worldMatrix,
+			m_mutatingValue,
+			m_mutatingTex);
+	}
 }
 
 void HealthyBunny::Reset()

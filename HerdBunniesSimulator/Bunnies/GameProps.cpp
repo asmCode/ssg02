@@ -31,7 +31,7 @@ const float GameProps::RefreshNewTargetPositionTo = 5.0f;
 const float GameProps::FuckingTime = 4.0f;
 const float GameProps::RunningAwayDistance = 10.0f;
 const float GameProps::SickBunnySpeed = 2.0f;
-const float GameProps::ChangingToInfectedTime = 5.0f;
+const float GameProps::ChangingToInfectedTime = 8.0f;
 
 const float GameProps::ShotgunShotDelay = 1.45f;
 const float GameProps::ShotgunRange = 20.0f;

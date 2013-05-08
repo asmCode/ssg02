@@ -136,8 +136,8 @@ void BunniesManager::Update(float time, float seconds)
 		GoToReproduce();
 
 
-	if (ShouldRespawnInfectedBunny());
-		//SpawnInfectedBunny();
+	if (ShouldRespawnInfectedBunny())
+		SpawnInfectedBunny();
 }
 
 void BunniesManager::Draw(float time, float seconds, const sm::Matrix &viewMatrix)

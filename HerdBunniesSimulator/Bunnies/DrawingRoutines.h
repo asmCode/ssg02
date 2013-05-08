@@ -14,6 +14,7 @@ public:
 	static bool Initialize();
 
 	static void DrawCelShaded(Model *model, const sm::Matrix &viewMatrix, sm::Matrix &worldMatrix);
+	static void DrawCelShadedMutating(Model *model, const sm::Matrix &viewMatrix, sm::Matrix &worldMatrix, float mutatingValue, Texture *mutatingTex);
 
 	static void SetLightPosition(const sm::Vec3 &lightPosition);
 	static void SetOutlineWidth(float outlineWidth);
@@ -21,7 +22,9 @@ public:
 
 private:
 	static Shader *m_celShadingShader;
+	static Shader *m_celShadingMutatingShader;
 	static Shader *m_outlineShader;
+	static Shader *m_outlineMutatingShader;
 
 	static float m_outlineWidth;
 	static sm::Vec3 m_lightPosition;

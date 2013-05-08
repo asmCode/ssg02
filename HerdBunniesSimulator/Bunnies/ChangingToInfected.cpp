@@ -24,6 +24,10 @@ void ChangingToInfected::Initialize(BunniesManager *bunniesManager)
 
 void ChangingToInfected::Enter(IBunny *bunny)
 {
+	HealthyBunny *hbunny = dynamic_cast<HealthyBunny*>(bunny);
+	assert(hbunny != NULL);
+
+	hbunny->m_mutatingValue = 0.0f;
 }
 
 void ChangingToInfected::Leave(IBunny *bunny)
@@ -41,11 +45,10 @@ void ChangingToInfected::Update(IBunny *bunny, float time, float seconds)
 
 	hbunny->RefreshNewTargetPosition(seconds);
 
-	sm::Vec3 moveTarget = hbunny->GetTargetPosition() - hbunny->GetPosition();
-	moveTarget.y = 0.0f;
-	moveTarget.Normalize();
+	hbunny->SetDestinationPosition(hbunny->GetTargetPosition());
+	hbunny->UpdateMovement(seconds, GameProps::SickBunnySpeed, GameProps::DelayBetweenWalkJump);
 
-	hbunny->SetPosition(hbunny->GetPosition() + moveTarget * GameProps::SickBunnySpeed * seconds);
+	hbunny->m_mutatingValue = sinf(time * 8.0f) * 0.5f + 0.5f;
 
 	hbunny->ChangingProgress().Progress(seconds);
 	if (hbunny->ChangingProgress().IsTimeout())

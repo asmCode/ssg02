@@ -10,6 +10,7 @@ class IBunnyState;
 class InfectedBunny;
 class Model;
 class Animation;
+class Texture;
 
 class HealthyBunny : public Bunny
 {
@@ -19,6 +20,7 @@ class HealthyBunny : public Bunny
 	friend class RunningAway;
 	friend class BeeingFucked;
 	friend class Idle;
+	friend class ChangingToInfected;
 
 public:
 	HealthyBunny(void);
@@ -97,6 +99,7 @@ private:
 	Animation *m_runAnim;
 	Animation *m_fuckAnim;
 	Animation *m_babyWalkAnim;
+	Texture *m_mutatingTex;
 
 	bool m_useRunningAwayInitialDirection;
 	sm::Vec3 m_runningAwayInitialDirection;
@@ -120,6 +123,8 @@ private:
 	float m_exposeAssAngleDiff;
 	sm::Vec3 m_exposeAssBaseTarget;
 	sm::Vec3 m_exposeAssAxis;
+
+	float m_mutatingValue;
 };
 
 #endif
