@@ -2,12 +2,15 @@
 
 #include "IScreen.h"
 #include "IDamageableProvider.h"
+#include <Math/Matrix.h>
 
 class Player;
 class IGun;
 class IShapesRenderer;
 class BunniesManager;
 class Ground;
+class LevelEnvironment;
+class Skydome;
 
 class GameScreen : public IScreen,
 				   public IDamageableProvider
@@ -50,5 +53,9 @@ private:
 	IGun *m_activeGun;
 	BunniesManager *m_bunniesMgr;
 	Ground *m_ground;
+	LevelEnvironment *m_levelEnv;
+	Skydome *m_skydome;
+
+	sm::Matrix m_projMatrix;
 };
 

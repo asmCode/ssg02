@@ -18,7 +18,8 @@
 #include "InterfaceProvider.h"
 #include "Environment.h"
 #include "Ground.h"
-#include <Windows.h>
+#include "LevelEnvironment.h"
+#include "Skydome.h"
 
 #include "../BunniesView/IShapesRenderer.h"
 #include "../BunniesView/WinShapesRenderer.h"
@@ -51,6 +52,8 @@ bool GameScreen::Initialize()
 	m_activeGun = shotgun;
 
 	m_ground = new Ground();
+	m_levelEnv = new LevelEnvironment();
+	m_skydome = new Skydome();
 
 	Idle::GetInstance()->Initialize(m_player);
 	SettingsInRanks::GetInstance()->Initialize(m_player, m_bunniesMgr);
@@ -59,6 +62,10 @@ bool GameScreen::Initialize()
 	RestingAfterFucking::GetInstance()->Initialize(m_bunniesMgr);
 	BeeingFucked::GetInstance()->Initialize(m_bunniesMgr);
 	ChangingToInfected::GetInstance()->Initialize(m_bunniesMgr);
+
+	uint32_t screenWidth = Environment::GetInstance()->GetScreenWidth();
+	uint32_t screenHeight = Environment::GetInstance()->GetScreenHeight();
+	m_projMatrix = sm::Matrix::PerspectiveMatrix(45.0f, static_cast<float>(screenWidth) / static_cast<float>(screenHeight), 0.1f, 1000.0f);
 
 	return true;
 }
@@ -75,7 +82,9 @@ bool GameScreen::ReleaseResources()
 
 void GameScreen::Draw(float time, float seconds)
 {
+	m_skydome->Draw(time, seconds);
 	m_ground->Draw(time, seconds);
+	m_levelEnv->Draw(time, seconds);
 	m_player->Draw(time, seconds);
 	m_bunniesMgr->Draw(time, seconds, m_player->GetViewMatrix());
 	m_activeGun->Draw(time, seconds);
@@ -89,8 +98,16 @@ void GameScreen::Update(float time, float seconds)
 	m_player->Update(time, seconds);
 	sm::Matrix viewMatrix = m_player->GetViewMatrix();
 
+	m_skydome->SetViewMatrix(viewMatrix);
+	m_skydome->SetProjMatrix(m_projMatrix);
+	m_skydome->Update(time, seconds);
+
 	m_ground->SetViewMatrix(viewMatrix);
 	m_ground->Update(time, seconds);
+
+	m_levelEnv->SetViewMatrix(viewMatrix);
+	m_levelEnv->Update(time, seconds);
+
 	m_activeGun->Update(time, seconds);
 	IBullet *bullet = m_activeGun->GetBullet();
 	if (bullet != NULL)

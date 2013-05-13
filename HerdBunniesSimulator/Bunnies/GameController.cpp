@@ -53,6 +53,11 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 	m_content->Get<Texture>("grass")->SetWrappingMode(Texture::Wrap_Repeat);
 	m_content->Get<Texture>("grass")->GenerateMipmaps();
 
+	m_content->Get<Texture>("field")->BindTexture();
+	m_content->Get<Texture>("field")->SetFilterModel(Texture::Filter_LinearMipmapLinear, Texture::Filter_Linear);
+	m_content->Get<Texture>("field")->SetWrappingMode(Texture::Wrap_Repeat);
+	m_content->Get<Texture>("field")->GenerateMipmaps();
+
 	m_content->Get<Animation>("shotgun")->AssignModel(m_content->Get<Model>("shotgun"));
 	m_content->Get<Animation>("hbunny_walk")->AssignModel(m_content->Get<Model>("hbunny"));
 	m_content->Get<Animation>("hbunny_run")->AssignModel(m_content->Get<Model>("hbunny"));
@@ -63,8 +68,8 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 	m_content->Get<Animation>("baby_walk")->AssignModel(m_content->Get<Model>("baby"));
 
 	DrawingRoutines::Initialize();
-	DrawingRoutines::SetLightPosition(sm::Vec3(-5.0f, 30.0f, -5.0f));
-	DrawingRoutines::SetProjectionMatrix(sm::Matrix::PerspectiveMatrix(45.0f, static_cast<float>(screenWidth) / static_cast<float>(screenHeight), 0.1f, 100.0f));
+	DrawingRoutines::SetLightPosition(sm::Vec3(-100.0f, 500.0f, -100.0f));
+	DrawingRoutines::SetProjectionMatrix(sm::Matrix::PerspectiveMatrix(45.0f, static_cast<float>(screenWidth) / static_cast<float>(screenHeight), 0.1f, 1000.0f));
 
 	Shader *shader = m_content->Get<Shader>("sprite");
 

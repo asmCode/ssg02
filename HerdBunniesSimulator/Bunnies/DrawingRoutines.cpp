@@ -11,6 +11,7 @@ Shader* DrawingRoutines::m_celShadingShader;
 Shader* DrawingRoutines::m_celShadingMutatingShader;
 Shader* DrawingRoutines::m_outlineShader;
 Shader* DrawingRoutines::m_outlineMutatingShader;
+Shader* DrawingRoutines::m_skydomeShader;
 float DrawingRoutines::m_outlineWidth;
 sm::Vec3 DrawingRoutines::m_lightPosition;
 sm::Matrix DrawingRoutines::m_projMatrix;
@@ -29,6 +30,9 @@ bool DrawingRoutines::Initialize()
 
 	m_outlineMutatingShader = InterfaceProvider::GetContent()->Get<Shader>("OutlineMutating");
 	assert(m_outlineMutatingShader != NULL);
+
+	m_skydomeShader = InterfaceProvider::GetContent()->Get<Shader>("Skydome");
+	assert(m_skydomeShader != NULL);
 
 	m_celLightTex = InterfaceProvider::GetContent()->Get<Texture>("cel_light");
 	assert(m_celLightTex != NULL);
@@ -50,6 +54,10 @@ bool DrawingRoutines::Initialize()
 	m_outlineMutatingShader->BindVertexChannel(0, "a_position");
 	m_outlineMutatingShader->BindVertexChannel(1, "a_normal");
 	m_outlineMutatingShader->LinkProgram();
+
+	m_skydomeShader->BindVertexChannel(0, "a_position");
+	m_skydomeShader->BindVertexChannel(2, "a_coords");
+	m_skydomeShader->LinkProgram();
 
 	return true;
 }
@@ -144,6 +152,34 @@ void DrawingRoutines::DrawCelShadedMutating(Model *model,
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
+}
+
+void DrawingRoutines::DrawSkydome(Model *model, const sm::Matrix &viewMatrix, const sm::Matrix &projMatrix)
+{
+	assert(model != NULL);
+
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
+
+	std::vector<MeshPart*> meshParts;
+	model->GetMeshParts(meshParts);
+
+	glDepthMask(GL_FALSE);
+	glEnableVertexAttribArray(0); 
+	glEnableVertexAttribArray(2);
+	m_skydomeShader->UseProgram();
+	m_skydomeShader->SetMatrixParameter("u_viewMatrix", viewMatrix);
+	m_skydomeShader->SetMatrixParameter("u_projMatrix", projMatrix);
+	for (uint32_t i = 0; i < meshParts.size(); i++)
+	{
+		m_skydomeShader->SetTextureParameter("u_diffTex", 0, meshParts[i]->GetMaterial()->diffuseTex->GetId());
+		meshParts[i]->Draw();
+	}
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+
+	glDepthMask(GL_TRUE);
 }
 
 void DrawingRoutines::SetLightPosition(const sm::Vec3 &lightPosition)

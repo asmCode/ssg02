@@ -1,0 +1,14 @@
+<Material Name="tree_material">
+	<Param Type="Ambient" Value="0.588235;0.588235;0.588235" />
+	<Param Type="Diffuse" Value="0.588235;0.588235;0.588235" />
+	<Param Type="Specular" Value="0.9;0.9;0.9" />
+	<Param Type="Emissive" Value="0;0;0" />
+	<Param Type="Opacity" Value="1" />
+	<Param Type="Glossiness" Value="0.1" />
+	<Param Type="SpecularLevel" Value="0" />
+	<Param Type="EmissiveAmount" Value="0" />
+	<Textures>
+		<Texture Type="Diffuse" File="tree_texture.png">
+		</Texture>
+	</Textures>
+</Material>

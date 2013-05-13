@@ -27,6 +27,20 @@ void Player::Update(float time, float seconds)
 	strafeTarget *= m_strafeMove * GameProps::FarmerMoveSpeed;
 
 	m_position += (moveTarget + strafeTarget) * seconds;
+
+	float playerWidth = 2.0f;
+
+	if (m_position.x > 50.0f - playerWidth)
+		m_position.x = 50.0f - playerWidth;
+
+	if (m_position.x < -50.0f + playerWidth)
+		m_position.x = -50.0f + playerWidth;
+
+	if (m_position.z > 50.0f - playerWidth)
+		m_position.z = 50.0f - playerWidth;
+	
+	if (m_position.z < -50.0f + playerWidth)
+		m_position.z = -50.0f + playerWidth;
 }
 
 void Player::Draw(float time, float seconds)
