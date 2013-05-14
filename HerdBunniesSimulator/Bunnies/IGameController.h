@@ -15,6 +15,7 @@ public:
 	virtual void Draw(float time, float seconds) = 0;
 	virtual void Update(float time, float seconds) = 0;
 
+	virtual bool proto_IsInGame() = 0;
 	virtual void proto_SetStrafeMove(float value) = 0;
 	virtual void proto_SetForwardMove(float value) = 0;
 	virtual void proto_SetLookTarget(const sm::Vec3 &lookTarget) = 0;

@@ -107,4 +107,15 @@ public:
 
 		return PtInRect(&windowRect, pos);		
 	}
+
+	void SetCursorPosition(int x, int y)
+	{
+		POINT point = {x, y};
+		ClientToScreen(windowHandle, &point);
+
+		SetCursorPos(point.x, point.y);
+		//prevMousePos = point;
+		prevMousePos.x = x;
+		prevMousePos.y = y;
+	}
 };

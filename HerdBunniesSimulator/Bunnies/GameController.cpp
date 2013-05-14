@@ -191,3 +191,8 @@ void GameController::ShowMainMenuScreen()
 	m_activeScreen = m_mainMenuScreen;
 }
 
+bool GameController::proto_IsInGame()
+{
+	return dynamic_cast<GameScreen*>(m_activeScreen) != NULL;
+}
+

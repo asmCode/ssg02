@@ -107,7 +107,7 @@ void Shotgun::Update(float time, float seconds)
 void Shotgun::Draw(float time, float seconds)
 {
 	DrawingRoutines::SetOutlineWidth(0.02f);
-	DrawingRoutines::DrawCelShaded(InterfaceProvider::GetContent()->Get<Model>("cylinder"), m_player->GetViewMatrix(), CalcBoneMatrixZ(p, p + t));
+	//DrawingRoutines::DrawCelShaded(InterfaceProvider::GetContent()->Get<Model>("cylinder"), m_player->GetViewMatrix(), CalcBoneMatrixZ(p, p + t));
 	//DrawingRoutines::DrawCelShaded(InterfaceProvider::GetContent()->Get<Model>("cylinder"), m_player->GetViewMatrix(), sm::Matrix::TranslateMatrix(0, 4, 0));
 	DrawingRoutines::DrawCelShaded(m_shotgunModel, sm::Matrix::IdentityMatrix(), sm::Matrix::IdentityMatrix());
 
@@ -115,7 +115,7 @@ void Shotgun::Draw(float time, float seconds)
 
 
 	InterfaceProvider::GetSpriteBatch()->Begin();
-	InterfaceProvider::GetSpriteBatch()->Draw(*spritesMap->GetTexPart("crosshair"), (960 - 18) / 2, (640 - 18) / 2); // TODO, 
+	InterfaceProvider::GetSpriteBatch()->Draw(*spritesMap->GetTexPart("crosshair"), (960 - 32) / 2, (640 - 32) / 2); // TODO, 
 	InterfaceProvider::GetSpriteBatch()->End();
 }
 

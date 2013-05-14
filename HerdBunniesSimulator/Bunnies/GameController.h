@@ -30,6 +30,7 @@ public:
     void HandleRelease(uint32_t pointIndex, const sm::Vec2 &point);
 	void HandleMove(uint32_t pointIndex, const sm::Vec2 &point);
 
+	bool proto_IsInGame();
 	void proto_SetStrafeMove(float value);
 	void proto_SetForwardMove(float value);
 	void proto_SetLookTarget(const sm::Vec3 &lookTarget);

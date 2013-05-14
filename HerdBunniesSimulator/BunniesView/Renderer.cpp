@@ -18,6 +18,9 @@ IGraphicsEngine *graphics;
 
 bool mouseDown = false;
 
+static const int ScreenWidth = 960;
+static const int ScreenHeight = 640;
+
 Renderer::Renderer(OpenglWindow *glwnd)
 {
 	this ->glwnd = glwnd;
@@ -37,7 +40,7 @@ void Renderer::Initialize()
 
 	gctrl = InfectedBunniesFactory::Create(graphics);
 
-	Environment::GetInstance()->SetScreenSize(960, 640);
+	Environment::GetInstance()->SetScreenSize(ScreenWidth, ScreenHeight);
 	Environment::GetInstance()->SetBasePath(currentDir);
 
 	bool success = gctrl->Initialize();
@@ -147,14 +150,33 @@ void Renderer::MouseMove(int x, int y, int xShift, int yShift)
 	{
 		gctrl->HandleMove(0, sm::Vec2(x, y));
 	}
-
-	//SetCursorPos(960 / 2, 640 / 2);
 }
+
+bool mouseVisible = true;
 
 void Renderer::Update(float time, float seconds)
 {
 	input->UpdateMouse();
 	input->Update();
+
+	if (gctrl->proto_IsInGame())
+	{
+		if (mouseVisible)
+		{
+			ShowCursor(false);
+			mouseVisible = false;
+		}
+
+		input->SetCursorPosition(ScreenWidth / 2, ScreenHeight / 2);
+	}
+	else
+	{
+		if (!mouseVisible)
+		{
+			ShowCursor(true);
+			mouseVisible = true;
+		}
+	}
 
 	gctrl->Update(time, seconds);
 }
