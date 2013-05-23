@@ -124,6 +124,11 @@ void Renderer::MouseMove(int x, int y, int xShift, int yShift)
 	xAngle += static_cast<float>(xShift) * 0.004f;
 	yAngle += static_cast<float>(yShift) * 0.004f;
 
+	if (yAngle > rad(60.0f))
+		yAngle = rad(60.0f);
+	else if (yAngle < rad(-60.0f))
+		yAngle = rad(-60.0f);
+
 	double modelView[16];
 	double projMatrix[16];
 	int viewport[4];

@@ -54,7 +54,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GL_GLEXT_PROTOTYPES;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Framework\;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Contrib\;C:\Users\majak\code\Machineris\Code\headers\;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext\opengl;D:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext;"d:\stuff\Infected Bunnies\code\ssg02\HerdBunniesSimulator\Ext\glew-1.9.0\include";%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -289,6 +289,10 @@
     <None Include="data\shaders\CelShading.vpr" />
     <None Include="data\shaders\CelShadingMutating.fpr" />
     <None Include="data\shaders\CelShadingMutating.vpr" />
+    <None Include="data\shaders\DiffTex.fpr" />
+    <None Include="data\shaders\DiffTex.vpr" />
+    <None Include="data\shaders\Grass.fpr" />
+    <None Include="data\shaders\Grass.vpr" />
     <None Include="data\shaders\Outline.fpr" />
     <None Include="data\shaders\Outline.vpr" />
     <None Include="data\shaders\OutlineMutating.fpr" />

@@ -16,6 +16,8 @@ public:
 	static void DrawCelShaded(Model *model, const sm::Matrix &viewMatrix, sm::Matrix &worldMatrix);
 	static void DrawCelShadedMutating(Model *model, const sm::Matrix &viewMatrix, sm::Matrix &worldMatrix, float mutatingValue, Texture *mutatingTex);
 	static void DrawSkydome(Model *model, const sm::Matrix &viewMatrix, const sm::Matrix &projMatrix);
+	static void DrawSprite(Model *model, const sm::Matrix &viewMatrix, sm::Matrix &worldMatrix);
+	static void DrawGrass(Model *model, Texture *colorMapTex, const sm::Matrix &viewMatrix, sm::Matrix &worldMatrix);
 
 	static void SetLightPosition(const sm::Vec3 &lightPosition);
 	static void SetOutlineWidth(float outlineWidth);
@@ -27,6 +29,8 @@ private:
 	static Shader *m_outlineShader;
 	static Shader *m_outlineMutatingShader;
 	static Shader *m_skydomeShader;
+	static Shader *m_diffTexShader;
+	static Shader *m_grassShader;
 
 	static float m_outlineWidth;
 	static sm::Vec3 m_lightPosition;
@@ -35,4 +39,5 @@ private:
 };
 
 #endif // DRAWING_ROUTINES
+
 

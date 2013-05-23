@@ -4,6 +4,7 @@
 #include <Math/Matrix.h>
 
 class Model;
+class Texture;
 
 class Ground
 {
@@ -17,6 +18,9 @@ public:
 
 private:
 	Model *m_groundModel;
+	Model *m_grassX1Model;
+	Texture *m_colorMapTex;
+
 	sm::Matrix m_viewMatrix;
 };
 

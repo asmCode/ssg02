@@ -106,7 +106,7 @@ static sm::Matrix CalcBoneMatrixZ(const sm::Vec3 &jointStart, const sm::Vec3 &jo
 
 sm::Matrix Player::GetViewMatrix() const
 {
-	return (CalcBoneMatrixZ(m_position, m_position + m_lookTarget) *
-		sm::Matrix::TranslateMatrix(0, GameProps::PlayerHeight, 0)).GetInversed();
+	return (sm::Matrix::TranslateMatrix(0, GameProps::PlayerHeight, 0) *
+		CalcBoneMatrixZ(m_position, m_position + m_lookTarget)).GetInversed();
 }
 
