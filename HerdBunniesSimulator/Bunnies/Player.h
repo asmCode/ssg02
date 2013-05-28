@@ -4,6 +4,8 @@
 #include <Math/Matrix.h>
 
 class IShapesRenderer;
+class Model;
+class Animation;
 
 class Player
 {
@@ -24,11 +26,22 @@ public:
 
 	sm::Matrix GetViewMatrix() const;
 
+	void Kick();
+	bool IsKicking() const;
+	bool IsAbleToKick() const;
+
 private:
 	sm::Vec3 m_position;
 	sm::Vec3 m_lookTarget;
 
 	float m_forwardMove;
 	float m_strafeMove;
+
+	Model *m_leg;
+	Animation *m_kickAnim;
+
+	float m_kickProgress;
+	bool m_isKicking;
+	float m_kickCooldown;
 };
 

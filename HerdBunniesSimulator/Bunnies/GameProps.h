@@ -45,6 +45,10 @@ public:
 	static const float ShotgunDamage;
 
 	static const float PlayerHeight;
+	static const float KickMinDistance;
+	static const float KickMaxDistance;
+	static const float KickFOV;
+	static const float KickCooldown;
 
 	// GUI
 	static const float SplashScreenDuration;

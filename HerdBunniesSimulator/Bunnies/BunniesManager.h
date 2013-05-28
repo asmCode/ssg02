@@ -1,11 +1,13 @@
 #pragma once
 
+#include "BunnyType.h"
 #include <Math/Vec3.h>
 #include <Math/Matrix.h>
 #include <vector>
 #include <stdint.h>
 
 class IBunny;
+class Bunny;
 class HealthyBunny;
 class InfectedBunny;
 
@@ -39,6 +41,8 @@ public:
 
 	HealthyBunny** GetHealthyBunnies();
 	InfectedBunny** GetInfectedBunnies();
+
+	Bunny* GetClosestBunny(const sm::Vec3 &position, BunnyType bunnyType, float &distance);
 
 private:
 	HealthyBunny *m_healthyBunnies[MaxBunniesCount];

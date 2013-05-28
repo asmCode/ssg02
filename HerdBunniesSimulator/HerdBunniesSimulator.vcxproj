@@ -92,6 +92,7 @@
     <ClInclude Include="Bunnies\BeeingFucked.h" />
     <ClInclude Include="Bunnies\BunniesManager.h" />
     <ClInclude Include="Bunnies\Bunny.h" />
+    <ClInclude Include="Bunnies\BunnyType.h" />
     <ClInclude Include="Bunnies\ChangingToInfected.h" />
     <ClInclude Include="Bunnies\CollideObject.h" />
     <ClInclude Include="Bunnies\CollisionManager.h" />

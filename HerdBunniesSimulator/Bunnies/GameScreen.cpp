@@ -20,6 +20,7 @@
 #include "Ground.h"
 #include "LevelEnvironment.h"
 #include "Skydome.h"
+#include "GameProps.h"
 
 #include "../BunniesView/IShapesRenderer.h"
 #include "../BunniesView/WinShapesRenderer.h"
@@ -85,9 +86,9 @@ void GameScreen::Draw(float time, float seconds)
 	m_skydome->Draw(time, seconds);
 	m_ground->Draw(time, seconds);
 	m_levelEnv->Draw(time, seconds);
-	m_player->Draw(time, seconds);
 	m_bunniesMgr->Draw(time, seconds, m_player->GetViewMatrix());
 	m_activeGun->Draw(time, seconds);
+	m_player->Draw(time, seconds);
 
 	float width = Environment::GetInstance()->GetScreenWidth();
 	float height = Environment::GetInstance()->GetScreenHeight();
@@ -116,6 +117,23 @@ void GameScreen::Update(float time, float seconds)
 	}
 
 	m_bunniesMgr->Update(time, seconds);
+
+	float distance = 0;
+	Bunny *bunny = m_bunniesMgr->GetClosestBunny(m_player->GetPosition(), BunnyType_Infected, distance);
+	if (bunny != NULL &&
+		distance <= GameProps::KickMaxDistance &&
+		distance >= GameProps::KickMinDistance &&
+		m_player->IsAbleToKick())
+	{
+		sm::Vec3 bunnyPosition(bunny->GetPosition().x, 0, bunny->GetPosition().z);
+		sm::Vec3 playerPosition(m_player->GetPosition().x, 0, m_player->GetPosition().z);
+		sm::Vec3 playerTarget(m_player->GetLookTarget().x, 0.0f, m_player->GetLookTarget().z);
+		playerTarget.Normalize();
+
+		sm::Vec3 bunnyDirection = (bunnyPosition - playerPosition).GetNormalized();
+		if (sm::Vec3::Dot(playerTarget, bunnyDirection) >= GameProps::KickFOV)
+			m_player->Kick();
+	}
 }
 
 void GameScreen::HandlePress(uint32_t pointIndex, const sm::Vec2 &point)

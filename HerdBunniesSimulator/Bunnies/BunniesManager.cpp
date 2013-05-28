@@ -1,5 +1,6 @@
 #include "BunniesManager.h"
 #include "HealthyBunny.h"
+#include "Bunny.h"
 #include "InfectedBunny.h"
 #include "IBunnyState.h"
 #include "GoingToReproduction.h"
@@ -59,6 +60,13 @@ void BunniesManager::ResetForNewGame(uint32_t healthyBunniesCount)
 				m_maxHealthyBunnyIndex = i;
 		}
 	}
+
+	// TEST
+	SpawnInfectedBunny();
+	InfectedBunny *ib = m_infectedBunnies[0];
+	assert(ib != NULL && ib->IsActive());
+
+	ib->SetPosition(sm::Vec3(0, 0, -10));
 }
 
 void BunniesManager::BornNewRabbit(const sm::Vec3 &position)
@@ -176,10 +184,6 @@ void BunniesManager::GoToReproduce()
 		bunny1->StartReproductionProcess(bunny2, true);
 		bunny2->StartReproductionProcess(bunny1, false);
 	}
-	else
-	{
-		int r = 0;
-	}
 }
 
 HealthyBunny *BunniesManager::GetRandomHealthyBunny(bool ableToReproduce, bool ableToFuck, const IBunny *excludeFromTest)
@@ -292,8 +296,7 @@ InfectedBunny* BunniesManager::GetUnusedInfectedBunny()
 		if (!m_infectedBunnies[i]->IsActive())
 			return m_infectedBunnies[i];
 	}
-
-
+	
 	return NULL;
 }
 
@@ -305,5 +308,45 @@ HealthyBunny** BunniesManager::GetHealthyBunnies()
 InfectedBunny** BunniesManager::GetInfectedBunnies()
 {
 	return m_infectedBunnies;
+}
+
+Bunny* BunniesManager::GetClosestBunny(const sm::Vec3 &position, BunnyType bunnyType, float &distance)
+{
+	distance = 999999999.0f;
+	Bunny *closestBunny = NULL;
+
+	if (bunnyType == BunnyType_Healthy || bunnyType == BunnyType_Any)
+	{
+		for (uint32_t i = 0; i < MaxBunniesCount; i++)
+		{
+			if (!m_healthyBunnies[i]->IsActive())
+				continue;
+
+			float currentDistance = (m_healthyBunnies[i]->GetPosition() - position).GetLength();
+			if (currentDistance < distance)
+			{
+				distance = currentDistance;
+				closestBunny = m_healthyBunnies[i];
+			}
+		}
+	}
+
+	if (bunnyType == BunnyType_Infected || bunnyType == BunnyType_Any)
+	{
+		for (uint32_t i = 0; i < MaxBunniesCount; i++)
+		{
+			if (!m_infectedBunnies[i]->IsActive())
+				continue;
+
+			float currentDistance = (m_infectedBunnies[i]->GetPosition() - position).GetLength();
+			if (currentDistance < distance)
+			{
+				distance = currentDistance;
+				closestBunny = m_infectedBunnies[i];
+			}
+		}
+	}
+
+	return closestBunny;
 }
 

@@ -134,6 +134,7 @@ void HealthyBunny::Reset()
 	m_growingUpTime = 0.0f;
 	m_health = 100.0f;
 	m_useRunningAwayInitialDirection = false;
+	m_mutatingValue = 0.0f;
 	SetState(SettingsInRanks::GetInstance());
 }
 

@@ -1,7 +1,13 @@
 #include "Player.h"
 #include "GameProps.h"
 #include "InterfaceProvider.h"
+#include "DrawingRoutines.h"
 #include "../BunniesView/IShapesRenderer.h"
+#include <Graphics/Model.h>
+#include <Graphics/Animation.h>
+#include <Graphics/Content/Content.h>
+#include <GL/glew.h>
+#include <GL/gl.h>
 #include <stdio.h>
 #include <assert.h>
 
@@ -9,8 +15,16 @@ Player::Player() :
 	m_position(0, 0, 0),
 	m_lookTarget(0, 0, -1),
 	m_forwardMove(0.0f),
-	m_strafeMove(0.0f)
+	m_strafeMove(0.0f),
+	m_kickProgress(0.0f),
+	m_isKicking(false),
+	m_kickCooldown(0.0f)
 {
+	m_leg = InterfaceProvider::GetContent()->Get<Model>("leg");
+	assert(m_leg != NULL);
+
+	m_kickAnim = InterfaceProvider::GetContent()->Get<Animation>("leg");
+	assert(m_kickAnim != NULL);
 }
 
 Player::~Player(void)
@@ -41,10 +55,28 @@ void Player::Update(float time, float seconds)
 	
 	if (m_position.z < -50.0f + playerWidth)
 		m_position.z = -50.0f + playerWidth;
+
+	if (m_isKicking)
+	{
+		m_kickAnim->Update(m_kickProgress, sm::Matrix::IdentityMatrix(), seconds);
+		m_kickProgress += seconds;
+
+		if (m_kickProgress > m_kickAnim->GetAnimLength())
+		{
+			m_isKicking = false;
+		}
+	}
+
+	m_kickCooldown += seconds;
 }
 
 void Player::Draw(float time, float seconds)
 {
+	if (m_isKicking)
+	{
+		glClear(GL_DEPTH_BUFFER_BIT);
+		DrawingRoutines::DrawCelShaded(m_leg, sm::Matrix::IdentityMatrix(), sm::Matrix::TranslateMatrix(-8.87f, -12, -22));
+	}
 }
 
 void Player::SetLookTarget(const sm::Vec3 &lookTarget)
@@ -110,3 +142,22 @@ sm::Matrix Player::GetViewMatrix() const
 		CalcBoneMatrixZ(m_position, m_position + m_lookTarget)).GetInversed();
 }
 
+void Player::Kick()
+{
+	if (m_isKicking)
+		return;
+
+	m_kickProgress = 0.0f;
+	m_isKicking = true;
+	m_kickCooldown = 0.0f;
+}
+
+bool Player::IsKicking() const
+{
+	return m_isKicking;
+}
+
+bool Player::IsAbleToKick() const
+{
+	return m_kickCooldown >= GameProps::KickCooldown;
+}

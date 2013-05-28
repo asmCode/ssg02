@@ -67,6 +67,8 @@ bool GameController::InitializeGraphics(const std::string &basePath)
 	m_content->Get<Animation>("ibunny_fuck")->AssignModel(m_content->Get<Model>("ibunny"));
 	m_content->Get<Animation>("baby_walk")->AssignModel(m_content->Get<Model>("baby"));
 
+	m_content->Get<Animation>("leg")->AssignModel(m_content->Get<Model>("leg"));
+
 	DrawingRoutines::Initialize();
 	DrawingRoutines::SetLightPosition(sm::Vec3(-100.0f, 500.0f, -100.0f));
 	DrawingRoutines::SetProjectionMatrix(sm::Matrix::PerspectiveMatrix(45.0f, static_cast<float>(screenWidth) / static_cast<float>(screenHeight), 0.1f, 1000.0f));

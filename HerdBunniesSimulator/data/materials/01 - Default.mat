@@ -8,7 +8,7 @@
 	<Param Type="SpecularLevel" Value="0" />
 	<Param Type="EmissiveAmount" Value="0" />
 	<Textures>
-		<Texture Type="Diffuse" File="shotgun_rifle.png">
+		<Texture Type="Diffuse" File="hbunny.png">
 		</Texture>
 	</Textures>
 </Material>

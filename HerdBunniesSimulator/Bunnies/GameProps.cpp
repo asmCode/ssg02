@@ -39,6 +39,10 @@ const float GameProps::ShotgunFieldOfDamage = cosf(3.1415f / 32.0f);
 const float GameProps::ShotgunDamage = 100.0f;
 
 const float GameProps::PlayerHeight = 3.0f;
+const float GameProps::KickMinDistance = 1.0f;
+const float GameProps::KickMaxDistance = 3.0f;
+const float GameProps::KickFOV = 0.90f; // value of cos(angle)
+const float GameProps::KickCooldown = 2.0f;
 
 const float GameProps::SplashScreenDuration = 1.0f;
 
