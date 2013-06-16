@@ -335,7 +335,7 @@ Bunny* BunniesManager::GetClosestBunny(const sm::Vec3 &position, BunnyType bunny
 	{
 		for (uint32_t i = 0; i < MaxBunniesCount; i++)
 		{
-			if (!m_infectedBunnies[i]->IsActive())
+			if (!m_infectedBunnies[i]->IsActive() || m_infectedBunnies[i]->IsDying())
 				continue;
 
 			float currentDistance = (m_infectedBunnies[i]->GetPosition() - position).GetLength();

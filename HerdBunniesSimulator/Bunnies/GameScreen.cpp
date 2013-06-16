@@ -217,7 +217,7 @@ void GameScreen::GetDamageablesInCone(
 			}
 		}
 
-		if (infectedBunnies[i]->IsActive())
+		if (infectedBunnies[i]->IsActive() && !infectedBunnies[i]->IsDying())
 		{
 			bunnyDirection = (infectedBunnies[i]->GetPosition() - coneTop).GetNormalized();
 			if (sm::Vec3::Dot(coneTarget, bunnyDirection) >= cosOfAngle)

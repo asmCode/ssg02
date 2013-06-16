@@ -33,10 +33,6 @@ void Flying::Update(IBunny *bunny, float time, float seconds)
 	InfectedBunny *ibunny = dynamic_cast<InfectedBunny*>(bunny);
 	assert(ibunny != NULL);
 
-//	ibunny->m_position += ibunny->m_flyingVector * 20.0f * seconds;
-//	ibunny->m_flyingVector = (ibunny->m_flyingVector * 20.0f + sm::Vec3(0.0f, -0.5f, 0.0f)) * seconds;
-//	ibunny->m_flyingVector.Normalize();
-
 	ibunny->m_kickTrajectory.Update(seconds);
 	ibunny->m_position = ibunny->m_kickTrajectory.GetPosition();
 
@@ -67,5 +63,4 @@ IBunnyState::State Flying::GetStateType() const
 }
 
 Flying *GenericSingleton<Flying>::instance;
-
 

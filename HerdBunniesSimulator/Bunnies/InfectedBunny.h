@@ -17,6 +17,7 @@ class InfectedBunny : public Bunny
 	friend class Hunting;
 	friend class Fucking;
 	friend class Flying;
+	friend class Dying;
 
 public:
 	InfectedBunny(void);
@@ -62,6 +63,8 @@ public:
 	void Die();
 	void KickOff(const sm::Vec3 &target);
 
+	bool IsDying() const;
+
 private:
 	bool m_isActive;
 
@@ -77,8 +80,19 @@ private:
 	Model *m_dieHead;
 	Model *m_dieBody;
 
+	sm::Matrix m_dieBaseMatrix; // world matrix in the moment of die
 	sm::Matrix m_dieBodyMatrix;
 	sm::Matrix m_dieHeadMatrix;
+
+	ThrowTrajectory m_dieBodyTrajectory;
+	ThrowTrajectory m_dieHeadTrajectory;
+
+	sm::Vec3 m_dieBodyAxis;
+	float m_dieBodyAngleProgress;
+	float m_dieBodyAngleSpeed;
+	sm::Vec3 m_dieHeadAxis;
+	float m_dieHeadAngleProgress;
+	float m_dieHeadAngleSpeed;
 
 	float m_targetPositionRefreshColldown;
 
@@ -92,8 +106,6 @@ private:
 
 	float m_spawningProgress;
 	HealthyBunny *m_huntingTarget;
-
-	sm::Vec3 m_flyingVector;
 };
 
 #endif

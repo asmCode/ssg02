@@ -29,9 +29,23 @@ void Dying::Update(IBunny *bunny, float time, float seconds)
 	InfectedBunny *ibunny = dynamic_cast<InfectedBunny*>(bunny);
 	assert(ibunny != NULL);
 
+	ibunny->m_dieBodyTrajectory.Update(seconds);
+	ibunny->m_dieHeadTrajectory.Update(seconds);
 
-	sm::Matrix m_dieBodyMatrix;
-	sm::Matrix m_dieHeadMatrix;
+	sm::Matrix bodyRot = sm::Matrix::RotateAxisMatrix(ibunny->m_dieBodyAngleProgress * ibunny->m_dieBodyAngleSpeed, ibunny->m_dieBodyAxis);
+	sm::Matrix headRot = sm::Matrix::RotateAxisMatrix(ibunny->m_dieHeadAngleProgress * ibunny->m_dieHeadAngleSpeed, ibunny->m_dieHeadAxis);
+
+	ibunny->m_dieBodyAngleProgress += seconds;
+	ibunny->m_dieHeadAngleProgress += seconds;
+
+	ibunny->m_dieBodyMatrix = sm::Matrix::TranslateMatrix(ibunny->m_dieBodyTrajectory.GetPosition()) * bodyRot * ibunny->m_dieBaseMatrix;
+	ibunny->m_dieHeadMatrix = sm::Matrix::TranslateMatrix(ibunny->m_dieHeadTrajectory.GetPosition()) * headRot * ibunny->m_dieBaseMatrix;
+
+	if (ibunny->m_dieBodyTrajectory.GetPosition().y < 2.0f &&
+		ibunny->m_dieHeadTrajectory.GetPosition().y < -2.0f)
+	{
+		ibunny->Reset(); // remove from level
+	}
 }
 
 IBunnyState::State Dying::GetStateType() const

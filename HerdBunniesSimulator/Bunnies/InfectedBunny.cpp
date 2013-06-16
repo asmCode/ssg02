@@ -256,6 +256,23 @@ void InfectedBunny::Die()
 		GetState()->GetStateType() == IBunnyState::State_Hunting)
 		m_huntingTarget->SetToIdle();
 
+	m_dieBaseMatrix =
+		CalcBoneMatrixZ(sm::Vec3(0, 0, 0), m_moveTarget) *
+		sm::Matrix::RotateAxisMatrix(3.1415f, 0, 1, 0);
+
+	static Randomizer random;
+
+	m_dieBodyTrajectory.Throw(m_position, sm::Vec3(random.GetFloat(-0.2f, 0.2f), 1, random.GetFloat(-0.2f, 0.2f)).GetNormalized(), random.GetFloat(10.0f, 14.0f), 30.0f);
+	m_dieHeadTrajectory.Throw(m_position, sm::Vec3(random.GetFloat(-0.2f, 0.2f), 1, random.GetFloat(-0.2f, 0.2f)).GetNormalized(), random.GetFloat(10.0f, 14.0f), 30.0f);
+
+	m_dieBodyAxis = sm::Vec3(random.GetFloat(-1.0f, 1.0f), random.GetFloat(-1.0f, 1.0f), random.GetFloat(-1.0f, 1.0f)).GetNormalized();
+	m_dieBodyAngleProgress = 0.0f;
+	m_dieBodyAngleSpeed = random.GetFloat(2.0f, 6.0f);
+
+	m_dieHeadAxis = sm::Vec3(random.GetFloat(-1.0f, 1.0f), random.GetFloat(-1.0f, 1.0f), random.GetFloat(-1.0f, 1.0f)).GetNormalized();
+	m_dieHeadAngleProgress = 0.0f;
+	m_dieHeadAngleSpeed = random.GetFloat(2.0f, 6.0f);
+
 	SetState(Dying::GetInstance());
 }
 
@@ -265,10 +282,13 @@ void InfectedBunny::KickOff(const sm::Vec3 &target)
 		GetState()->GetStateType() == IBunnyState::State_Hunting)
 		m_huntingTarget->SetToIdle();
 
-	//m_flyingVector = target;
-
 	m_kickTrajectory.Throw(m_position, target, 25.0f, 30.0f);
 
 	SetState(Flying::GetInstance());
+}
+
+bool InfectedBunny::IsDying() const
+{
+	return m_bunnyState->GetStateType() == IBunnyState::State_Dying;
 }
 
