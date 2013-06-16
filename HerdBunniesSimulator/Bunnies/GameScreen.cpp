@@ -9,6 +9,7 @@
 #include "InfectedBunny.h"
 #include "Idle.h"
 #include "SettingsInRanks.h"
+#include "Flying.h"
 #include "Reproducting.h"
 #include "ChangingToInfected.h"
 #include "Respawning.h"
@@ -132,7 +133,11 @@ void GameScreen::Update(float time, float seconds)
 
 		sm::Vec3 bunnyDirection = (bunnyPosition - playerPosition).GetNormalized();
 		if (sm::Vec3::Dot(playerTarget, bunnyDirection) >= GameProps::KickFOV)
+		{
 			m_player->Kick();
+			InfectedBunny *ibunny = dynamic_cast<InfectedBunny*>(bunny);
+			ibunny->KickOff(sm::Vec3(m_player->GetLookTarget().x, 1.5f, m_player->GetLookTarget().z).GetNormalized());
+		}
 	}
 }
 

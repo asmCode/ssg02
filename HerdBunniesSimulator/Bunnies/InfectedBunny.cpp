@@ -5,6 +5,7 @@
 #include "InterfaceProvider.h"
 #include "Dying.h"
 #include "RestingAfterFucking.h"
+#include "Flying.h"
 #include "GameProps.h"
 #include "DrawingRoutines.h"
 
@@ -26,11 +27,15 @@ InfectedBunny::InfectedBunny() :
 	m_runAnim = InterfaceProvider::GetContent()->Get<Animation>("ibunny_run");
 	m_walkAnim = InterfaceProvider::GetContent()->Get<Animation>("ibunny_walk");
 	m_fuckAnim = InterfaceProvider::GetContent()->Get<Animation>("ibunny_fuck");
+	m_dieHead = InterfaceProvider::GetContent()->Get<Model>("ibunny_die_head");
+	m_dieBody = InterfaceProvider::GetContent()->Get<Model>("ibunny_die_body");
 
 	assert(m_bunnyModel != NULL);
 	assert(m_runAnim != NULL);
 	assert(m_walkAnim != NULL);
 	assert(m_fuckAnim != NULL);
+	assert(m_dieHead != NULL);
+	assert(m_dieBody != NULL);
 
 	InitFuckAnimBounds(m_bunnyModel);
 
@@ -115,9 +120,27 @@ static sm::Matrix CalcBoneMatrixZ(const sm::Vec3 &jointStart, const sm::Vec3 &jo
 
 void InfectedBunny::Draw(float time, float seconds, const sm::Matrix &viewMatrix)
 {
-	this->Bunny::Draw(time, seconds);
+	if (m_bunnyState->GetStateType() != IBunnyState::State_Dying)
+	{
+		this->Bunny::Draw(time, seconds);
 
-	DrawingRoutines::DrawCelShaded(m_bunnyModel, viewMatrix, CalcBoneMatrixZ(m_position, m_position + m_moveTarget) * sm::Matrix::RotateAxisMatrix(3.1415f, 0, 1, 0));
+		DrawingRoutines::DrawCelShaded(
+			m_bunnyModel,
+			viewMatrix,
+			CalcBoneMatrixZ(m_position, m_position + m_moveTarget) * sm::Matrix::RotateAxisMatrix(3.1415f, 0, 1, 0));
+	}
+	else
+	{
+		DrawingRoutines::DrawCelShaded(
+			m_dieBody,
+			viewMatrix,
+			m_dieBodyMatrix);
+
+		DrawingRoutines::DrawCelShaded(
+			m_dieHead,
+			viewMatrix,
+			m_dieHeadMatrix);
+	}
 }
 
 void InfectedBunny::Respawn(const sm::Vec3 &position)
@@ -234,5 +257,18 @@ void InfectedBunny::Die()
 		m_huntingTarget->SetToIdle();
 
 	SetState(Dying::GetInstance());
+}
+
+void InfectedBunny::KickOff(const sm::Vec3 &target)
+{
+	if (GetState()->GetStateType() == IBunnyState::State_Fucking ||
+		GetState()->GetStateType() == IBunnyState::State_Hunting)
+		m_huntingTarget->SetToIdle();
+
+	//m_flyingVector = target;
+
+	m_kickTrajectory.Throw(m_position, target, 25.0f, 30.0f);
+
+	SetState(Flying::GetInstance());
 }
 

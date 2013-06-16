@@ -29,8 +29,6 @@ void Respawning::Leave(IBunny *bunny)
 
 void Respawning::Update(IBunny *bunny, float time, float seconds)
 {
-	return;
-
 	assert(bunny != NULL);
 
 	InfectedBunny *ibunny = dynamic_cast<InfectedBunny*>(bunny);

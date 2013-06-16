@@ -1,5 +1,5 @@
 #include "Dying.h"
-#include "HealthyBunny.h"
+#include "InfectedBunny.h"
 #include "GameProps.h"
 #include "Dying.h"
 #include "BunniesManager.h"
@@ -26,6 +26,12 @@ void Dying::Leave(IBunny *bunny)
 void Dying::Update(IBunny *bunny, float time, float seconds)
 {
 	assert(bunny != NULL);
+	InfectedBunny *ibunny = dynamic_cast<InfectedBunny*>(bunny);
+	assert(ibunny != NULL);
+
+
+	sm::Matrix m_dieBodyMatrix;
+	sm::Matrix m_dieHeadMatrix;
 }
 
 IBunnyState::State Dying::GetStateType() const

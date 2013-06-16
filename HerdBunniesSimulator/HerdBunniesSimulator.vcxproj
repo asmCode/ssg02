@@ -100,6 +100,7 @@
     <ClInclude Include="Bunnies\DrawingRoutines.h" />
     <ClInclude Include="Bunnies\Dying.h" />
     <ClInclude Include="Bunnies\Environment.h" />
+    <ClInclude Include="Bunnies\Flying.h" />
     <ClInclude Include="Bunnies\Fucking.h" />
     <ClInclude Include="Bunnies\GameController.h" />
     <ClInclude Include="Bunnies\GameObjectType.h" />
@@ -138,6 +139,7 @@
     <ClInclude Include="Bunnies\Skydome.h" />
     <ClInclude Include="Bunnies\SplashScreen.h" />
     <ClInclude Include="Bunnies\SpritesMap.h" />
+    <ClInclude Include="Bunnies\ThrowTrajectory.h" />
     <ClInclude Include="Bunnies\Ticker.h" />
     <ClInclude Include="Framework\Graphics\Animation.h" />
     <ClInclude Include="Framework\Graphics\AnimationLoader.h" />
@@ -219,6 +221,7 @@
     <ClCompile Include="Bunnies\DrawingRoutines.cpp" />
     <ClCompile Include="Bunnies\Dying.cpp" />
     <ClCompile Include="Bunnies\Environment.cpp" />
+    <ClCompile Include="Bunnies\Flying.cpp" />
     <ClCompile Include="Bunnies\Fucking.cpp" />
     <ClCompile Include="Bunnies\GameController.cpp" />
     <ClCompile Include="Bunnies\GameScreen.cpp" />
@@ -246,6 +249,7 @@
     <ClCompile Include="Bunnies\Skydome.cpp" />
     <ClCompile Include="Bunnies\SplashScreen.cpp" />
     <ClCompile Include="Bunnies\SpritesMap.cpp" />
+    <ClCompile Include="Bunnies\ThrowTrajectory.cpp" />
     <ClCompile Include="Bunnies\Ticker.cpp" />
     <ClCompile Include="Ext\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="Framework\Graphics\Animation.cpp" />

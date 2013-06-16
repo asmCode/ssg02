@@ -20,6 +20,7 @@ public:
 		State_RunningAway,
 		State_ChangingToInfected,
 		State_Dying,
+		State_Flying
 	};
 
 	virtual ~IBunnyState() {}

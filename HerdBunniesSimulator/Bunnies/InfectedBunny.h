@@ -3,6 +3,7 @@
 
 #include "Bunny.h"
 #include "Ticker.h"
+#include "ThrowTrajectory.h"
 #include <Math/Matrix.h>
 
 class Model;
@@ -15,6 +16,7 @@ class InfectedBunny : public Bunny
 	friend class RestingAfterFucking;
 	friend class Hunting;
 	friend class Fucking;
+	friend class Flying;
 
 public:
 	InfectedBunny(void);
@@ -58,16 +60,25 @@ public:
 	void MakeDamage(float damageValue);
 
 	void Die();
+	void KickOff(const sm::Vec3 &target);
 
 private:
 	bool m_isActive;
 
 	IBunnyState *m_bunnyState;
 
+	ThrowTrajectory m_kickTrajectory;
+
 	Model *m_bunnyModel;
 	Animation *m_runAnim;
 	Animation *m_walkAnim;
 	Animation *m_fuckAnim;
+
+	Model *m_dieHead;
+	Model *m_dieBody;
+
+	sm::Matrix m_dieBodyMatrix;
+	sm::Matrix m_dieHeadMatrix;
 
 	float m_targetPositionRefreshColldown;
 
@@ -81,6 +92,8 @@ private:
 
 	float m_spawningProgress;
 	HealthyBunny *m_huntingTarget;
+
+	sm::Vec3 m_flyingVector;
 };
 
 #endif
