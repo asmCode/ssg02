@@ -18,6 +18,7 @@ float DrawingRoutines::m_outlineWidth;
 sm::Vec3 DrawingRoutines::m_lightPosition;
 sm::Matrix DrawingRoutines::m_projMatrix;
 Texture* DrawingRoutines::m_celLightTex;
+Model *DrawingRoutines::m_bloodParticleModel;
 
 bool DrawingRoutines::Initialize()
 {
@@ -44,6 +45,9 @@ bool DrawingRoutines::Initialize()
 
 	m_celLightTex = InterfaceProvider::GetContent()->Get<Texture>("cel_light");
 	assert(m_celLightTex != NULL);
+
+	m_bloodParticleModel = InterfaceProvider::GetContent()->Get<Model>("blood_particle");
+	assert(m_bloodParticleModel != NULL);
 
 	m_celShadingShader->BindVertexChannel(0, "a_position");
 	m_celShadingShader->BindVertexChannel(1, "a_normal");
@@ -78,7 +82,7 @@ bool DrawingRoutines::Initialize()
 	return true;
 }
 
-void DrawingRoutines::DrawCelShaded(Model *model, const sm::Matrix &viewMatrix, sm::Matrix &worldMatrix)
+void DrawingRoutines::DrawCelShaded(Model *model, const sm::Matrix &viewMatrix, const sm::Matrix &worldMatrix)
 {
 	assert(model != NULL);
 
@@ -122,7 +126,7 @@ void DrawingRoutines::DrawCelShaded(Model *model, const sm::Matrix &viewMatrix, 
 
 void DrawingRoutines::DrawCelShadedMutating(Model *model,
 											const sm::Matrix &viewMatrix,
-											sm::Matrix &worldMatrix,
+											const sm::Matrix &worldMatrix,
 											float mutatingValue,
 											Texture *mutatingTex)
 {
@@ -198,7 +202,7 @@ void DrawingRoutines::DrawSkydome(Model *model, const sm::Matrix &viewMatrix, co
 	glDepthMask(GL_TRUE);
 }
 
-void DrawingRoutines::DrawSprite(Model *model, const sm::Matrix &viewMatrix, sm::Matrix &worldMatrix)
+void DrawingRoutines::DrawSprite(Model *model, const sm::Matrix &viewMatrix, const sm::Matrix &worldMatrix)
 {
 	assert(model != NULL);
 
@@ -221,7 +225,7 @@ void DrawingRoutines::DrawSprite(Model *model, const sm::Matrix &viewMatrix, sm:
 	glDisableVertexAttribArray(2);
 }
 
-void DrawingRoutines::DrawGrass(Model *model, Texture *colorMapTex, const sm::Matrix &viewMatrix, sm::Matrix &worldMatrix)
+void DrawingRoutines::DrawGrass(Model *model, Texture *colorMapTex, const sm::Matrix &viewMatrix, const sm::Matrix &worldMatrix)
 {
 	assert(model != NULL);
 
@@ -244,6 +248,11 @@ void DrawingRoutines::DrawGrass(Model *model, Texture *colorMapTex, const sm::Ma
 	}
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(2);
+}
+
+void DrawingRoutines::DrawBloodParticle(const sm::Matrix &viewMatrix, const sm::Matrix &worldMatrix)
+{
+	DrawCelShaded(m_bloodParticleModel, viewMatrix, worldMatrix);
 }
 
 void DrawingRoutines::SetLightPosition(const sm::Vec3 &lightPosition)

@@ -8,8 +8,17 @@
 #include <GL/glew.h>
 #include <assert.h>
 
+#include "SparksGenerator.h"
+#include "ParticleRenderer.h"
+
+SparksGenerator *a;
+ParticleRenderer *b;
+
 Ground::Ground()
 {
+	b = new ParticleRenderer();
+	a = new SparksGenerator(200, b, NULL);
+
 	m_groundModel = InterfaceProvider::GetContent()->Get<Model>("ground");
 	assert(m_groundModel != NULL);
 
@@ -26,10 +35,13 @@ Ground::~Ground()
 
 void Ground::Update(float time, float seconds)
 {
+	a->Update(seconds);
 }
 
 void Ground::Draw(float time, float seconds)
 {
+	a->Draw(seconds, sm::Matrix::IdentityMatrix(), m_viewMatrix);
+
 	DrawingRoutines::DrawCelShaded(m_groundModel, m_viewMatrix, sm::Matrix::IdentityMatrix());
 
 	//glDepthMask(GL_FALSE);

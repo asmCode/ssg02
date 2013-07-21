@@ -90,6 +90,7 @@
     <ClInclude Include="BunniesView\WinShapesRenderer.h" />
     <ClInclude Include="Bunnies\AnimButton.h" />
     <ClInclude Include="Bunnies\BeeingFucked.h" />
+    <ClInclude Include="Bunnies\BloodParticle.h" />
     <ClInclude Include="Bunnies\BunniesManager.h" />
     <ClInclude Include="Bunnies\Bunny.h" />
     <ClInclude Include="Bunnies\BunnyType.h" />
@@ -120,11 +121,14 @@
     <ClInclude Include="Bunnies\InfectedBunniesFactory.h" />
     <ClInclude Include="Bunnies\InfectedBunny.h" />
     <ClInclude Include="Bunnies\InterfaceProvider.h" />
+    <ClInclude Include="Bunnies\IParticleFactory.h" />
     <ClInclude Include="Bunnies\IScreen.h" />
+    <ClInclude Include="Bunnies\IParticleRenderer.h" />
     <ClInclude Include="Bunnies\ITexture.h" />
     <ClInclude Include="Bunnies\LevelEnvironment.h" />
     <ClInclude Include="Bunnies\MainMenuPanel.h" />
     <ClInclude Include="Bunnies\MainMenuScreen.h" />
+    <ClInclude Include="Bunnies\ParticleRenderer.h" />
     <ClInclude Include="Bunnies\Reproducting.h" />
     <ClInclude Include="Bunnies\Respawning.h" />
     <ClInclude Include="Bunnies\RestingAfterFucking.h" />
@@ -137,6 +141,8 @@
     <ClInclude Include="Bunnies\Shotgun.h" />
     <ClInclude Include="Bunnies\ShotgunBullet.h" />
     <ClInclude Include="Bunnies\Skydome.h" />
+    <ClInclude Include="Bunnies\Spark.h" />
+    <ClInclude Include="Bunnies\SparksGenerator.h" />
     <ClInclude Include="Bunnies\SplashScreen.h" />
     <ClInclude Include="Bunnies\SpritesMap.h" />
     <ClInclude Include="Bunnies\ThrowTrajectory.h" />
@@ -212,6 +218,7 @@
     <ClCompile Include="BunniesView\WinShapesRenderer.cpp" />
     <ClCompile Include="Bunnies\AnimButton.cpp" />
     <ClCompile Include="Bunnies\BeeingFucked.cpp" />
+    <ClCompile Include="Bunnies\BloodParticle.cpp" />
     <ClCompile Include="Bunnies\BunniesManager.cpp" />
     <ClCompile Include="Bunnies\Bunny.cpp" />
     <ClCompile Include="Bunnies\ChangingToInfected.cpp" />
@@ -237,6 +244,7 @@
     <ClCompile Include="Bunnies\LevelEnvironment.cpp" />
     <ClCompile Include="Bunnies\MainMenuPanel.cpp" />
     <ClCompile Include="Bunnies\MainMenuScreen.cpp" />
+    <ClCompile Include="Bunnies\ParticleRenderer.cpp" />
     <ClCompile Include="Bunnies\Reproducting.cpp" />
     <ClCompile Include="Bunnies\Respawning.cpp" />
     <ClCompile Include="Bunnies\RestingAfterFucking.cpp" />
@@ -247,6 +255,8 @@
     <ClCompile Include="Bunnies\Shotgun.cpp" />
     <ClCompile Include="Bunnies\ShotgunBullet.cpp" />
     <ClCompile Include="Bunnies\Skydome.cpp" />
+    <ClCompile Include="Bunnies\Spark.cpp" />
+    <ClCompile Include="Bunnies\SparksGenerator.cpp" />
     <ClCompile Include="Bunnies\SplashScreen.cpp" />
     <ClCompile Include="Bunnies\SpritesMap.cpp" />
     <ClCompile Include="Bunnies\ThrowTrajectory.cpp" />
