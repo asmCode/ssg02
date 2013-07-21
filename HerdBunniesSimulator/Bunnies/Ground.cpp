@@ -18,6 +18,9 @@ Ground::Ground()
 {
 	b = new ParticleRenderer();
 	a = new SparksGenerator(200, b, NULL);
+	a->SetSourcePosition(sm::Vec3(0, 10, 0));
+	a->SetSourceDirection(sm::Vec3(1, 0, 0), 0.01f);
+	a->SetSparksPerSecond(100);
 
 	m_groundModel = InterfaceProvider::GetContent()->Get<Model>("ground");
 	assert(m_groundModel != NULL);

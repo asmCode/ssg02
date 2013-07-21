@@ -2,8 +2,14 @@
 #include "IParticleRenderer.h"
 #include "IParticleFactory.h"
 #include "Spark.h"
+#include <Utils/Randomizer.h>
 #include <memory>
 #include <assert.h>
+
+const uint32_t SparksGenerator::DefaultSparksPerSecond = 10;
+const float SparksGenerator::DefaultInitialMinSpeed = 5.0f;
+const float SparksGenerator::DefaultInitialMaxSpeed = 10.0f;
+const float SparksGenerator::DefaultSpreadAngle = 1.0f;
 
 SparksGenerator::SparksGenerator(uint32_t maxSpritesCount,
 								 IParticleRenderer *particleRenderer,
@@ -15,7 +21,11 @@ SparksGenerator::SparksGenerator(uint32_t maxSpritesCount,
 	m_sparksSourceEnabled(true),
 	m_liveSparksCount(0),
 	m_sparksToStart(0.0f),
-	m_sourcePosition(sm::Vec3(0, 0, 0))
+	m_sourcePosition(sm::Vec3(0, 0, 0)),
+	m_spreadAngle(DefaultSpreadAngle),
+	m_sparksPerSeconds(DefaultSparksPerSecond),
+	m_initialMinSpeed(DefaultInitialMinSpeed),
+	m_initialMaxSpeed(DefaultInitialMaxSpeed)
 {
 	m_sparks = new Spark*[maxSpritesCount];
 	
@@ -37,7 +47,7 @@ SparksGenerator::~SparksGenerator(void)
 void SparksGenerator::Update(float seconds)
 {
 	if (m_sparksSourceEnabled)
-		m_sparksToStart += static_cast<float>(DefaultSparksPerSecond) * seconds;
+		m_sparksToStart += static_cast<float>(m_sparksPerSeconds) * seconds;
 
 	if (m_activeParticles == 0 && m_sparksToStart < 1.0f)
 		return;
@@ -48,8 +58,7 @@ void SparksGenerator::Update(float seconds)
 		if (m_sparks[i]->m_isUsed && m_sparks[i]->m_liteTime >= 0.0f)
 		{
 			m_sparks[i]->m_liteTime -= seconds;
-			m_sparks[i]->m_position += m_sparks[i]->m_moveTarget * seconds * 40.0f;
-			m_sparks[i]->m_moveTarget = (m_sparks[i]->m_moveTarget + (sm::Vec3(0, -9.8f, 0.0f) * seconds));
+			m_sparks[i]->m_throw.Update(seconds);
 		}
 		// spark just died
 		else if (m_sparks[i]->m_isUsed && m_sparks[i]->m_liteTime < 0.0f)
@@ -61,7 +70,7 @@ void SparksGenerator::Update(float seconds)
 		if (m_sparksSourceEnabled && !m_sparks[i]->m_isUsed && m_sparksToStart >= 1.0f)
 		{
 			m_activeParticles++;
-			m_sparks[i]->Start(m_sourcePosition);
+			StartParticle(m_sparks[i]);
 			m_sparksToStart -= 1.0f;
 		}
 	}
@@ -97,6 +106,23 @@ void SparksGenerator::SetSourcePosition(const sm::Vec3 &position)
 	m_sourcePosition = position;
 }
 
+void SparksGenerator::SetSourceDirection(const sm::Vec3 &direction, float spreadAngle)
+{
+	m_direction = direction;
+	m_spreadAngle = spreadAngle;
+}
+
+void SparksGenerator::SetInitialSpeed(float minSpeed, float maxSpeed)
+{
+	m_initialMinSpeed = minSpeed;
+	m_initialMaxSpeed = maxSpeed;
+}
+
+void SparksGenerator::SetSparksPerSecond(float sparksPerSecond)
+{
+	m_sparksPerSeconds = sparksPerSecond;
+}
+
 void SparksGenerator::EnableSparksSource()
 {
 	m_sparksSourceEnabled = true;
@@ -106,5 +132,21 @@ void SparksGenerator::DisableSparksSource()
 {
 	m_sparksSourceEnabled = false;
 	m_sparksToStart = 0.0f;
+}
+
+void SparksGenerator::StartParticle(Spark *particle)
+{
+	static Randomizer random;
+
+	sm::Vec3 spreadVector = sm::Vec3(
+		random.GetFloat(-m_spreadAngle, m_spreadAngle),
+		random.GetFloat(-m_spreadAngle, m_spreadAngle),
+		random.GetFloat(-m_spreadAngle, m_spreadAngle));
+
+	float speed = random.GetFloat(m_initialMinSpeed, m_initialMaxSpeed);
+
+	particle->m_throw.Throw(m_sourcePosition, m_direction + spreadVector, speed, 30.0f);
+	particle->m_liteTime = random.GetFloat(0.4f, 1.2f);
+	particle->m_isUsed = true;
 }
 

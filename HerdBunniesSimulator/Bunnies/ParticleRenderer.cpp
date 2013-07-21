@@ -4,8 +4,8 @@
 
 void ParticleRenderer::Draw(Spark *spark, const sm::Matrix &viewMatrix)
 {
-	sm::Matrix worldMatrix = sm::Matrix::TranslateMatrix(spark->m_position);
+	sm::Matrix worldMatrix = sm::Matrix::TranslateMatrix(spark->m_throw.GetPosition());
 
-	DrawingRoutines::DrawBloodParticle(worldMatrix, viewMatrix);
+	DrawingRoutines::DrawBloodParticle(viewMatrix, worldMatrix);
 }
 
