@@ -11,17 +11,8 @@
 #include "SparksGenerator.h"
 #include "ParticleRenderer.h"
 
-SparksGenerator *a;
-ParticleRenderer *b;
-
 Ground::Ground()
 {
-	b = new ParticleRenderer();
-	a = new SparksGenerator(200, b, NULL);
-	a->SetSourcePosition(sm::Vec3(0, 10, 0));
-	a->SetSourceDirection(sm::Vec3(1, 0, 0), 0.01f);
-	a->SetSparksPerSecond(100);
-
 	m_groundModel = InterfaceProvider::GetContent()->Get<Model>("ground");
 	assert(m_groundModel != NULL);
 
@@ -38,13 +29,10 @@ Ground::~Ground()
 
 void Ground::Update(float time, float seconds)
 {
-	a->Update(seconds);
 }
 
 void Ground::Draw(float time, float seconds)
 {
-	a->Draw(seconds, sm::Matrix::IdentityMatrix(), m_viewMatrix);
-
 	DrawingRoutines::DrawCelShaded(m_groundModel, m_viewMatrix, sm::Matrix::IdentityMatrix());
 
 	//glDepthMask(GL_FALSE);

@@ -36,7 +36,7 @@ const float GameProps::ChangingToInfectedTime = 8.0f;
 const float GameProps::ShotgunShotDelay = 1.45f;
 const float GameProps::ShotgunRange = 20.0f;
 const float GameProps::ShotgunFieldOfDamage = cosf(3.1415f / 32.0f);
-const float GameProps::ShotgunDamage = 100.0f;
+const float GameProps::ShotgunDamage = 50.0f;
 
 const float GameProps::PlayerHeight = 3.0f;
 const float GameProps::KickMinDistance = 1.0f;

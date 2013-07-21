@@ -10,6 +10,7 @@ class Model;
 class IBunnyState;
 class HealthyBunny;
 class Animation;
+class SparksGenerator;
 
 class InfectedBunny : public Bunny
 {
@@ -87,6 +88,10 @@ private:
 	ThrowTrajectory m_dieBodyTrajectory;
 	ThrowTrajectory m_dieHeadTrajectory;
 
+	SparksGenerator *m_shotBloodParticles;
+	SparksGenerator *m_dieBodyParticles;
+	SparksGenerator *m_dieHeadParticles;
+
 	sm::Vec3 m_dieBodyAxis;
 	float m_dieBodyAngleProgress;
 	float m_dieBodyAngleSpeed;
@@ -106,6 +111,8 @@ private:
 
 	float m_spawningProgress;
 	HealthyBunny *m_huntingTarget;
+
+	float m_bleedingTime;
 };
 
 #endif

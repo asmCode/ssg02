@@ -8,6 +8,8 @@
 #include "Flying.h"
 #include "GameProps.h"
 #include "DrawingRoutines.h"
+#include "SparksGenerator.h"
+#include "ParticleRenderer.h"
 
 #include <Graphics/Content/Content.h>
 #include <Utils/Randomizer.h>
@@ -20,8 +22,11 @@ InfectedBunny::InfectedBunny() :
 	m_spawningProgress(0.0f),
 	m_huntingTarget(NULL),
 	m_bunnyState(NULL),
+	m_bleedingTime(0.0f),
 	m_targetPositionRefreshColldown(0.0f),
-	m_fuckingProgress(GameProps::FuckingTime)
+	m_fuckingProgress(GameProps::FuckingTime),
+	m_dieBodyParticles(NULL),
+	m_dieHeadParticles(NULL)
 {
 	m_bunnyModel = InterfaceProvider::GetContent()->Get<Model>("ibunny");
 	m_runAnim = InterfaceProvider::GetContent()->Get<Animation>("ibunny_run");
@@ -40,6 +45,9 @@ InfectedBunny::InfectedBunny() :
 	InitFuckAnimBounds(m_bunnyModel);
 
 	m_currentModel = m_bunnyModel;
+
+	m_shotBloodParticles = new SparksGenerator(20, ParticleRenderer::GetInstance(), NULL);
+	m_shotBloodParticles->DisableSparksSource();
 }
 
 InfectedBunny::~InfectedBunny(void)
@@ -92,6 +100,18 @@ void InfectedBunny::Update(float time, float seconds)
 {
 	assert(m_bunnyState != NULL);
 
+	m_bleedingTime -= seconds;
+	if (m_bleedingTime > 0.0f)
+	{
+		m_shotBloodParticles->SetSourcePosition(m_position + sm::Vec3(0, 0.7f, 0));
+	}
+	else
+	{
+		m_shotBloodParticles->DisableSparksSource();
+	}
+
+	m_shotBloodParticles->Update(seconds);
+
 	m_bunnyState->Update(this, time, seconds);
 }
 
@@ -120,6 +140,8 @@ static sm::Matrix CalcBoneMatrixZ(const sm::Vec3 &jointStart, const sm::Vec3 &jo
 
 void InfectedBunny::Draw(float time, float seconds, const sm::Matrix &viewMatrix)
 {
+	m_shotBloodParticles->Draw(seconds, sm::Matrix::IdentityMatrix(), viewMatrix);
+
 	if (m_bunnyState->GetStateType() != IBunnyState::State_Dying)
 	{
 		this->Bunny::Draw(time, seconds);
@@ -240,6 +262,13 @@ void InfectedBunny::ChangeFromInfected(HealthyBunny *hbunny)
 
 void InfectedBunny::MakeDamage(float damageValue)
 {
+	m_shotBloodParticles->SetSourcePosition(m_position);
+	m_shotBloodParticles->SetSourceDirection(sm::Vec3(0, 1, 0), 0.3f);
+	m_shotBloodParticles->SetInitialSpeed(5, 10);
+	m_shotBloodParticles->SetSparksPerSecond(10000);
+	m_shotBloodParticles->EnableSparksSource();
+	m_bleedingTime = 0.1f;
+
 	m_health -= damageValue;
 	if (m_health < 0.0f)
 		m_health = 0.0f;
