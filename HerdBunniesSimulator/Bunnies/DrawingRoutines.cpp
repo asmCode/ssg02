@@ -26,7 +26,7 @@ bool DrawingRoutines::Initialize()
 	assert(m_celShadingShader != NULL);
 
 	m_celShadingMutatingShader = InterfaceProvider::GetContent()->Get<Shader>("CelShadingMutating");
-	assert(m_celShadingShader != NULL);
+	assert(m_celShadingMutatingShader != NULL);
 
 	m_outlineShader = InterfaceProvider::GetContent()->Get<Shader>("Outline");
 	assert(m_outlineShader != NULL);
