@@ -198,11 +198,11 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\code\ssg02\HerdBunniesSimulator\Framework\IO\BinaryReader.cpp" />
-    <ClCompile Include="..\..\..\code\ssg02\HerdBunniesSimulator\Framework\IO\BinaryWriter.cpp" />
-    <ClCompile Include="..\..\..\code\ssg02\HerdBunniesSimulator\Framework\IO\Win32\Path.cpp" />
-    <ClCompile Include="..\..\..\code\ssg02\HerdBunniesSimulator\Framework\Utils\Log.cpp" />
-    <ClCompile Include="..\..\..\code\ssg02\HerdBunniesSimulator\Framework\Utils\StringUtils.cpp" />
+    <ClCompile Include="..\..\..\HerdBunniesSimulator\Framework\IO\BinaryReader.cpp" />
+    <ClCompile Include="..\..\..\HerdBunniesSimulator\Framework\IO\BinaryWriter.cpp" />
+    <ClCompile Include="..\..\..\HerdBunniesSimulator\Framework\IO\Win32\Path.cpp" />
+    <ClCompile Include="..\..\..\HerdBunniesSimulator\Framework\Utils\Log.cpp" />
+    <ClCompile Include="..\..\..\HerdBunniesSimulator\Framework\Utils\StringUtils.cpp" />
     <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="ExporterController.cpp" />
     <ClCompile Include="MainForm.cpp" />

@@ -197,7 +197,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\code\ssg02\HerdBunniesSimulator\Framework\Utils\StringUtils.cpp" />
+    <ClCompile Include="..\..\..\HerdBunniesSimulator\Framework\Utils\StringUtils.cpp" />
     <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="SGMExporter.cpp" />
     <ClCompile Include="TexturesSlotsHelper.cpp" />

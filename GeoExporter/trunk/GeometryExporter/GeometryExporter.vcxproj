@@ -198,9 +198,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\code\ssg02\HerdBunniesSimulator\Framework\IO\BinaryWriter.cpp" />
-    <ClCompile Include="..\..\..\code\ssg02\HerdBunniesSimulator\Framework\Utils\Log.cpp" />
-    <ClCompile Include="..\..\..\code\ssg02\HerdBunniesSimulator\Framework\Utils\StringUtils.cpp" />
+    <ClCompile Include="..\..\..\HerdBunniesSimulator\Framework\IO\BinaryWriter.cpp" />
+    <ClCompile Include="..\..\..\HerdBunniesSimulator\Framework\Utils\Log.cpp" />
+    <ClCompile Include="..\..\..\HerdBunniesSimulator\Framework\Utils\StringUtils.cpp" />
     <ClCompile Include="code\scene3d\GeoSaver.cpp" />
     <ClCompile Include="code\DllMain.cpp" />
     <ClCompile Include="code\SGMExporter.cpp" />
