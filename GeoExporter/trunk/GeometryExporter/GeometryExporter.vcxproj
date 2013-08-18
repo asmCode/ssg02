@@ -210,6 +210,7 @@
     <ClInclude Include="code\scene3d\GeoSaver.h" />
     <ClInclude Include="code\scene3d\Scene3DMesh.h" />
     <ClInclude Include="code\scene3d\Scene3DMeshPart.h" />
+    <ClInclude Include="code\scene3d\VertexChannel.h" />
     <ClInclude Include="code\scene3d\Scene3DVertex.h" />
     <ClInclude Include="code\SGMExporter.h" />
   </ItemGroup>

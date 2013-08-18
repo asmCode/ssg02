@@ -1,4 +1,5 @@
 #include "GeoSaver.h"
+#include "VertexChannel.h"
 #include <sstream>
 
 void GeoSaver::SaveMeshes(std::vector<Scene3DMesh*> &meshes, std::ostream &os)
@@ -30,26 +31,50 @@ void GeoSaver::SaveMesh(Scene3DMesh *mesh, BinaryWriter &bw)
 void GeoSaver::SaveMeshPart(Scene3DMeshPart *meshPart, BinaryWriter &bw)
 {
 	bw.Write(meshPart ->materialName);
+	bw.Write(meshPart ->m_vertexChannels);
 	bw.Write((int)meshPart ->vertices.size());
 
 	for (int i = 0; i < (int)meshPart ->vertices.size(); i++)
 	{
 		Scene3DVertex *vert = meshPart ->vertices[i];
 
-		bw.Write(vert ->position.x);
-		bw.Write(vert ->position.y);
-		bw.Write(vert ->position.z);
+		if (meshPart ->m_vertexChannels & VertexChannel_Position)
+		{
+			bw.Write(vert ->position.x);
+			bw.Write(vert ->position.y);
+			bw.Write(vert ->position.z);
+		}
 
-		bw.Write(vert ->normal.x);
-		bw.Write(vert ->normal.y);
-		bw.Write(vert ->normal.z);
+		if (meshPart ->m_vertexChannels & VertexChannel_Coords1)
+		{
+			bw.Write(vert ->coords1.x);
+			bw.Write(vert ->coords1.y);
+		}
 
-		bw.Write(vert ->tangent.x);
-		bw.Write(vert ->tangent.y);
-		bw.Write(vert ->tangent.z);
+		if (meshPart ->m_vertexChannels & VertexChannel_Coords2)
+		{
+			bw.Write(vert ->coords2.x);
+			bw.Write(vert ->coords2.y);
+		}
+		if (meshPart ->m_vertexChannels & VertexChannel_Coords3)
+		{
+			bw.Write(vert ->coords3.x);
+			bw.Write(vert ->coords3.y);
+		}
 
-		bw.Write(vert ->coords.x);
-		bw.Write(vert ->coords.y);
+		if (meshPart ->m_vertexChannels & VertexChannel_Normal)
+		{
+			bw.Write(vert ->normal.x);
+			bw.Write(vert ->normal.y);
+			bw.Write(vert ->normal.z);
+		}
+
+		if (meshPart ->m_vertexChannels & VertexChannel_Tangent)
+		{
+			bw.Write(vert ->tangent.x);
+			bw.Write(vert ->tangent.y);
+			bw.Write(vert ->tangent.z);
+		}
 	}
 }
 

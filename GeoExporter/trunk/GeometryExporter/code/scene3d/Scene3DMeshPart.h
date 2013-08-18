@@ -8,6 +8,8 @@ class Scene3DMeshPart
 {
 public:
 	std::string materialName;
+	uint8_t m_vertexChannels;
+
 	std::vector<Scene3DVertex*> vertices;
 
 	~Scene3DMeshPart()

@@ -6,8 +6,10 @@
 class Scene3DVertex
 {
 public:
+	sm::Vec3 position;
+	sm::Vec2 coords1;
+	sm::Vec2 coords2;
+	sm::Vec2 coords3;
 	sm::Vec3 normal;
 	sm::Vec3 tangent;
-	sm::Vec2 coords;
-	sm::Vec3 position;
 };

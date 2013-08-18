@@ -1,4 +1,5 @@
 #include "sgmexporter.h"
+#include "scene3d/VertexChannel.h"
 
 #include <Utils/StringUtils.h>
 #include <Utils/Log.h>
@@ -292,17 +293,19 @@ Scene3DMesh* SGMExporter::ConvertMesh(IGameNode* meshNode)
 		return NULL;
 	}
 
-	if (gMesh ->GetNumberOfTexVerts() == 0)
-	{
-		Log::LogT("warning: mesh '%s' doesn't have texture coordinates", meshNodeName.c_str());
-		//return false;
-	}
+	uint8_t vertexChannels = VertexChannel_Position | VertexChannel_Normal | VertexChannel_Tangent;
 
-	/*if (gMesh ->GetNumberOfTangents() == 0)
-	{
-		log ->AddLog(sb() + "error: mesh '" + meshNode ->GetName() + "' doesn't have tangents, skippping...");
-		return false;
-	}*/
+	Log::LogT("chanel 1: %d", gMesh->GetNumberOfMapVerts(1));
+	if (gMesh->GetNumberOfMapVerts(1) > 0)
+		vertexChannels |= VertexChannel_Coords1;
+
+	Log::LogT("chanel 2: %d", gMesh->GetNumberOfMapVerts(2));
+	if (gMesh->GetNumberOfMapVerts(2) > 0)
+		vertexChannels |= VertexChannel_Coords2;
+
+	Log::LogT("chanel 3: %d", gMesh->GetNumberOfMapVerts(3));
+	if (gMesh->GetNumberOfMapVerts(3) > 0)
+		vertexChannels |= VertexChannel_Coords3;
 
 	Scene3DMesh *mesh = new Scene3DMesh();
 
@@ -320,6 +323,7 @@ Scene3DMesh* SGMExporter::ConvertMesh(IGameNode* meshNode)
 	if (mat == NULL || !mat ->IsMultiType())
 	{
 		Scene3DMeshPart *meshPart = new Scene3DMeshPart();
+		meshPart->m_vertexChannels = vertexChannels;
 		mesh ->meshParts.push_back(meshPart);
 		if (mat != NULL)
 		{
@@ -330,7 +334,7 @@ Scene3DMesh* SGMExporter::ConvertMesh(IGameNode* meshNode)
 			Log::LogT("no material found for %s", meshNodeName.c_str());
 
 		for (int i = 0; i < gMesh ->GetNumberOfFaces(); i++)
-			ExtractVertices(gMesh ->GetFace(i), gMesh, meshPart ->vertices);
+			ExtractVertices(gMesh ->GetFace(i), gMesh, meshPart ->vertices, vertexChannels);
 	}
 	else
 	{
@@ -341,6 +345,7 @@ Scene3DMesh* SGMExporter::ConvertMesh(IGameNode* meshNode)
 		for (int i = 0; i < matIds.Count(); i++)
 		{
 			Scene3DMeshPart *meshPart = new Scene3DMeshPart();
+			meshPart->m_vertexChannels = vertexChannels;
 			mesh ->meshParts.push_back(meshPart);
 			
 			IGameMaterial *subMat = GetMaterialById(mat, matIds[i]);
@@ -352,7 +357,9 @@ Scene3DMesh* SGMExporter::ConvertMesh(IGameNode* meshNode)
 			//log ->AddLog(sb() + "for matid " + matIds[i] + " found " + gFaces.Count() + " faces");
 
 			for (int j = 0; j < gFaces.Count(); j++)
-				ExtractVertices(gFaces[j], gMesh, meshPart ->vertices);
+			{
+				ExtractVertices(gFaces[j], gMesh, meshPart ->vertices, vertexChannels);
+			}
 		}
 	}
 
@@ -361,7 +368,7 @@ Scene3DMesh* SGMExporter::ConvertMesh(IGameNode* meshNode)
 	return mesh;
 }
 
-void SGMExporter::ExtractVertices( FaceEx *gFace, IGameMesh *gMesh, std::vector<Scene3DVertex*> &vertices )
+void SGMExporter::ExtractVertices(FaceEx *gFace, IGameMesh *gMesh, std::vector<Scene3DVertex*> &vertices, uint8_t vertexChannels)
 {
 	GMatrix objectTM = gMesh ->GetIGameObjectTM();
 	/*log ->AddLog(sb() + "[" + objectTM.GetRow(0).x + "] [" + objectTM.GetRow(0).y + "] [" + objectTM.GetRow(0).z + "] [" + objectTM.GetRow(0).w + "]");
@@ -380,11 +387,26 @@ void SGMExporter::ExtractVertices( FaceEx *gFace, IGameMesh *gMesh, std::vector<
 			gMesh ->GetVertex(gFace ->vert[i]).y,
 			gMesh ->GetVertex(gFace ->vert[i]).z);
 
-		/*Point3 normal = gMesh ->GetNormal(gFace ->norm[i], true);
-		Matrix3 rotTM;
-		objectTM.Rotation().MakeMatrix(rotTM);
-		normal = normal * rotTM;
-		normal = normal.Normalize();*/
+		if (vertexChannels & VertexChannel_Coords1)
+		{
+			Point3 uv = gMesh->GetMapVertex(1, gMesh->GetFaceTextureVertex(gFace->meshFaceIndex, i, 1)); 
+
+			vert ->coords1.Set(uv.x, uv.y);
+		}
+
+		if (vertexChannels & VertexChannel_Coords2)
+		{
+			Point3 uv = gMesh->GetMapVertex(2, gMesh->GetFaceTextureVertex(gFace->meshFaceIndex, i, 2)); 
+
+			vert ->coords2.Set(uv.x, uv.y);
+		}
+
+		if (vertexChannels & VertexChannel_Coords3)
+		{
+			Point3 uv = gMesh->GetMapVertex(3, gMesh->GetFaceTextureVertex(gFace->meshFaceIndex, i, 3)); 
+
+			vert ->coords3.Set(uv.x, uv.y);
+		}
 
 		Point3 normal = gMesh->GetNormal(faceIndex, i);
 
@@ -406,10 +428,6 @@ void SGMExporter::ExtractVertices( FaceEx *gFace, IGameMesh *gMesh, std::vector<
 			gMesh ->GetTangent(tangentIndex).x,
 			gMesh ->GetTangent(tangentIndex).y,
 			gMesh ->GetTangent(tangentIndex).z);
-
-		vert ->coords.Set(
-			gMesh ->GetTexVertex(gFace ->texCoord[i]).x,
-			gMesh ->GetTexVertex(gFace ->texCoord[i]).y);
 
 		vertices.push_back(vert);
 	}
@@ -566,8 +584,15 @@ bool SGMExporter::DoExport(const TCHAR *name, ExpInterface *ei, Interface *max_i
 	std::ofstream fileStream(fileName.c_str(), std::ios::binary);
 	BinaryWriter bw(&fileStream);
 
+	/*
+
+	1.2
+		- vertex channels in mesh part
+
+	*/
+
 	bw.Write("FTSMDL", 6);
-	bw.Write((unsigned short)((1 << 8) | 1));
+	bw.Write((unsigned short)((1 << 8) | 2)); // version 1.2
 
 	bw.Write((int)0);
 

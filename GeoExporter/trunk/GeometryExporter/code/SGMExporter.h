@@ -24,7 +24,7 @@ private:
 
 	bool GetMeshes(std::vector<Scene3DMesh*> &meshes, BinaryWriter *bw);
 	Scene3DMesh* ConvertMesh(IGameNode* meshNode);
-	void ExtractVertices(FaceEx *gFace, IGameMesh *gMesh, std::vector<Scene3DVertex*> &vertices);
+	void ExtractVertices(FaceEx *gFace, IGameMesh *gMesh, std::vector<Scene3DVertex*> &vertices, uint8_t vertexChannels);
 	IGameMaterial* SGMExporter::GetMaterialById( IGameMaterial *mat, int id );
 	void FilterMeshNodes(IGameNode *node, std::vector<IGameNode*> &meshNodes);
 	void CollectProperties(Scene3DMesh *mesh, IGameMesh *gMesh);
